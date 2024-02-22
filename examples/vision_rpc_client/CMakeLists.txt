@@ -4,7 +4,8 @@ set(protobuf_MODULE_COMPATIBLE TRUE)
 find_package(Protobuf CONFIG REQUIRED)
 find_package(gRPC CONFIG REQUIRED)
 
-file(GLOB SRCS "*.cpp")
+file(GLOB SRCS "*.cpp" "${CMAKE_SOURCE_DIR}/proto/*.cc")
+message(STATUS "${PROJECT_NAME} sources: ${SRCS}")
 add_executable(${PROJECT_NAME}
     ${SRCS}
 )
