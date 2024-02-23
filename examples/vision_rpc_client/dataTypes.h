@@ -1,6 +1,8 @@
-#ifndef ROBOTDATA_H
-#define ROBOTDATA_H
+#ifndef __DATA_TYPES_H__
+#define __DATA_TYPES_H__
 
+#include <thread>
+#include <chrono>
 #include <cmath>
 
 typedef struct _Point {
@@ -39,25 +41,4 @@ typedef struct _Polygon {
     uint32_t vertex_count;
 } Polygon;
 
-class RobotData
-{
-public:
-    // kinematic odom
-    Point basePos;
-    Quaternion baseRot;
-
-    // joint position
-    double jointPos[12];
-
-    // visual odom received
-    Point visualOdomPos;
-    Quaternion visualOdomRot;
-
-    // steppable and unsteppable areas
-    Polygon steppableArea[MAX_POLYGON];
-    Polygon unsteppableArea[MAX_POLYGON];
-    uint32_t steppableAreaCount;
-    uint32_t unsteppableAreaCount;
-};
-
-#endif // ROBOTDATA_H
+#endif // __DATA_TYPES_H__

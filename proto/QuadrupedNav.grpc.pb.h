@@ -36,14 +36,28 @@ class Nav final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>> ExchangeOdometry(::grpc::ClientContext* context) {
-      return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>>(ExchangeOdometryRaw(context));
+    virtual ::grpc::Status RequestOdometry(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped& request, ::dtproto::quadruped::OdomWithJointPosTimeStamped* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::dtproto::quadruped::OdomWithJointPosTimeStamped>> AsyncRequestOdometry(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::dtproto::quadruped::OdomWithJointPosTimeStamped>>(AsyncRequestOdometryRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>> AsyncExchangeOdometry(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>>(AsyncExchangeOdometryRaw(context, cq, tag));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::dtproto::quadruped::OdomWithJointPosTimeStamped>> PrepareAsyncRequestOdometry(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::dtproto::quadruped::OdomWithJointPosTimeStamped>>(PrepareAsyncRequestOdometryRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>> PrepareAsyncExchangeOdometry(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>>(PrepareAsyncExchangeOdometryRaw(context, cq));
+    virtual ::grpc::Status NotifySteppableArea(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped& request, ::dtproto::std_msgs::Response* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::dtproto::std_msgs::Response>> AsyncNotifySteppableArea(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::dtproto::std_msgs::Response>>(AsyncNotifySteppableAreaRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::dtproto::std_msgs::Response>> PrepareAsyncNotifySteppableArea(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::dtproto::std_msgs::Response>>(PrepareAsyncNotifySteppableAreaRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>> StreamOdometry(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>>(StreamOdometryRaw(context));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>> AsyncStreamOdometry(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>>(AsyncStreamOdometryRaw(context, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>> PrepareAsyncStreamOdometry(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>>(PrepareAsyncStreamOdometryRaw(context, cq));
     }
     std::unique_ptr< ::grpc::ClientWriterInterface< ::dtproto::nav_msgs::SteppableAreaTimeStamped>> StreamSteppableArea(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response) {
       return std::unique_ptr< ::grpc::ClientWriterInterface< ::dtproto::nav_msgs::SteppableAreaTimeStamped>>(StreamSteppableAreaRaw(context, response));
@@ -57,16 +71,24 @@ class Nav final {
     class async_interface {
      public:
       virtual ~async_interface() {}
-      virtual void ExchangeOdometry(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::dtproto::nav_msgs::OdomTimeStamped,::dtproto::nav_msgs::OdomTimeStamped>* reactor) = 0;
+      virtual void RequestOdometry(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped* request, ::dtproto::quadruped::OdomWithJointPosTimeStamped* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void RequestOdometry(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped* request, ::dtproto::quadruped::OdomWithJointPosTimeStamped* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void NotifySteppableArea(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped* request, ::dtproto::std_msgs::Response* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void NotifySteppableArea(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped* request, ::dtproto::std_msgs::Response* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void StreamOdometry(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::dtproto::nav_msgs::OdomTimeStamped,::dtproto::quadruped::OdomWithJointPosTimeStamped>* reactor) = 0;
       virtual void StreamSteppableArea(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::ClientWriteReactor< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
     class async_interface* experimental_async() { return async(); }
    private:
-    virtual ::grpc::ClientReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* ExchangeOdometryRaw(::grpc::ClientContext* context) = 0;
-    virtual ::grpc::ClientAsyncReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* AsyncExchangeOdometryRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
-    virtual ::grpc::ClientAsyncReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* PrepareAsyncExchangeOdometryRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::dtproto::quadruped::OdomWithJointPosTimeStamped>* AsyncRequestOdometryRaw(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::dtproto::quadruped::OdomWithJointPosTimeStamped>* PrepareAsyncRequestOdometryRaw(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::dtproto::std_msgs::Response>* AsyncNotifySteppableAreaRaw(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::dtproto::std_msgs::Response>* PrepareAsyncNotifySteppableAreaRaw(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>* StreamOdometryRaw(::grpc::ClientContext* context) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>* AsyncStreamOdometryRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>* PrepareAsyncStreamOdometryRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientWriterInterface< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* StreamSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response) = 0;
     virtual ::grpc::ClientAsyncWriterInterface< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* AsyncStreamSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncWriterInterface< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* PrepareAsyncStreamSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq) = 0;
@@ -74,14 +96,28 @@ class Nav final {
   class Stub final : public StubInterface {
    public:
     Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
-    std::unique_ptr< ::grpc::ClientReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>> ExchangeOdometry(::grpc::ClientContext* context) {
-      return std::unique_ptr< ::grpc::ClientReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>>(ExchangeOdometryRaw(context));
+    ::grpc::Status RequestOdometry(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped& request, ::dtproto::quadruped::OdomWithJointPosTimeStamped* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::dtproto::quadruped::OdomWithJointPosTimeStamped>> AsyncRequestOdometry(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::dtproto::quadruped::OdomWithJointPosTimeStamped>>(AsyncRequestOdometryRaw(context, request, cq));
     }
-    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>> AsyncExchangeOdometry(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>>(AsyncExchangeOdometryRaw(context, cq, tag));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::dtproto::quadruped::OdomWithJointPosTimeStamped>> PrepareAsyncRequestOdometry(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::dtproto::quadruped::OdomWithJointPosTimeStamped>>(PrepareAsyncRequestOdometryRaw(context, request, cq));
     }
-    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>> PrepareAsyncExchangeOdometry(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>>(PrepareAsyncExchangeOdometryRaw(context, cq));
+    ::grpc::Status NotifySteppableArea(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped& request, ::dtproto::std_msgs::Response* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::dtproto::std_msgs::Response>> AsyncNotifySteppableArea(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::dtproto::std_msgs::Response>>(AsyncNotifySteppableAreaRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::dtproto::std_msgs::Response>> PrepareAsyncNotifySteppableArea(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::dtproto::std_msgs::Response>>(PrepareAsyncNotifySteppableAreaRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>> StreamOdometry(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>>(StreamOdometryRaw(context));
+    }
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>> AsyncStreamOdometry(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>>(AsyncStreamOdometryRaw(context, cq, tag));
+    }
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>> PrepareAsyncStreamOdometry(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>>(PrepareAsyncStreamOdometryRaw(context, cq));
     }
     std::unique_ptr< ::grpc::ClientWriter< ::dtproto::nav_msgs::SteppableAreaTimeStamped>> StreamSteppableArea(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response) {
       return std::unique_ptr< ::grpc::ClientWriter< ::dtproto::nav_msgs::SteppableAreaTimeStamped>>(StreamSteppableAreaRaw(context, response));
@@ -95,7 +131,11 @@ class Nav final {
     class async final :
       public StubInterface::async_interface {
      public:
-      void ExchangeOdometry(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::dtproto::nav_msgs::OdomTimeStamped,::dtproto::nav_msgs::OdomTimeStamped>* reactor) override;
+      void RequestOdometry(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped* request, ::dtproto::quadruped::OdomWithJointPosTimeStamped* response, std::function<void(::grpc::Status)>) override;
+      void RequestOdometry(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped* request, ::dtproto::quadruped::OdomWithJointPosTimeStamped* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void NotifySteppableArea(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped* request, ::dtproto::std_msgs::Response* response, std::function<void(::grpc::Status)>) override;
+      void NotifySteppableArea(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped* request, ::dtproto::std_msgs::Response* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void StreamOdometry(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::dtproto::nav_msgs::OdomTimeStamped,::dtproto::quadruped::OdomWithJointPosTimeStamped>* reactor) override;
       void StreamSteppableArea(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::ClientWriteReactor< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* reactor) override;
      private:
       friend class Stub;
@@ -108,13 +148,19 @@ class Nav final {
    private:
     std::shared_ptr< ::grpc::ChannelInterface> channel_;
     class async async_stub_{this};
-    ::grpc::ClientReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* ExchangeOdometryRaw(::grpc::ClientContext* context) override;
-    ::grpc::ClientAsyncReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* AsyncExchangeOdometryRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
-    ::grpc::ClientAsyncReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* PrepareAsyncExchangeOdometryRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::dtproto::quadruped::OdomWithJointPosTimeStamped>* AsyncRequestOdometryRaw(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::dtproto::quadruped::OdomWithJointPosTimeStamped>* PrepareAsyncRequestOdometryRaw(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::dtproto::std_msgs::Response>* AsyncNotifySteppableAreaRaw(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::dtproto::std_msgs::Response>* PrepareAsyncNotifySteppableAreaRaw(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>* StreamOdometryRaw(::grpc::ClientContext* context) override;
+    ::grpc::ClientAsyncReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>* AsyncStreamOdometryRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>* PrepareAsyncStreamOdometryRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientWriter< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* StreamSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response) override;
     ::grpc::ClientAsyncWriter< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* AsyncStreamSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncWriter< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* PrepareAsyncStreamSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq) override;
-    const ::grpc::internal::RpcMethod rpcmethod_ExchangeOdometry_;
+    const ::grpc::internal::RpcMethod rpcmethod_RequestOdometry_;
+    const ::grpc::internal::RpcMethod rpcmethod_NotifySteppableArea_;
+    const ::grpc::internal::RpcMethod rpcmethod_StreamOdometry_;
     const ::grpc::internal::RpcMethod rpcmethod_StreamSteppableArea_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
@@ -123,27 +169,69 @@ class Nav final {
    public:
     Service();
     virtual ~Service();
-    virtual ::grpc::Status ExchangeOdometry(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* stream);
+    virtual ::grpc::Status RequestOdometry(::grpc::ServerContext* context, const ::dtproto::nav_msgs::OdomTimeStamped* request, ::dtproto::quadruped::OdomWithJointPosTimeStamped* response);
+    virtual ::grpc::Status NotifySteppableArea(::grpc::ServerContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped* request, ::dtproto::std_msgs::Response* response);
+    virtual ::grpc::Status StreamOdometry(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::dtproto::quadruped::OdomWithJointPosTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* stream);
     virtual ::grpc::Status StreamSteppableArea(::grpc::ServerContext* context, ::grpc::ServerReader< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* reader, ::dtproto::std_msgs::Response* response);
   };
   template <class BaseClass>
-  class WithAsyncMethod_ExchangeOdometry : public BaseClass {
+  class WithAsyncMethod_RequestOdometry : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_ExchangeOdometry() {
+    WithAsyncMethod_RequestOdometry() {
       ::grpc::Service::MarkMethodAsync(0);
     }
-    ~WithAsyncMethod_ExchangeOdometry() override {
+    ~WithAsyncMethod_RequestOdometry() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ExchangeOdometry(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* /*stream*/)  override {
+    ::grpc::Status RequestOdometry(::grpc::ServerContext* /*context*/, const ::dtproto::nav_msgs::OdomTimeStamped* /*request*/, ::dtproto::quadruped::OdomWithJointPosTimeStamped* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestExchangeOdometry(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(0, context, stream, new_call_cq, notification_cq, tag);
+    void RequestRequestOdometry(::grpc::ServerContext* context, ::dtproto::nav_msgs::OdomTimeStamped* request, ::grpc::ServerAsyncResponseWriter< ::dtproto::quadruped::OdomWithJointPosTimeStamped>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_NotifySteppableArea : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_NotifySteppableArea() {
+      ::grpc::Service::MarkMethodAsync(1);
+    }
+    ~WithAsyncMethod_NotifySteppableArea() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status NotifySteppableArea(::grpc::ServerContext* /*context*/, const ::dtproto::nav_msgs::SteppableAreaTimeStamped* /*request*/, ::dtproto::std_msgs::Response* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestNotifySteppableArea(::grpc::ServerContext* context, ::dtproto::nav_msgs::SteppableAreaTimeStamped* request, ::grpc::ServerAsyncResponseWriter< ::dtproto::std_msgs::Response>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_StreamOdometry : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_StreamOdometry() {
+      ::grpc::Service::MarkMethodAsync(2);
+    }
+    ~WithAsyncMethod_StreamOdometry() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StreamOdometry(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::dtproto::quadruped::OdomWithJointPosTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* /*stream*/)  override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestStreamOdometry(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::dtproto::quadruped::OdomWithJointPosTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncBidiStreaming(2, context, stream, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -152,7 +240,7 @@ class Nav final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_StreamSteppableArea() {
-      ::grpc::Service::MarkMethodAsync(1);
+      ::grpc::Service::MarkMethodAsync(3);
     }
     ~WithAsyncMethod_StreamSteppableArea() override {
       BaseClassMustBeDerivedFromService(this);
@@ -163,30 +251,84 @@ class Nav final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestStreamSteppableArea(::grpc::ServerContext* context, ::grpc::ServerAsyncReader< ::dtproto::std_msgs::Response, ::dtproto::nav_msgs::SteppableAreaTimeStamped>* reader, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncClientStreaming(1, context, reader, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncClientStreaming(3, context, reader, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_ExchangeOdometry<WithAsyncMethod_StreamSteppableArea<Service > > AsyncService;
+  typedef WithAsyncMethod_RequestOdometry<WithAsyncMethod_NotifySteppableArea<WithAsyncMethod_StreamOdometry<WithAsyncMethod_StreamSteppableArea<Service > > > > AsyncService;
   template <class BaseClass>
-  class WithCallbackMethod_ExchangeOdometry : public BaseClass {
+  class WithCallbackMethod_RequestOdometry : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_ExchangeOdometry() {
+    WithCallbackMethod_RequestOdometry() {
       ::grpc::Service::MarkMethodCallback(0,
-          new ::grpc::internal::CallbackBidiHandler< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>(
+          new ::grpc::internal::CallbackUnaryHandler< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>(
             [this](
-                   ::grpc::CallbackServerContext* context) { return this->ExchangeOdometry(context); }));
+                   ::grpc::CallbackServerContext* context, const ::dtproto::nav_msgs::OdomTimeStamped* request, ::dtproto::quadruped::OdomWithJointPosTimeStamped* response) { return this->RequestOdometry(context, request, response); }));}
+    void SetMessageAllocatorFor_RequestOdometry(
+        ::grpc::MessageAllocator< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(0);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>*>(handler)
+              ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_ExchangeOdometry() override {
+    ~WithCallbackMethod_RequestOdometry() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ExchangeOdometry(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* /*stream*/)  override {
+    ::grpc::Status RequestOdometry(::grpc::ServerContext* /*context*/, const ::dtproto::nav_msgs::OdomTimeStamped* /*request*/, ::dtproto::quadruped::OdomWithJointPosTimeStamped* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerBidiReactor< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* ExchangeOdometry(
+    virtual ::grpc::ServerUnaryReactor* RequestOdometry(
+      ::grpc::CallbackServerContext* /*context*/, const ::dtproto::nav_msgs::OdomTimeStamped* /*request*/, ::dtproto::quadruped::OdomWithJointPosTimeStamped* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_NotifySteppableArea : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_NotifySteppableArea() {
+      ::grpc::Service::MarkMethodCallback(1,
+          new ::grpc::internal::CallbackUnaryHandler< ::dtproto::nav_msgs::SteppableAreaTimeStamped, ::dtproto::std_msgs::Response>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped* request, ::dtproto::std_msgs::Response* response) { return this->NotifySteppableArea(context, request, response); }));}
+    void SetMessageAllocatorFor_NotifySteppableArea(
+        ::grpc::MessageAllocator< ::dtproto::nav_msgs::SteppableAreaTimeStamped, ::dtproto::std_msgs::Response>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::dtproto::nav_msgs::SteppableAreaTimeStamped, ::dtproto::std_msgs::Response>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_NotifySteppableArea() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status NotifySteppableArea(::grpc::ServerContext* /*context*/, const ::dtproto::nav_msgs::SteppableAreaTimeStamped* /*request*/, ::dtproto::std_msgs::Response* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* NotifySteppableArea(
+      ::grpc::CallbackServerContext* /*context*/, const ::dtproto::nav_msgs::SteppableAreaTimeStamped* /*request*/, ::dtproto::std_msgs::Response* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_StreamOdometry : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_StreamOdometry() {
+      ::grpc::Service::MarkMethodCallback(2,
+          new ::grpc::internal::CallbackBidiHandler< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>(
+            [this](
+                   ::grpc::CallbackServerContext* context) { return this->StreamOdometry(context); }));
+    }
+    ~WithCallbackMethod_StreamOdometry() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StreamOdometry(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::dtproto::quadruped::OdomWithJointPosTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* /*stream*/)  override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerBidiReactor< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>* StreamOdometry(
       ::grpc::CallbackServerContext* /*context*/)
       { return nullptr; }
   };
@@ -196,7 +338,7 @@ class Nav final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_StreamSteppableArea() {
-      ::grpc::Service::MarkMethodCallback(1,
+      ::grpc::Service::MarkMethodCallback(3,
           new ::grpc::internal::CallbackClientStreamingHandler< ::dtproto::nav_msgs::SteppableAreaTimeStamped, ::dtproto::std_msgs::Response>(
             [this](
                    ::grpc::CallbackServerContext* context, ::dtproto::std_msgs::Response* response) { return this->StreamSteppableArea(context, response); }));
@@ -212,21 +354,55 @@ class Nav final {
     virtual ::grpc::ServerReadReactor< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* StreamSteppableArea(
       ::grpc::CallbackServerContext* /*context*/, ::dtproto::std_msgs::Response* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_ExchangeOdometry<WithCallbackMethod_StreamSteppableArea<Service > > CallbackService;
+  typedef WithCallbackMethod_RequestOdometry<WithCallbackMethod_NotifySteppableArea<WithCallbackMethod_StreamOdometry<WithCallbackMethod_StreamSteppableArea<Service > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
-  class WithGenericMethod_ExchangeOdometry : public BaseClass {
+  class WithGenericMethod_RequestOdometry : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_ExchangeOdometry() {
+    WithGenericMethod_RequestOdometry() {
       ::grpc::Service::MarkMethodGeneric(0);
     }
-    ~WithGenericMethod_ExchangeOdometry() override {
+    ~WithGenericMethod_RequestOdometry() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ExchangeOdometry(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* /*stream*/)  override {
+    ::grpc::Status RequestOdometry(::grpc::ServerContext* /*context*/, const ::dtproto::nav_msgs::OdomTimeStamped* /*request*/, ::dtproto::quadruped::OdomWithJointPosTimeStamped* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_NotifySteppableArea : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_NotifySteppableArea() {
+      ::grpc::Service::MarkMethodGeneric(1);
+    }
+    ~WithGenericMethod_NotifySteppableArea() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status NotifySteppableArea(::grpc::ServerContext* /*context*/, const ::dtproto::nav_msgs::SteppableAreaTimeStamped* /*request*/, ::dtproto::std_msgs::Response* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_StreamOdometry : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_StreamOdometry() {
+      ::grpc::Service::MarkMethodGeneric(2);
+    }
+    ~WithGenericMethod_StreamOdometry() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StreamOdometry(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::dtproto::quadruped::OdomWithJointPosTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -237,7 +413,7 @@ class Nav final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_StreamSteppableArea() {
-      ::grpc::Service::MarkMethodGeneric(1);
+      ::grpc::Service::MarkMethodGeneric(3);
     }
     ~WithGenericMethod_StreamSteppableArea() override {
       BaseClassMustBeDerivedFromService(this);
@@ -249,23 +425,63 @@ class Nav final {
     }
   };
   template <class BaseClass>
-  class WithRawMethod_ExchangeOdometry : public BaseClass {
+  class WithRawMethod_RequestOdometry : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_ExchangeOdometry() {
+    WithRawMethod_RequestOdometry() {
       ::grpc::Service::MarkMethodRaw(0);
     }
-    ~WithRawMethod_ExchangeOdometry() override {
+    ~WithRawMethod_RequestOdometry() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ExchangeOdometry(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* /*stream*/)  override {
+    ::grpc::Status RequestOdometry(::grpc::ServerContext* /*context*/, const ::dtproto::nav_msgs::OdomTimeStamped* /*request*/, ::dtproto::quadruped::OdomWithJointPosTimeStamped* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestExchangeOdometry(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncBidiStreaming(0, context, stream, new_call_cq, notification_cq, tag);
+    void RequestRequestOdometry(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_NotifySteppableArea : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_NotifySteppableArea() {
+      ::grpc::Service::MarkMethodRaw(1);
+    }
+    ~WithRawMethod_NotifySteppableArea() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status NotifySteppableArea(::grpc::ServerContext* /*context*/, const ::dtproto::nav_msgs::SteppableAreaTimeStamped* /*request*/, ::dtproto::std_msgs::Response* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestNotifySteppableArea(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_StreamOdometry : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_StreamOdometry() {
+      ::grpc::Service::MarkMethodRaw(2);
+    }
+    ~WithRawMethod_StreamOdometry() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StreamOdometry(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::dtproto::quadruped::OdomWithJointPosTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* /*stream*/)  override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestStreamOdometry(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncBidiStreaming(2, context, stream, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -274,7 +490,7 @@ class Nav final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_StreamSteppableArea() {
-      ::grpc::Service::MarkMethodRaw(1);
+      ::grpc::Service::MarkMethodRaw(3);
     }
     ~WithRawMethod_StreamSteppableArea() override {
       BaseClassMustBeDerivedFromService(this);
@@ -285,29 +501,73 @@ class Nav final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestStreamSteppableArea(::grpc::ServerContext* context, ::grpc::ServerAsyncReader< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* reader, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncClientStreaming(1, context, reader, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncClientStreaming(3, context, reader, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_ExchangeOdometry : public BaseClass {
+  class WithRawCallbackMethod_RequestOdometry : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_ExchangeOdometry() {
+    WithRawCallbackMethod_RequestOdometry() {
       ::grpc::Service::MarkMethodRawCallback(0,
-          new ::grpc::internal::CallbackBidiHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context) { return this->ExchangeOdometry(context); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->RequestOdometry(context, request, response); }));
     }
-    ~WithRawCallbackMethod_ExchangeOdometry() override {
+    ~WithRawCallbackMethod_RequestOdometry() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ExchangeOdometry(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* /*stream*/)  override {
+    ::grpc::Status RequestOdometry(::grpc::ServerContext* /*context*/, const ::dtproto::nav_msgs::OdomTimeStamped* /*request*/, ::dtproto::quadruped::OdomWithJointPosTimeStamped* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerBidiReactor< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* ExchangeOdometry(
+    virtual ::grpc::ServerUnaryReactor* RequestOdometry(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_NotifySteppableArea : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_NotifySteppableArea() {
+      ::grpc::Service::MarkMethodRawCallback(1,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->NotifySteppableArea(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_NotifySteppableArea() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status NotifySteppableArea(::grpc::ServerContext* /*context*/, const ::dtproto::nav_msgs::SteppableAreaTimeStamped* /*request*/, ::dtproto::std_msgs::Response* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* NotifySteppableArea(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_StreamOdometry : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_StreamOdometry() {
+      ::grpc::Service::MarkMethodRawCallback(2,
+          new ::grpc::internal::CallbackBidiHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context) { return this->StreamOdometry(context); }));
+    }
+    ~WithRawCallbackMethod_StreamOdometry() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StreamOdometry(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::dtproto::quadruped::OdomWithJointPosTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* /*stream*/)  override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerBidiReactor< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* StreamOdometry(
       ::grpc::CallbackServerContext* /*context*/)
       { return nullptr; }
   };
@@ -317,7 +577,7 @@ class Nav final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_StreamSteppableArea() {
-      ::grpc::Service::MarkMethodRawCallback(1,
+      ::grpc::Service::MarkMethodRawCallback(3,
           new ::grpc::internal::CallbackClientStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, ::grpc::ByteBuffer* response) { return this->StreamSteppableArea(context, response); }));
@@ -333,9 +593,63 @@ class Nav final {
     virtual ::grpc::ServerReadReactor< ::grpc::ByteBuffer>* StreamSteppableArea(
       ::grpc::CallbackServerContext* /*context*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
-  typedef Service StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_RequestOdometry : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_RequestOdometry() {
+      ::grpc::Service::MarkMethodStreamed(0,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>* streamer) {
+                       return this->StreamedRequestOdometry(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_RequestOdometry() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status RequestOdometry(::grpc::ServerContext* /*context*/, const ::dtproto::nav_msgs::OdomTimeStamped* /*request*/, ::dtproto::quadruped::OdomWithJointPosTimeStamped* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedRequestOdometry(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::dtproto::nav_msgs::OdomTimeStamped,::dtproto::quadruped::OdomWithJointPosTimeStamped>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_NotifySteppableArea : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_NotifySteppableArea() {
+      ::grpc::Service::MarkMethodStreamed(1,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::dtproto::nav_msgs::SteppableAreaTimeStamped, ::dtproto::std_msgs::Response>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::dtproto::nav_msgs::SteppableAreaTimeStamped, ::dtproto::std_msgs::Response>* streamer) {
+                       return this->StreamedNotifySteppableArea(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_NotifySteppableArea() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status NotifySteppableArea(::grpc::ServerContext* /*context*/, const ::dtproto::nav_msgs::SteppableAreaTimeStamped* /*request*/, ::dtproto::std_msgs::Response* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedNotifySteppableArea(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::dtproto::nav_msgs::SteppableAreaTimeStamped,::dtproto::std_msgs::Response>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_RequestOdometry<WithStreamedUnaryMethod_NotifySteppableArea<Service > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef Service StreamedService;
+  typedef WithStreamedUnaryMethod_RequestOdometry<WithStreamedUnaryMethod_NotifySteppableArea<Service > > StreamedService;
 };
 
 }  // namespace quadruped

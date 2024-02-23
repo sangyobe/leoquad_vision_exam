@@ -1,15 +1,16 @@
 #include <iostream>
 #include "rpcServer.h"
 #include "quadRobot.h"
-#include "robotData.h"
 #include <dtCore/src/dtLog/dtLog.h>
+
+QuadRobot quadRobot;
 
 int main()
 {
     dtCore::dtLog::Initialize("leoquad_vision_rpc_server"); //, "logs/leoquad_vision_rpc_server.txt");
     dtCore::dtLog::SetLogLevel(dtCore::dtLog::LogLevel::trace);
 
-    RpcServer rpcServer("0.0.0.0:50052");
+    RpcServer rpcServer("0.0.0.0:50052", (void*)&(quadRobot.robotData));
     rpcServer.Run();
 
     std::atomic<bool> bRun;
@@ -22,6 +23,7 @@ int main()
             bRun = false;
         }
     }
+    rpcServer.Stop();
 
     dtCore::dtLog::Terminate(); // flush all log messages
     return 0;

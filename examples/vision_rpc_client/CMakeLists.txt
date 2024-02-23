@@ -3,6 +3,7 @@ project(vision_rpc_client)
 set(protobuf_MODULE_COMPATIBLE TRUE)
 find_package(Protobuf CONFIG REQUIRED)
 find_package(gRPC CONFIG REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
 
 file(GLOB SRCS "*.cpp" "${CMAKE_SOURCE_DIR}/proto/*.cc")
 message(STATUS "${PROJECT_NAME} sources: ${SRCS}")
@@ -18,4 +19,5 @@ target_link_libraries(${PROJECT_NAME}
     protobuf::libprotobuf
     gRPC::grpc++
     gRPC::grpc++_reflection
+    spdlog::spdlog
 )

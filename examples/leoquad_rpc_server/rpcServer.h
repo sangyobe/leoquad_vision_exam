@@ -7,11 +7,12 @@
 class RpcServer
 {
 public:
-    RpcServer(const std::string &server_address);
+    RpcServer(const std::string &server_address, void* robotData);
     virtual ~RpcServer();
 
 public:
     void Run();
+    void Stop();
 
 private:
     std::unique_ptr<dtCore::dtServiceListenerGrpc> _listener{nullptr};

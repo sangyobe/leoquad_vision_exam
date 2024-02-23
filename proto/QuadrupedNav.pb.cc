@@ -22,37 +22,79 @@ namespace _pbi = _pb::internal;
 
 namespace dtproto {
 namespace quadruped {
+PROTOBUF_CONSTEXPR OdomWithJointPosTimeStamped::OdomWithJointPosTimeStamped(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.joint_pos_)*/{}
+  , /*decltype(_impl_.header_)*/nullptr
+  , /*decltype(_impl_.odom_)*/nullptr
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct OdomWithJointPosTimeStampedDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR OdomWithJointPosTimeStampedDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~OdomWithJointPosTimeStampedDefaultTypeInternal() {}
+  union {
+    OdomWithJointPosTimeStamped _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 OdomWithJointPosTimeStampedDefaultTypeInternal _OdomWithJointPosTimeStamped_default_instance_;
 }  // namespace quadruped
 }  // namespace dtproto
+static ::_pb::Metadata file_level_metadata_QuadrupedNav_2eproto[1];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_QuadrupedNav_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_QuadrupedNav_2eproto = nullptr;
-const uint32_t TableStruct_QuadrupedNav_2eproto::offsets[1] = {};
-static constexpr ::_pbi::MigrationSchema* schemas = nullptr;
-static constexpr ::_pb::Message* const* file_default_instances = nullptr;
+
+const uint32_t TableStruct_QuadrupedNav_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::dtproto::quadruped::OdomWithJointPosTimeStamped, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::dtproto::quadruped::OdomWithJointPosTimeStamped, _impl_.header_),
+  PROTOBUF_FIELD_OFFSET(::dtproto::quadruped::OdomWithJointPosTimeStamped, _impl_.odom_),
+  PROTOBUF_FIELD_OFFSET(::dtproto::quadruped::OdomWithJointPosTimeStamped, _impl_.joint_pos_),
+};
+static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+  { 0, -1, -1, sizeof(::dtproto::quadruped::OdomWithJointPosTimeStamped)},
+};
+
+static const ::_pb::Message* const file_default_instances[] = {
+  &::dtproto::quadruped::_OdomWithJointPosTimeStamped_default_instance_._instance,
+};
 
 const char descriptor_table_protodef_QuadrupedNav_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\022QuadrupedNav.proto\022\021dtproto.quadruped\032"
   "\033dtProto/nav_msgs/Odom.proto\032$dtProto/na"
   "v_msgs/SteppableArea.proto\032\036dtProto/std_"
-  "msgs/Request.proto2\304\001\n\003Nav\022\\\n\020ExchangeOd"
-  "ometry\022!.dtproto.nav_msgs.OdomTimeStampe"
-  "d\032!.dtproto.nav_msgs.OdomTimeStamped(\0010\001"
-  "\022_\n\023StreamSteppableArea\022*.dtproto.nav_ms"
-  "gs.SteppableAreaTimeStamped\032\032.dtproto.st"
-  "d_msgs.Response(\001b\006proto3"
+  "msgs/Request.proto\032\035dtProto/std_msgs/Hea"
+  "der.proto\"\200\001\n\033OdomWithJointPosTimeStampe"
+  "d\022(\n\006header\030\001 \001(\0132\030.dtproto.std_msgs.Hea"
+  "der\022$\n\004odom\030\002 \001(\0132\026.dtproto.nav_msgs.Odo"
+  "m\022\021\n\tjoint_pos\030\003 \003(\0012\224\003\n\003Nav\022d\n\017RequestO"
+  "dometry\022!.dtproto.nav_msgs.OdomTimeStamp"
+  "ed\032..dtproto.quadruped.OdomWithJointPosT"
+  "imeStamped\022]\n\023NotifySteppableArea\022*.dtpr"
+  "oto.nav_msgs.SteppableAreaTimeStamped\032\032."
+  "dtproto.std_msgs.Response\022g\n\016StreamOdome"
+  "try\022!.dtproto.nav_msgs.OdomTimeStamped\032."
+  ".dtproto.quadruped.OdomWithJointPosTimeS"
+  "tamped(\0010\001\022_\n\023StreamSteppableArea\022*.dtpr"
+  "oto.nav_msgs.SteppableAreaTimeStamped\032\032."
+  "dtproto.std_msgs.Response(\001b\006proto3"
   ;
-static const ::_pbi::DescriptorTable* const descriptor_table_QuadrupedNav_2eproto_deps[3] = {
+static const ::_pbi::DescriptorTable* const descriptor_table_QuadrupedNav_2eproto_deps[4] = {
   &::descriptor_table_dtProto_2fnav_5fmsgs_2fOdom_2eproto,
   &::descriptor_table_dtProto_2fnav_5fmsgs_2fSteppableArea_2eproto,
+  &::descriptor_table_dtProto_2fstd_5fmsgs_2fHeader_2eproto,
   &::descriptor_table_dtProto_2fstd_5fmsgs_2fRequest_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_QuadrupedNav_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_QuadrupedNav_2eproto = {
-    false, false, 345, descriptor_table_protodef_QuadrupedNav_2eproto,
+    false, false, 715, descriptor_table_protodef_QuadrupedNav_2eproto,
     "QuadrupedNav.proto",
-    &descriptor_table_QuadrupedNav_2eproto_once, descriptor_table_QuadrupedNav_2eproto_deps, 3, 0,
+    &descriptor_table_QuadrupedNav_2eproto_once, descriptor_table_QuadrupedNav_2eproto_deps, 4, 1,
     schemas, file_default_instances, TableStruct_QuadrupedNav_2eproto::offsets,
-    nullptr, file_level_enum_descriptors_QuadrupedNav_2eproto,
+    file_level_metadata_QuadrupedNav_2eproto, file_level_enum_descriptors_QuadrupedNav_2eproto,
     file_level_service_descriptors_QuadrupedNav_2eproto,
 };
 PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_QuadrupedNav_2eproto_getter() {
@@ -64,10 +106,298 @@ PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_in
 namespace dtproto {
 namespace quadruped {
 
+// ===================================================================
+
+class OdomWithJointPosTimeStamped::_Internal {
+ public:
+  static const ::dtproto::std_msgs::Header& header(const OdomWithJointPosTimeStamped* msg);
+  static const ::dtproto::nav_msgs::Odom& odom(const OdomWithJointPosTimeStamped* msg);
+};
+
+const ::dtproto::std_msgs::Header&
+OdomWithJointPosTimeStamped::_Internal::header(const OdomWithJointPosTimeStamped* msg) {
+  return *msg->_impl_.header_;
+}
+const ::dtproto::nav_msgs::Odom&
+OdomWithJointPosTimeStamped::_Internal::odom(const OdomWithJointPosTimeStamped* msg) {
+  return *msg->_impl_.odom_;
+}
+void OdomWithJointPosTimeStamped::clear_header() {
+  if (GetArenaForAllocation() == nullptr && _impl_.header_ != nullptr) {
+    delete _impl_.header_;
+  }
+  _impl_.header_ = nullptr;
+}
+void OdomWithJointPosTimeStamped::clear_odom() {
+  if (GetArenaForAllocation() == nullptr && _impl_.odom_ != nullptr) {
+    delete _impl_.odom_;
+  }
+  _impl_.odom_ = nullptr;
+}
+OdomWithJointPosTimeStamped::OdomWithJointPosTimeStamped(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:dtproto.quadruped.OdomWithJointPosTimeStamped)
+}
+OdomWithJointPosTimeStamped::OdomWithJointPosTimeStamped(const OdomWithJointPosTimeStamped& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  OdomWithJointPosTimeStamped* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.joint_pos_){from._impl_.joint_pos_}
+    , decltype(_impl_.header_){nullptr}
+    , decltype(_impl_.odom_){nullptr}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_header()) {
+    _this->_impl_.header_ = new ::dtproto::std_msgs::Header(*from._impl_.header_);
+  }
+  if (from._internal_has_odom()) {
+    _this->_impl_.odom_ = new ::dtproto::nav_msgs::Odom(*from._impl_.odom_);
+  }
+  // @@protoc_insertion_point(copy_constructor:dtproto.quadruped.OdomWithJointPosTimeStamped)
+}
+
+inline void OdomWithJointPosTimeStamped::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.joint_pos_){arena}
+    , decltype(_impl_.header_){nullptr}
+    , decltype(_impl_.odom_){nullptr}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+OdomWithJointPosTimeStamped::~OdomWithJointPosTimeStamped() {
+  // @@protoc_insertion_point(destructor:dtproto.quadruped.OdomWithJointPosTimeStamped)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void OdomWithJointPosTimeStamped::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.joint_pos_.~RepeatedField();
+  if (this != internal_default_instance()) delete _impl_.header_;
+  if (this != internal_default_instance()) delete _impl_.odom_;
+}
+
+void OdomWithJointPosTimeStamped::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void OdomWithJointPosTimeStamped::Clear() {
+// @@protoc_insertion_point(message_clear_start:dtproto.quadruped.OdomWithJointPosTimeStamped)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.joint_pos_.Clear();
+  if (GetArenaForAllocation() == nullptr && _impl_.header_ != nullptr) {
+    delete _impl_.header_;
+  }
+  _impl_.header_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && _impl_.odom_ != nullptr) {
+    delete _impl_.odom_;
+  }
+  _impl_.odom_ = nullptr;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* OdomWithJointPosTimeStamped::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .dtproto.std_msgs.Header header = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_header(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .dtproto.nav_msgs.Odom odom = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_odom(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // repeated double joint_pos = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedDoubleParser(_internal_mutable_joint_pos(), ptr, ctx);
+          CHK_(ptr);
+        } else if (static_cast<uint8_t>(tag) == 25) {
+          _internal_add_joint_pos(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr));
+          ptr += sizeof(double);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* OdomWithJointPosTimeStamped::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:dtproto.quadruped.OdomWithJointPosTimeStamped)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .dtproto.std_msgs.Header header = 1;
+  if (this->_internal_has_header()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::header(this),
+        _Internal::header(this).GetCachedSize(), target, stream);
+  }
+
+  // .dtproto.nav_msgs.Odom odom = 2;
+  if (this->_internal_has_odom()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::odom(this),
+        _Internal::odom(this).GetCachedSize(), target, stream);
+  }
+
+  // repeated double joint_pos = 3;
+  if (this->_internal_joint_pos_size() > 0) {
+    target = stream->WriteFixedPacked(3, _internal_joint_pos(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:dtproto.quadruped.OdomWithJointPosTimeStamped)
+  return target;
+}
+
+size_t OdomWithJointPosTimeStamped::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:dtproto.quadruped.OdomWithJointPosTimeStamped)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated double joint_pos = 3;
+  {
+    unsigned int count = static_cast<unsigned int>(this->_internal_joint_pos_size());
+    size_t data_size = 8UL * count;
+    if (data_size > 0) {
+      total_size += 1 +
+        ::_pbi::WireFormatLite::Int32Size(static_cast<int32_t>(data_size));
+    }
+    total_size += data_size;
+  }
+
+  // .dtproto.std_msgs.Header header = 1;
+  if (this->_internal_has_header()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.header_);
+  }
+
+  // .dtproto.nav_msgs.Odom odom = 2;
+  if (this->_internal_has_odom()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.odom_);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData OdomWithJointPosTimeStamped::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    OdomWithJointPosTimeStamped::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*OdomWithJointPosTimeStamped::GetClassData() const { return &_class_data_; }
+
+
+void OdomWithJointPosTimeStamped::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<OdomWithJointPosTimeStamped*>(&to_msg);
+  auto& from = static_cast<const OdomWithJointPosTimeStamped&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:dtproto.quadruped.OdomWithJointPosTimeStamped)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  _this->_impl_.joint_pos_.MergeFrom(from._impl_.joint_pos_);
+  if (from._internal_has_header()) {
+    _this->_internal_mutable_header()->::dtproto::std_msgs::Header::MergeFrom(
+        from._internal_header());
+  }
+  if (from._internal_has_odom()) {
+    _this->_internal_mutable_odom()->::dtproto::nav_msgs::Odom::MergeFrom(
+        from._internal_odom());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void OdomWithJointPosTimeStamped::CopyFrom(const OdomWithJointPosTimeStamped& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:dtproto.quadruped.OdomWithJointPosTimeStamped)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool OdomWithJointPosTimeStamped::IsInitialized() const {
+  return true;
+}
+
+void OdomWithJointPosTimeStamped::InternalSwap(OdomWithJointPosTimeStamped* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.joint_pos_.InternalSwap(&other->_impl_.joint_pos_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(OdomWithJointPosTimeStamped, _impl_.odom_)
+      + sizeof(OdomWithJointPosTimeStamped::_impl_.odom_)
+      - PROTOBUF_FIELD_OFFSET(OdomWithJointPosTimeStamped, _impl_.header_)>(
+          reinterpret_cast<char*>(&_impl_.header_),
+          reinterpret_cast<char*>(&other->_impl_.header_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata OdomWithJointPosTimeStamped::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_QuadrupedNav_2eproto_getter, &descriptor_table_QuadrupedNav_2eproto_once,
+      file_level_metadata_QuadrupedNav_2eproto[0]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace quadruped
 }  // namespace dtproto
 PROTOBUF_NAMESPACE_OPEN
+template<> PROTOBUF_NOINLINE ::dtproto::quadruped::OdomWithJointPosTimeStamped*
+Arena::CreateMaybeMessage< ::dtproto::quadruped::OdomWithJointPosTimeStamped >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::dtproto::quadruped::OdomWithJointPosTimeStamped >(arena);
+}
 PROTOBUF_NAMESPACE_CLOSE
 
 // @@protoc_insertion_point(global_scope)

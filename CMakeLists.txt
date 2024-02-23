@@ -13,8 +13,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${CMAKE_SOURCE_DIR}/proto)
 link_directories(${CMAKE_SOURCE_DIR}/lib)
-include_directories(/usr/local/include)
-link_directories(/usr/local/lib)
+# include_directories(/usr/local/include)
+# link_directories(/usr/local/lib)
+include_directories($ENV{HOME}/.local/include)
+link_directories($ENV{HOME}/.local/lib)
+
 
 # --------------------------------------------------------
 # Build examples

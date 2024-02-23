@@ -1,0 +1,1 @@
+protoc -I=./ -I=${HOME}/.local/include --cpp_out=./ --grpc_out=./ --plugin=protoc-gen-grpc=$(dirname $(which protoc))/grpc_cpp_plugin QuadrupedNav.proto
