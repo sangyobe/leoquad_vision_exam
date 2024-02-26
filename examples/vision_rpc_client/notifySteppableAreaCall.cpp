@@ -1,9 +1,21 @@
 #include "notifySteppableAreaCall.h"
 #include <dtCore/src/dtLog/dtLog.h>
 
+// #define MAX_VERTEX (128)
+// #define MAX_POLYGON (16)
+
 NotifySteppableAreaCall::NotifySteppableAreaCall(ServiceType::Stub *stub, grpc::CompletionQueue *cq, void *udata)
 : dtCore::dtServiceCallerGrpc<ServiceType>::Call(stub, cq, udata), _steppables((SteppableArea*)udata) 
 {
+    for (int i=0; i<5; i++) {
+        _request.mutable_area()->add_steppables();
+        _request.mutable_area()->add_unsteppables();
+        for (int j=0; j<10; j++) {
+            _request.mutable_area()->mutable_steppables(i)->add_vertex();
+            _request.mutable_area()->mutable_unsteppables(i)->add_vertex();
+        }
+    }
+
     LOG(info) << "NotifySteppableAreaCall[" << _id << "] NEW call.";
     _request.mutable_area()->set_steppables_count(99);
     _request.mutable_area()->set_unsteppables_count(1);
