@@ -57,7 +57,7 @@ bool OnStreamOdometry::OnCompletionEvent(bool ok)
         else {
             std::lock_guard<std::mutex> lock(_proc_mtx);
             _responder.Finish(grpc::Status::CANCELLED, this);
-            _call_state == CallState::WAIT_FINISH;
+            _call_state = CallState::WAIT_FINISH;
         }
     }
     return true;
