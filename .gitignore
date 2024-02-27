@@ -2,8 +2,8 @@
 ###################
 .vscode
 build
-lib
-include
+# lib
+# include
 
 # Prerequisites
 ###################
