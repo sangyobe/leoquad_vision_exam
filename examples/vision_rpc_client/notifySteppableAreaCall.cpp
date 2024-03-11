@@ -57,14 +57,20 @@ bool NotifySteppableAreaCall::OnCompletionEvent(bool ok) {
     else if (ok) {
 
         if (this->_call_state == CallState::WAIT_FINISH) {
-            LOG(info) << "NotifySteppableAreaCall[" << _id << "] Get response.";
-            {
-                std::lock_guard<std::mutex> lock(this->_proc_mtx);
+            if (this->_status.ok()) {  // when the server's response message and status have been received.
+                LOG(info) << "NotifySteppableAreaCall[" << _id << "] Get response.";
+                {
+                    std::lock_guard<std::mutex> lock(this->_proc_mtx);
 
-                LOG(trace) << "NotifySteppableAreaCall[" << this->_id << "]\treturn code : " << _response.rtn();
-                LOG(trace) << "NotifySteppableAreaCall[" << this->_id << "]\tmessage : " << _response.msg();
+                    LOG(trace) << "NotifySteppableAreaCall[" << this->_id << "]\treturn code : " << _response.rtn();
+                    LOG(trace) << "NotifySteppableAreaCall[" << this->_id << "]\tmessage : " << _response.msg();
 
-                _call_state = CallState::FINISHED;
+                    _call_state = CallState::FINISHED;
+                }
+            }
+            else { // when the server has returned a non-OK status (no message expected in this case).
+                   // when the call failed for some reason and the library generated a non-OK status. 
+                LOG(err) << "NotifySteppableAreaCall[" << this->_id << "] failed.\terror code : " << this->_status.error_code();
             }
         }
         else {

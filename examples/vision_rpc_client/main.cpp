@@ -24,7 +24,7 @@ int main()
 
     double t_ = 0.0;
     double dt_ = 0.01;
-    while (t_ < 10.0) {
+    while (t_ < 5.0) {
         rpcClient->template StartCall<RequestOdometryCall>((void*)(&odomEmul.odom));
         // rpcClient->template StartCall<NotifySteppableAreaCall>((void*)(&steppablesEmul.steppables));
         std::this_thread::sleep_for(std::chrono::milliseconds(long(dt_ * 1000)));

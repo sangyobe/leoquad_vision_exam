@@ -50,21 +50,29 @@ bool RequestOdometryCall::OnCompletionEvent(bool ok) {
     else if (ok) {
 
         if (this->_call_state == CallState::WAIT_FINISH) {
-            LOG(info) << "RequestOdometryCall[" << _id << "] Get response.";
-            {
-                LOG(trace) << "RequestOdometryCall[" << this->_id << "]\tposition.x : " << _response.odom().pose().position().x();
-                LOG(trace) << "RequestOdometryCall[" << this->_id << "]\tposition.y : " << _response.odom().pose().position().y();
-                LOG(trace) << "RequestOdometryCall[" << this->_id << "]\tposition.z : " << _response.odom().pose().position().z();
-                LOG(trace) << "RequestOdometryCall[" << this->_id << "]\torientation.x : " << _response.odom().pose().orientation().x();
-                LOG(trace) << "RequestOdometryCall[" << this->_id << "]\torientation.y : " << _response.odom().pose().orientation().y();
-                LOG(trace) << "RequestOdometryCall[" << this->_id << "]\torientation.z : " << _response.odom().pose().orientation().z();
-                LOG(trace) << "RequestOdometryCall[" << this->_id << "]\torientation.w : " << _response.odom().pose().orientation().w();
-                for (int j=0; j<12; j++) {
-                    LOG(trace) << "RequestOdometryCall[" << this->_id << "]\tjoint_pos[" << j << "] : " << _response.joint_pos(j);
+            if (this->_status.ok()) {  // when the server's response message and status have been received.
+
+                LOG(info) << "RequestOdometryCall[" << _id << "] Get response.";
+                {
+                    LOG(trace) << "RequestOdometryCall[" << this->_id << "]\tposition.x : " << _response.odom().pose().position().x();
+                    LOG(trace) << "RequestOdometryCall[" << this->_id << "]\tposition.y : " << _response.odom().pose().position().y();
+                    LOG(trace) << "RequestOdometryCall[" << this->_id << "]\tposition.z : " << _response.odom().pose().position().z();
+                    LOG(trace) << "RequestOdometryCall[" << this->_id << "]\torientation.x : " << _response.odom().pose().orientation().x();
+                    LOG(trace) << "RequestOdometryCall[" << this->_id << "]\torientation.y : " << _response.odom().pose().orientation().y();
+                    LOG(trace) << "RequestOdometryCall[" << this->_id << "]\torientation.z : " << _response.odom().pose().orientation().z();
+                    LOG(trace) << "RequestOdometryCall[" << this->_id << "]\torientation.w : " << _response.odom().pose().orientation().w();
+                    for (int j=0; j<12 && j<_response.joint_pos_size(); j++) {
+                        LOG(trace) << "RequestOdometryCall[" << this->_id << "]\tjoint_pos[" << j << "] : " << _response.joint_pos(j);
+                    }
+
+                    std::lock_guard<std::mutex> lock(this->_proc_mtx);
+                    _call_state = CallState::FINISHED;
                 }
 
-                std::lock_guard<std::mutex> lock(this->_proc_mtx);
-                _call_state = CallState::FINISHED;
+            }
+            else { // when the server has returned a non-OK status (no message expected in this case).
+                   // when the call failed for some reason and the library generated a non-OK status. 
+                LOG(err) << "RequestOdometryCall[" << this->_id << "] failed.\terror code : " << this->_status.error_code();
             }
         }
         else {
