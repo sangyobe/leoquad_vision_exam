@@ -36,6 +36,7 @@
 #include "dtProto/robot_msgs/MoveControl.pb.h"
 #include "dtProto/robot_msgs/JointControl.pb.h"
 #include <google/protobuf/empty.pb.h>
+#include <google/protobuf/wrappers.pb.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_dtProto_2fService_2eproto

@@ -22,6 +22,7 @@
 namespace dtproto {
 
 static const char* dtService_method_names[] = {
+  "/dtproto.dtService/Version",
   "/dtproto.dtService/StreamState",
   "/dtproto.dtService/Move",
   "/dtproto.dtService/MoveJoint",
@@ -36,12 +37,36 @@ std::unique_ptr< dtService::Stub> dtService::NewStub(const std::shared_ptr< ::gr
 }
 
 dtService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
-  : channel_(channel), rpcmethod_StreamState_(dtService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
-  , rpcmethod_Move_(dtService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_MoveJoint_(dtService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_Command_(dtService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_QueryRobotInfo_(dtService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  : channel_(channel), rpcmethod_Version_(dtService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_StreamState_(dtService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_Move_(dtService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_MoveJoint_(dtService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_Command_(dtService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_QueryRobotInfo_(dtService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
+
+::grpc::Status dtService::Stub::Version(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::google::protobuf::StringValue* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::google::protobuf::Empty, ::google::protobuf::StringValue, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_Version_, context, request, response);
+}
+
+void dtService::Stub::async::Version(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::google::protobuf::StringValue* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::google::protobuf::Empty, ::google::protobuf::StringValue, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Version_, context, request, response, std::move(f));
+}
+
+void dtService::Stub::async::Version(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::google::protobuf::StringValue* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Version_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::google::protobuf::StringValue>* dtService::Stub::PrepareAsyncVersionRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::google::protobuf::StringValue, ::google::protobuf::Empty, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_Version_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::google::protobuf::StringValue>* dtService::Stub::AsyncVersionRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncVersionRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
 
 ::grpc::ClientReader< ::dtproto::std_msgs::State>* dtService::Stub::StreamStateRaw(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request& request) {
   return ::grpc::internal::ClientReaderFactory< ::dtproto::std_msgs::State>::Create(channel_.get(), rpcmethod_StreamState_, context, request);
@@ -154,6 +179,16 @@ void dtService::Stub::async::QueryRobotInfo(::grpc::ClientContext* context, cons
 dtService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       dtService_method_names[0],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< dtService::Service, ::google::protobuf::Empty, ::google::protobuf::StringValue, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](dtService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::google::protobuf::Empty* req,
+             ::google::protobuf::StringValue* resp) {
+               return service->Version(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      dtService_method_names[1],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< dtService::Service, ::dtproto::std_msgs::Request, ::dtproto::std_msgs::State>(
           [](dtService::Service* service,
@@ -163,7 +198,7 @@ dtService::Service::Service() {
                return service->StreamState(ctx, req, writer);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      dtService_method_names[1],
+      dtService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< dtService::Service, ::dtproto::robot_msgs::MoveControl, ::dtproto::std_msgs::Response, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](dtService::Service* service,
@@ -173,7 +208,7 @@ dtService::Service::Service() {
                return service->Move(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      dtService_method_names[2],
+      dtService_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< dtService::Service, ::dtproto::robot_msgs::JointControl, ::dtproto::std_msgs::Response, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](dtService::Service* service,
@@ -183,7 +218,7 @@ dtService::Service::Service() {
                return service->MoveJoint(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      dtService_method_names[3],
+      dtService_method_names[4],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< dtService::Service, ::dtproto::robot_msgs::ControlCmd, ::dtproto::std_msgs::Response, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](dtService::Service* service,
@@ -193,7 +228,7 @@ dtService::Service::Service() {
                return service->Command(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      dtService_method_names[4],
+      dtService_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< dtService::Service, ::google::protobuf::Empty, ::dtproto::robot_msgs::RobotInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](dtService::Service* service,
@@ -205,6 +240,13 @@ dtService::Service::Service() {
 }
 
 dtService::Service::~Service() {
+}
+
+::grpc::Status dtService::Service::Version(::grpc::ServerContext* context, const ::google::protobuf::Empty* request, ::google::protobuf::StringValue* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
 ::grpc::Status dtService::Service::StreamState(::grpc::ServerContext* context, const ::dtproto::std_msgs::Request* request, ::grpc::ServerWriter< ::dtproto::std_msgs::State>* writer) {

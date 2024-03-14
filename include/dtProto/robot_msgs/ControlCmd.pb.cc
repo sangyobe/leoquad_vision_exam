@@ -24,7 +24,10 @@ namespace dtproto {
 namespace robot_msgs {
 PROTOBUF_CONSTEXPR ControlCmd::ControlCmd(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.arg_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+    /*decltype(_impl_.arg_n_)*/{}
+  , /*decltype(_impl_._arg_n_cached_byte_size_)*/{0}
+  , /*decltype(_impl_.arg_f_)*/{}
+  , /*decltype(_impl_.arg_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.cmd_mode_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct ControlCmdDefaultTypeInternal {
@@ -65,6 +68,8 @@ const uint32_t TableStruct_dtProto_2frobot_5fmsgs_2fControlCmd_2eproto::offsets[
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::dtproto::robot_msgs::ControlCmd, _impl_.cmd_mode_),
   PROTOBUF_FIELD_OFFSET(::dtproto::robot_msgs::ControlCmd, _impl_.arg_),
+  PROTOBUF_FIELD_OFFSET(::dtproto::robot_msgs::ControlCmd, _impl_.arg_n_),
+  PROTOBUF_FIELD_OFFSET(::dtproto::robot_msgs::ControlCmd, _impl_.arg_f_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::dtproto::robot_msgs::ControlCmdTimeStamped, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -76,7 +81,7 @@ const uint32_t TableStruct_dtProto_2frobot_5fmsgs_2fControlCmd_2eproto::offsets[
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::dtproto::robot_msgs::ControlCmd)},
-  { 8, -1, -1, sizeof(::dtproto::robot_msgs::ControlCmdTimeStamped)},
+  { 10, -1, -1, sizeof(::dtproto::robot_msgs::ControlCmdTimeStamped)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -88,12 +93,12 @@ const char descriptor_table_protodef_dtProto_2frobot_5fmsgs_2fControlCmd_2eproto
   "\n#dtProto/robot_msgs/ControlCmd.proto\022\022d"
   "tproto.robot_msgs\032\035dtProto/std_msgs/Head"
   "er.proto\032 dtProto/geometry_msgs/Pose.pro"
-  "to\032!dtProto/geometry_msgs/Twist.proto\"+\n"
+  "to\032!dtProto/geometry_msgs/Twist.proto\"I\n"
   "\nControlCmd\022\020\n\010cmd_mode\030\001 \001(\005\022\013\n\003arg\030\002 \001"
-  "(\t\"n\n\025ControlCmdTimeStamped\022(\n\006header\030\001 "
-  "\001(\0132\030.dtproto.std_msgs.Header\022+\n\003cmd\030\002 \001"
-  "(\0132\036.dtproto.robot_msgs.ControlCmdb\006prot"
-  "o3"
+  "(\t\022\r\n\005arg_n\030\003 \003(\005\022\r\n\005arg_f\030\004 \003(\002\"n\n\025Cont"
+  "rolCmdTimeStamped\022(\n\006header\030\001 \001(\0132\030.dtpr"
+  "oto.std_msgs.Header\022+\n\003cmd\030\002 \001(\0132\036.dtpro"
+  "to.robot_msgs.ControlCmdb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_dtProto_2frobot_5fmsgs_2fControlCmd_2eproto_deps[3] = {
   &::descriptor_table_dtProto_2fgeometry_5fmsgs_2fPose_2eproto,
@@ -102,7 +107,7 @@ static const ::_pbi::DescriptorTable* const descriptor_table_dtProto_2frobot_5fm
 };
 static ::_pbi::once_flag descriptor_table_dtProto_2frobot_5fmsgs_2fControlCmd_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_dtProto_2frobot_5fmsgs_2fControlCmd_2eproto = {
-    false, false, 322, descriptor_table_protodef_dtProto_2frobot_5fmsgs_2fControlCmd_2eproto,
+    false, false, 352, descriptor_table_protodef_dtProto_2frobot_5fmsgs_2fControlCmd_2eproto,
     "dtProto/robot_msgs/ControlCmd.proto",
     &descriptor_table_dtProto_2frobot_5fmsgs_2fControlCmd_2eproto_once, descriptor_table_dtProto_2frobot_5fmsgs_2fControlCmd_2eproto_deps, 3, 2,
     schemas, file_default_instances, TableStruct_dtProto_2frobot_5fmsgs_2fControlCmd_2eproto::offsets,
@@ -134,7 +139,10 @@ ControlCmd::ControlCmd(const ControlCmd& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   ControlCmd* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.arg_){}
+      decltype(_impl_.arg_n_){from._impl_.arg_n_}
+    , /*decltype(_impl_._arg_n_cached_byte_size_)*/{0}
+    , decltype(_impl_.arg_f_){from._impl_.arg_f_}
+    , decltype(_impl_.arg_){}
     , decltype(_impl_.cmd_mode_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
@@ -156,7 +164,10 @@ inline void ControlCmd::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.arg_){}
+      decltype(_impl_.arg_n_){arena}
+    , /*decltype(_impl_._arg_n_cached_byte_size_)*/{0}
+    , decltype(_impl_.arg_f_){arena}
+    , decltype(_impl_.arg_){}
     , decltype(_impl_.cmd_mode_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -177,6 +188,8 @@ ControlCmd::~ControlCmd() {
 
 inline void ControlCmd::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.arg_n_.~RepeatedField();
+  _impl_.arg_f_.~RepeatedField();
   _impl_.arg_.Destroy();
 }
 
@@ -190,6 +203,8 @@ void ControlCmd::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  _impl_.arg_n_.Clear();
+  _impl_.arg_f_.Clear();
   _impl_.arg_.ClearToEmpty();
   _impl_.cmd_mode_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
@@ -216,6 +231,28 @@ const char* ControlCmd::_InternalParse(const char* ptr, ::_pbi::ParseContext* ct
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
           CHK_(::_pbi::VerifyUTF8(str, "dtproto.robot_msgs.ControlCmd.arg"));
+        } else
+          goto handle_unusual;
+        continue;
+      // repeated int32 arg_n = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt32Parser(_internal_mutable_arg_n(), ptr, ctx);
+          CHK_(ptr);
+        } else if (static_cast<uint8_t>(tag) == 24) {
+          _internal_add_arg_n(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr));
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // repeated float arg_f = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedFloatParser(_internal_mutable_arg_f(), ptr, ctx);
+          CHK_(ptr);
+        } else if (static_cast<uint8_t>(tag) == 37) {
+          _internal_add_arg_f(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr));
+          ptr += sizeof(float);
         } else
           goto handle_unusual;
         continue;
@@ -264,6 +301,20 @@ uint8_t* ControlCmd::_InternalSerialize(
         2, this->_internal_arg(), target);
   }
 
+  // repeated int32 arg_n = 3;
+  {
+    int byte_size = _impl_._arg_n_cached_byte_size_.load(std::memory_order_relaxed);
+    if (byte_size > 0) {
+      target = stream->WriteInt32Packed(
+          3, _internal_arg_n(), byte_size, target);
+    }
+  }
+
+  // repeated float arg_f = 4;
+  if (this->_internal_arg_f_size() > 0) {
+    target = stream->WriteFixedPacked(4, _internal_arg_f(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -279,6 +330,31 @@ size_t ControlCmd::ByteSizeLong() const {
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
+
+  // repeated int32 arg_n = 3;
+  {
+    size_t data_size = ::_pbi::WireFormatLite::
+      Int32Size(this->_impl_.arg_n_);
+    if (data_size > 0) {
+      total_size += 1 +
+        ::_pbi::WireFormatLite::Int32Size(static_cast<int32_t>(data_size));
+    }
+    int cached_size = ::_pbi::ToCachedSize(data_size);
+    _impl_._arg_n_cached_byte_size_.store(cached_size,
+                                    std::memory_order_relaxed);
+    total_size += data_size;
+  }
+
+  // repeated float arg_f = 4;
+  {
+    unsigned int count = static_cast<unsigned int>(this->_internal_arg_f_size());
+    size_t data_size = 4UL * count;
+    if (data_size > 0) {
+      total_size += 1 +
+        ::_pbi::WireFormatLite::Int32Size(static_cast<int32_t>(data_size));
+    }
+    total_size += data_size;
+  }
 
   // string arg = 2;
   if (!this->_internal_arg().empty()) {
@@ -310,6 +386,8 @@ void ControlCmd::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PRO
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  _this->_impl_.arg_n_.MergeFrom(from._impl_.arg_n_);
+  _this->_impl_.arg_f_.MergeFrom(from._impl_.arg_f_);
   if (!from._internal_arg().empty()) {
     _this->_internal_set_arg(from._internal_arg());
   }
@@ -335,6 +413,8 @@ void ControlCmd::InternalSwap(ControlCmd* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.arg_n_.InternalSwap(&other->_impl_.arg_n_);
+  _impl_.arg_f_.InternalSwap(&other->_impl_.arg_f_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &_impl_.arg_, lhs_arena,
       &other->_impl_.arg_, rhs_arena

@@ -35,6 +35,13 @@ class dtService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
+    virtual ::grpc::Status Version(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::google::protobuf::StringValue* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::StringValue>> AsyncVersion(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::StringValue>>(AsyncVersionRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::StringValue>> PrepareAsyncVersion(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::StringValue>>(PrepareAsyncVersionRaw(context, request, cq));
+    }
     std::unique_ptr< ::grpc::ClientReaderInterface< ::dtproto::std_msgs::State>> StreamState(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request& request) {
       return std::unique_ptr< ::grpc::ClientReaderInterface< ::dtproto::std_msgs::State>>(StreamStateRaw(context, request));
     }
@@ -75,6 +82,8 @@ class dtService final {
     class async_interface {
      public:
       virtual ~async_interface() {}
+      virtual void Version(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::google::protobuf::StringValue* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void Version(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::google::protobuf::StringValue* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void StreamState(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request* request, ::grpc::ClientReadReactor< ::dtproto::std_msgs::State>* reactor) = 0;
       virtual void Move(::grpc::ClientContext* context, const ::dtproto::robot_msgs::MoveControl* request, ::dtproto::std_msgs::Response* response, std::function<void(::grpc::Status)>) = 0;
       virtual void Move(::grpc::ClientContext* context, const ::dtproto::robot_msgs::MoveControl* request, ::dtproto::std_msgs::Response* response, ::grpc::ClientUnaryReactor* reactor) = 0;
@@ -89,6 +98,8 @@ class dtService final {
     virtual class async_interface* async() { return nullptr; }
     class async_interface* experimental_async() { return async(); }
    private:
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::StringValue>* AsyncVersionRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::StringValue>* PrepareAsyncVersionRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientReaderInterface< ::dtproto::std_msgs::State>* StreamStateRaw(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request& request) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::dtproto::std_msgs::State>* AsyncStreamStateRaw(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::dtproto::std_msgs::State>* PrepareAsyncStreamStateRaw(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request& request, ::grpc::CompletionQueue* cq) = 0;
@@ -104,6 +115,13 @@ class dtService final {
   class Stub final : public StubInterface {
    public:
     Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
+    ::grpc::Status Version(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::google::protobuf::StringValue* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::google::protobuf::StringValue>> AsyncVersion(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::google::protobuf::StringValue>>(AsyncVersionRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::google::protobuf::StringValue>> PrepareAsyncVersion(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::google::protobuf::StringValue>>(PrepareAsyncVersionRaw(context, request, cq));
+    }
     std::unique_ptr< ::grpc::ClientReader< ::dtproto::std_msgs::State>> StreamState(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request& request) {
       return std::unique_ptr< ::grpc::ClientReader< ::dtproto::std_msgs::State>>(StreamStateRaw(context, request));
     }
@@ -144,6 +162,8 @@ class dtService final {
     class async final :
       public StubInterface::async_interface {
      public:
+      void Version(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::google::protobuf::StringValue* response, std::function<void(::grpc::Status)>) override;
+      void Version(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::google::protobuf::StringValue* response, ::grpc::ClientUnaryReactor* reactor) override;
       void StreamState(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request* request, ::grpc::ClientReadReactor< ::dtproto::std_msgs::State>* reactor) override;
       void Move(::grpc::ClientContext* context, const ::dtproto::robot_msgs::MoveControl* request, ::dtproto::std_msgs::Response* response, std::function<void(::grpc::Status)>) override;
       void Move(::grpc::ClientContext* context, const ::dtproto::robot_msgs::MoveControl* request, ::dtproto::std_msgs::Response* response, ::grpc::ClientUnaryReactor* reactor) override;
@@ -164,6 +184,8 @@ class dtService final {
    private:
     std::shared_ptr< ::grpc::ChannelInterface> channel_;
     class async async_stub_{this};
+    ::grpc::ClientAsyncResponseReader< ::google::protobuf::StringValue>* AsyncVersionRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::google::protobuf::StringValue>* PrepareAsyncVersionRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientReader< ::dtproto::std_msgs::State>* StreamStateRaw(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request& request) override;
     ::grpc::ClientAsyncReader< ::dtproto::std_msgs::State>* AsyncStreamStateRaw(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request& request, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReader< ::dtproto::std_msgs::State>* PrepareAsyncStreamStateRaw(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request& request, ::grpc::CompletionQueue* cq) override;
@@ -175,6 +197,7 @@ class dtService final {
     ::grpc::ClientAsyncResponseReader< ::dtproto::std_msgs::Response>* PrepareAsyncCommandRaw(::grpc::ClientContext* context, const ::dtproto::robot_msgs::ControlCmd& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::dtproto::robot_msgs::RobotInfo>* AsyncQueryRobotInfoRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::dtproto::robot_msgs::RobotInfo>* PrepareAsyncQueryRobotInfoRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) override;
+    const ::grpc::internal::RpcMethod rpcmethod_Version_;
     const ::grpc::internal::RpcMethod rpcmethod_StreamState_;
     const ::grpc::internal::RpcMethod rpcmethod_Move_;
     const ::grpc::internal::RpcMethod rpcmethod_MoveJoint_;
@@ -187,6 +210,7 @@ class dtService final {
    public:
     Service();
     virtual ~Service();
+    virtual ::grpc::Status Version(::grpc::ServerContext* context, const ::google::protobuf::Empty* request, ::google::protobuf::StringValue* response);
     virtual ::grpc::Status StreamState(::grpc::ServerContext* context, const ::dtproto::std_msgs::Request* request, ::grpc::ServerWriter< ::dtproto::std_msgs::State>* writer);
     virtual ::grpc::Status Move(::grpc::ServerContext* context, const ::dtproto::robot_msgs::MoveControl* request, ::dtproto::std_msgs::Response* response);
     virtual ::grpc::Status MoveJoint(::grpc::ServerContext* context, const ::dtproto::robot_msgs::JointControl* request, ::dtproto::std_msgs::Response* response);
@@ -194,12 +218,32 @@ class dtService final {
     virtual ::grpc::Status QueryRobotInfo(::grpc::ServerContext* context, const ::google::protobuf::Empty* request, ::dtproto::robot_msgs::RobotInfo* response);
   };
   template <class BaseClass>
+  class WithAsyncMethod_Version : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_Version() {
+      ::grpc::Service::MarkMethodAsync(0);
+    }
+    ~WithAsyncMethod_Version() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Version(::grpc::ServerContext* /*context*/, const ::google::protobuf::Empty* /*request*/, ::google::protobuf::StringValue* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestVersion(::grpc::ServerContext* context, ::google::protobuf::Empty* request, ::grpc::ServerAsyncResponseWriter< ::google::protobuf::StringValue>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithAsyncMethod_StreamState : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_StreamState() {
-      ::grpc::Service::MarkMethodAsync(0);
+      ::grpc::Service::MarkMethodAsync(1);
     }
     ~WithAsyncMethod_StreamState() override {
       BaseClassMustBeDerivedFromService(this);
@@ -210,7 +254,7 @@ class dtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestStreamState(::grpc::ServerContext* context, ::dtproto::std_msgs::Request* request, ::grpc::ServerAsyncWriter< ::dtproto::std_msgs::State>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncServerStreaming(0, context, request, writer, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncServerStreaming(1, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -219,7 +263,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_Move() {
-      ::grpc::Service::MarkMethodAsync(1);
+      ::grpc::Service::MarkMethodAsync(2);
     }
     ~WithAsyncMethod_Move() override {
       BaseClassMustBeDerivedFromService(this);
@@ -230,7 +274,7 @@ class dtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestMove(::grpc::ServerContext* context, ::dtproto::robot_msgs::MoveControl* request, ::grpc::ServerAsyncResponseWriter< ::dtproto::std_msgs::Response>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -239,7 +283,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_MoveJoint() {
-      ::grpc::Service::MarkMethodAsync(2);
+      ::grpc::Service::MarkMethodAsync(3);
     }
     ~WithAsyncMethod_MoveJoint() override {
       BaseClassMustBeDerivedFromService(this);
@@ -250,7 +294,7 @@ class dtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestMoveJoint(::grpc::ServerContext* context, ::dtproto::robot_msgs::JointControl* request, ::grpc::ServerAsyncResponseWriter< ::dtproto::std_msgs::Response>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -259,7 +303,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_Command() {
-      ::grpc::Service::MarkMethodAsync(3);
+      ::grpc::Service::MarkMethodAsync(4);
     }
     ~WithAsyncMethod_Command() override {
       BaseClassMustBeDerivedFromService(this);
@@ -270,7 +314,7 @@ class dtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestCommand(::grpc::ServerContext* context, ::dtproto::robot_msgs::ControlCmd* request, ::grpc::ServerAsyncResponseWriter< ::dtproto::std_msgs::Response>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -279,7 +323,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_QueryRobotInfo() {
-      ::grpc::Service::MarkMethodAsync(4);
+      ::grpc::Service::MarkMethodAsync(5);
     }
     ~WithAsyncMethod_QueryRobotInfo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -290,17 +334,44 @@ class dtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestQueryRobotInfo(::grpc::ServerContext* context, ::google::protobuf::Empty* request, ::grpc::ServerAsyncResponseWriter< ::dtproto::robot_msgs::RobotInfo>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_StreamState<WithAsyncMethod_Move<WithAsyncMethod_MoveJoint<WithAsyncMethod_Command<WithAsyncMethod_QueryRobotInfo<Service > > > > > AsyncService;
+  typedef WithAsyncMethod_Version<WithAsyncMethod_StreamState<WithAsyncMethod_Move<WithAsyncMethod_MoveJoint<WithAsyncMethod_Command<WithAsyncMethod_QueryRobotInfo<Service > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithCallbackMethod_Version : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_Version() {
+      ::grpc::Service::MarkMethodCallback(0,
+          new ::grpc::internal::CallbackUnaryHandler< ::google::protobuf::Empty, ::google::protobuf::StringValue>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::google::protobuf::Empty* request, ::google::protobuf::StringValue* response) { return this->Version(context, request, response); }));}
+    void SetMessageAllocatorFor_Version(
+        ::grpc::MessageAllocator< ::google::protobuf::Empty, ::google::protobuf::StringValue>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(0);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::google::protobuf::Empty, ::google::protobuf::StringValue>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_Version() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Version(::grpc::ServerContext* /*context*/, const ::google::protobuf::Empty* /*request*/, ::google::protobuf::StringValue* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* Version(
+      ::grpc::CallbackServerContext* /*context*/, const ::google::protobuf::Empty* /*request*/, ::google::protobuf::StringValue* /*response*/)  { return nullptr; }
+  };
   template <class BaseClass>
   class WithCallbackMethod_StreamState : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_StreamState() {
-      ::grpc::Service::MarkMethodCallback(0,
+      ::grpc::Service::MarkMethodCallback(1,
           new ::grpc::internal::CallbackServerStreamingHandler< ::dtproto::std_msgs::Request, ::dtproto::std_msgs::State>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::dtproto::std_msgs::Request* request) { return this->StreamState(context, request); }));
@@ -322,13 +393,13 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_Move() {
-      ::grpc::Service::MarkMethodCallback(1,
+      ::grpc::Service::MarkMethodCallback(2,
           new ::grpc::internal::CallbackUnaryHandler< ::dtproto::robot_msgs::MoveControl, ::dtproto::std_msgs::Response>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::dtproto::robot_msgs::MoveControl* request, ::dtproto::std_msgs::Response* response) { return this->Move(context, request, response); }));}
     void SetMessageAllocatorFor_Move(
         ::grpc::MessageAllocator< ::dtproto::robot_msgs::MoveControl, ::dtproto::std_msgs::Response>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::dtproto::robot_msgs::MoveControl, ::dtproto::std_msgs::Response>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -349,13 +420,13 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_MoveJoint() {
-      ::grpc::Service::MarkMethodCallback(2,
+      ::grpc::Service::MarkMethodCallback(3,
           new ::grpc::internal::CallbackUnaryHandler< ::dtproto::robot_msgs::JointControl, ::dtproto::std_msgs::Response>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::dtproto::robot_msgs::JointControl* request, ::dtproto::std_msgs::Response* response) { return this->MoveJoint(context, request, response); }));}
     void SetMessageAllocatorFor_MoveJoint(
         ::grpc::MessageAllocator< ::dtproto::robot_msgs::JointControl, ::dtproto::std_msgs::Response>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::dtproto::robot_msgs::JointControl, ::dtproto::std_msgs::Response>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -376,13 +447,13 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_Command() {
-      ::grpc::Service::MarkMethodCallback(3,
+      ::grpc::Service::MarkMethodCallback(4,
           new ::grpc::internal::CallbackUnaryHandler< ::dtproto::robot_msgs::ControlCmd, ::dtproto::std_msgs::Response>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::dtproto::robot_msgs::ControlCmd* request, ::dtproto::std_msgs::Response* response) { return this->Command(context, request, response); }));}
     void SetMessageAllocatorFor_Command(
         ::grpc::MessageAllocator< ::dtproto::robot_msgs::ControlCmd, ::dtproto::std_msgs::Response>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::dtproto::robot_msgs::ControlCmd, ::dtproto::std_msgs::Response>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -403,13 +474,13 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_QueryRobotInfo() {
-      ::grpc::Service::MarkMethodCallback(4,
+      ::grpc::Service::MarkMethodCallback(5,
           new ::grpc::internal::CallbackUnaryHandler< ::google::protobuf::Empty, ::dtproto::robot_msgs::RobotInfo>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::google::protobuf::Empty* request, ::dtproto::robot_msgs::RobotInfo* response) { return this->QueryRobotInfo(context, request, response); }));}
     void SetMessageAllocatorFor_QueryRobotInfo(
         ::grpc::MessageAllocator< ::google::protobuf::Empty, ::dtproto::robot_msgs::RobotInfo>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(5);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::google::protobuf::Empty, ::dtproto::robot_msgs::RobotInfo>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -424,15 +495,32 @@ class dtService final {
     virtual ::grpc::ServerUnaryReactor* QueryRobotInfo(
       ::grpc::CallbackServerContext* /*context*/, const ::google::protobuf::Empty* /*request*/, ::dtproto::robot_msgs::RobotInfo* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_StreamState<WithCallbackMethod_Move<WithCallbackMethod_MoveJoint<WithCallbackMethod_Command<WithCallbackMethod_QueryRobotInfo<Service > > > > > CallbackService;
+  typedef WithCallbackMethod_Version<WithCallbackMethod_StreamState<WithCallbackMethod_Move<WithCallbackMethod_MoveJoint<WithCallbackMethod_Command<WithCallbackMethod_QueryRobotInfo<Service > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
+  template <class BaseClass>
+  class WithGenericMethod_Version : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_Version() {
+      ::grpc::Service::MarkMethodGeneric(0);
+    }
+    ~WithGenericMethod_Version() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Version(::grpc::ServerContext* /*context*/, const ::google::protobuf::Empty* /*request*/, ::google::protobuf::StringValue* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
   template <class BaseClass>
   class WithGenericMethod_StreamState : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_StreamState() {
-      ::grpc::Service::MarkMethodGeneric(0);
+      ::grpc::Service::MarkMethodGeneric(1);
     }
     ~WithGenericMethod_StreamState() override {
       BaseClassMustBeDerivedFromService(this);
@@ -449,7 +537,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_Move() {
-      ::grpc::Service::MarkMethodGeneric(1);
+      ::grpc::Service::MarkMethodGeneric(2);
     }
     ~WithGenericMethod_Move() override {
       BaseClassMustBeDerivedFromService(this);
@@ -466,7 +554,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_MoveJoint() {
-      ::grpc::Service::MarkMethodGeneric(2);
+      ::grpc::Service::MarkMethodGeneric(3);
     }
     ~WithGenericMethod_MoveJoint() override {
       BaseClassMustBeDerivedFromService(this);
@@ -483,7 +571,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_Command() {
-      ::grpc::Service::MarkMethodGeneric(3);
+      ::grpc::Service::MarkMethodGeneric(4);
     }
     ~WithGenericMethod_Command() override {
       BaseClassMustBeDerivedFromService(this);
@@ -500,7 +588,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_QueryRobotInfo() {
-      ::grpc::Service::MarkMethodGeneric(4);
+      ::grpc::Service::MarkMethodGeneric(5);
     }
     ~WithGenericMethod_QueryRobotInfo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -512,12 +600,32 @@ class dtService final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_Version : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_Version() {
+      ::grpc::Service::MarkMethodRaw(0);
+    }
+    ~WithRawMethod_Version() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Version(::grpc::ServerContext* /*context*/, const ::google::protobuf::Empty* /*request*/, ::google::protobuf::StringValue* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestVersion(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawMethod_StreamState : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_StreamState() {
-      ::grpc::Service::MarkMethodRaw(0);
+      ::grpc::Service::MarkMethodRaw(1);
     }
     ~WithRawMethod_StreamState() override {
       BaseClassMustBeDerivedFromService(this);
@@ -528,7 +636,7 @@ class dtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestStreamState(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncServerStreaming(0, context, request, writer, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncServerStreaming(1, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -537,7 +645,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_Move() {
-      ::grpc::Service::MarkMethodRaw(1);
+      ::grpc::Service::MarkMethodRaw(2);
     }
     ~WithRawMethod_Move() override {
       BaseClassMustBeDerivedFromService(this);
@@ -548,7 +656,7 @@ class dtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestMove(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -557,7 +665,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_MoveJoint() {
-      ::grpc::Service::MarkMethodRaw(2);
+      ::grpc::Service::MarkMethodRaw(3);
     }
     ~WithRawMethod_MoveJoint() override {
       BaseClassMustBeDerivedFromService(this);
@@ -568,7 +676,7 @@ class dtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestMoveJoint(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -577,7 +685,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_Command() {
-      ::grpc::Service::MarkMethodRaw(3);
+      ::grpc::Service::MarkMethodRaw(4);
     }
     ~WithRawMethod_Command() override {
       BaseClassMustBeDerivedFromService(this);
@@ -588,7 +696,7 @@ class dtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestCommand(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -597,7 +705,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_QueryRobotInfo() {
-      ::grpc::Service::MarkMethodRaw(4);
+      ::grpc::Service::MarkMethodRaw(5);
     }
     ~WithRawMethod_QueryRobotInfo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -608,8 +716,30 @@ class dtService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestQueryRobotInfo(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_Version : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_Version() {
+      ::grpc::Service::MarkMethodRawCallback(0,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->Version(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_Version() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Version(::grpc::ServerContext* /*context*/, const ::google::protobuf::Empty* /*request*/, ::google::protobuf::StringValue* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* Version(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithRawCallbackMethod_StreamState : public BaseClass {
@@ -617,7 +747,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_StreamState() {
-      ::grpc::Service::MarkMethodRawCallback(0,
+      ::grpc::Service::MarkMethodRawCallback(1,
           new ::grpc::internal::CallbackServerStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const::grpc::ByteBuffer* request) { return this->StreamState(context, request); }));
@@ -639,7 +769,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_Move() {
-      ::grpc::Service::MarkMethodRawCallback(1,
+      ::grpc::Service::MarkMethodRawCallback(2,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->Move(context, request, response); }));
@@ -661,7 +791,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_MoveJoint() {
-      ::grpc::Service::MarkMethodRawCallback(2,
+      ::grpc::Service::MarkMethodRawCallback(3,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->MoveJoint(context, request, response); }));
@@ -683,7 +813,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_Command() {
-      ::grpc::Service::MarkMethodRawCallback(3,
+      ::grpc::Service::MarkMethodRawCallback(4,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->Command(context, request, response); }));
@@ -705,7 +835,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_QueryRobotInfo() {
-      ::grpc::Service::MarkMethodRawCallback(4,
+      ::grpc::Service::MarkMethodRawCallback(5,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->QueryRobotInfo(context, request, response); }));
@@ -722,12 +852,39 @@ class dtService final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithStreamedUnaryMethod_Version : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_Version() {
+      ::grpc::Service::MarkMethodStreamed(0,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::google::protobuf::Empty, ::google::protobuf::StringValue>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::google::protobuf::Empty, ::google::protobuf::StringValue>* streamer) {
+                       return this->StreamedVersion(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_Version() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status Version(::grpc::ServerContext* /*context*/, const ::google::protobuf::Empty* /*request*/, ::google::protobuf::StringValue* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedVersion(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::google::protobuf::Empty,::google::protobuf::StringValue>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_Move : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_Move() {
-      ::grpc::Service::MarkMethodStreamed(1,
+      ::grpc::Service::MarkMethodStreamed(2,
         new ::grpc::internal::StreamedUnaryHandler<
           ::dtproto::robot_msgs::MoveControl, ::dtproto::std_msgs::Response>(
             [this](::grpc::ServerContext* context,
@@ -754,7 +911,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_MoveJoint() {
-      ::grpc::Service::MarkMethodStreamed(2,
+      ::grpc::Service::MarkMethodStreamed(3,
         new ::grpc::internal::StreamedUnaryHandler<
           ::dtproto::robot_msgs::JointControl, ::dtproto::std_msgs::Response>(
             [this](::grpc::ServerContext* context,
@@ -781,7 +938,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_Command() {
-      ::grpc::Service::MarkMethodStreamed(3,
+      ::grpc::Service::MarkMethodStreamed(4,
         new ::grpc::internal::StreamedUnaryHandler<
           ::dtproto::robot_msgs::ControlCmd, ::dtproto::std_msgs::Response>(
             [this](::grpc::ServerContext* context,
@@ -808,7 +965,7 @@ class dtService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_QueryRobotInfo() {
-      ::grpc::Service::MarkMethodStreamed(4,
+      ::grpc::Service::MarkMethodStreamed(5,
         new ::grpc::internal::StreamedUnaryHandler<
           ::google::protobuf::Empty, ::dtproto::robot_msgs::RobotInfo>(
             [this](::grpc::ServerContext* context,
@@ -829,14 +986,14 @@ class dtService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedQueryRobotInfo(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::google::protobuf::Empty,::dtproto::robot_msgs::RobotInfo>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_Move<WithStreamedUnaryMethod_MoveJoint<WithStreamedUnaryMethod_Command<WithStreamedUnaryMethod_QueryRobotInfo<Service > > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_Version<WithStreamedUnaryMethod_Move<WithStreamedUnaryMethod_MoveJoint<WithStreamedUnaryMethod_Command<WithStreamedUnaryMethod_QueryRobotInfo<Service > > > > > StreamedUnaryService;
   template <class BaseClass>
   class WithSplitStreamingMethod_StreamState : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithSplitStreamingMethod_StreamState() {
-      ::grpc::Service::MarkMethodStreamed(0,
+      ::grpc::Service::MarkMethodStreamed(1,
         new ::grpc::internal::SplitServerStreamingHandler<
           ::dtproto::std_msgs::Request, ::dtproto::std_msgs::State>(
             [this](::grpc::ServerContext* context,
@@ -858,7 +1015,7 @@ class dtService final {
     virtual ::grpc::Status StreamedStreamState(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::dtproto::std_msgs::Request,::dtproto::std_msgs::State>* server_split_streamer) = 0;
   };
   typedef WithSplitStreamingMethod_StreamState<Service > SplitStreamedService;
-  typedef WithSplitStreamingMethod_StreamState<WithStreamedUnaryMethod_Move<WithStreamedUnaryMethod_MoveJoint<WithStreamedUnaryMethod_Command<WithStreamedUnaryMethod_QueryRobotInfo<Service > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_Version<WithSplitStreamingMethod_StreamState<WithStreamedUnaryMethod_Move<WithStreamedUnaryMethod_MoveJoint<WithStreamedUnaryMethod_Command<WithStreamedUnaryMethod_QueryRobotInfo<Service > > > > > > StreamedService;
 };
 
 }  // namespace dtproto

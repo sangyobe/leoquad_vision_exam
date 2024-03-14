@@ -187,9 +187,55 @@ class ControlCmd final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kArgNFieldNumber = 3,
+    kArgFFieldNumber = 4,
     kArgFieldNumber = 2,
     kCmdModeFieldNumber = 1,
   };
+  // repeated int32 arg_n = 3;
+  int arg_n_size() const;
+  private:
+  int _internal_arg_n_size() const;
+  public:
+  void clear_arg_n();
+  private:
+  int32_t _internal_arg_n(int index) const;
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
+      _internal_arg_n() const;
+  void _internal_add_arg_n(int32_t value);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
+      _internal_mutable_arg_n();
+  public:
+  int32_t arg_n(int index) const;
+  void set_arg_n(int index, int32_t value);
+  void add_arg_n(int32_t value);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
+      arg_n() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
+      mutable_arg_n();
+
+  // repeated float arg_f = 4;
+  int arg_f_size() const;
+  private:
+  int _internal_arg_f_size() const;
+  public:
+  void clear_arg_f();
+  private:
+  float _internal_arg_f(int index) const;
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >&
+      _internal_arg_f() const;
+  void _internal_add_arg_f(float value);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >*
+      _internal_mutable_arg_f();
+  public:
+  float arg_f(int index) const;
+  void set_arg_f(int index, float value);
+  void add_arg_f(float value);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >&
+      arg_f() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >*
+      mutable_arg_f();
+
   // string arg = 2;
   void clear_arg();
   const std::string& arg() const;
@@ -221,6 +267,9 @@ class ControlCmd final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t > arg_n_;
+    mutable std::atomic<int> _arg_n_cached_byte_size_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedField< float > arg_f_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr arg_;
     int32_t cmd_mode_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -484,6 +533,100 @@ inline void ControlCmd::set_allocated_arg(std::string* arg) {
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:dtproto.robot_msgs.ControlCmd.arg)
+}
+
+// repeated int32 arg_n = 3;
+inline int ControlCmd::_internal_arg_n_size() const {
+  return _impl_.arg_n_.size();
+}
+inline int ControlCmd::arg_n_size() const {
+  return _internal_arg_n_size();
+}
+inline void ControlCmd::clear_arg_n() {
+  _impl_.arg_n_.Clear();
+}
+inline int32_t ControlCmd::_internal_arg_n(int index) const {
+  return _impl_.arg_n_.Get(index);
+}
+inline int32_t ControlCmd::arg_n(int index) const {
+  // @@protoc_insertion_point(field_get:dtproto.robot_msgs.ControlCmd.arg_n)
+  return _internal_arg_n(index);
+}
+inline void ControlCmd::set_arg_n(int index, int32_t value) {
+  _impl_.arg_n_.Set(index, value);
+  // @@protoc_insertion_point(field_set:dtproto.robot_msgs.ControlCmd.arg_n)
+}
+inline void ControlCmd::_internal_add_arg_n(int32_t value) {
+  _impl_.arg_n_.Add(value);
+}
+inline void ControlCmd::add_arg_n(int32_t value) {
+  _internal_add_arg_n(value);
+  // @@protoc_insertion_point(field_add:dtproto.robot_msgs.ControlCmd.arg_n)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
+ControlCmd::_internal_arg_n() const {
+  return _impl_.arg_n_;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
+ControlCmd::arg_n() const {
+  // @@protoc_insertion_point(field_list:dtproto.robot_msgs.ControlCmd.arg_n)
+  return _internal_arg_n();
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
+ControlCmd::_internal_mutable_arg_n() {
+  return &_impl_.arg_n_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
+ControlCmd::mutable_arg_n() {
+  // @@protoc_insertion_point(field_mutable_list:dtproto.robot_msgs.ControlCmd.arg_n)
+  return _internal_mutable_arg_n();
+}
+
+// repeated float arg_f = 4;
+inline int ControlCmd::_internal_arg_f_size() const {
+  return _impl_.arg_f_.size();
+}
+inline int ControlCmd::arg_f_size() const {
+  return _internal_arg_f_size();
+}
+inline void ControlCmd::clear_arg_f() {
+  _impl_.arg_f_.Clear();
+}
+inline float ControlCmd::_internal_arg_f(int index) const {
+  return _impl_.arg_f_.Get(index);
+}
+inline float ControlCmd::arg_f(int index) const {
+  // @@protoc_insertion_point(field_get:dtproto.robot_msgs.ControlCmd.arg_f)
+  return _internal_arg_f(index);
+}
+inline void ControlCmd::set_arg_f(int index, float value) {
+  _impl_.arg_f_.Set(index, value);
+  // @@protoc_insertion_point(field_set:dtproto.robot_msgs.ControlCmd.arg_f)
+}
+inline void ControlCmd::_internal_add_arg_f(float value) {
+  _impl_.arg_f_.Add(value);
+}
+inline void ControlCmd::add_arg_f(float value) {
+  _internal_add_arg_f(value);
+  // @@protoc_insertion_point(field_add:dtproto.robot_msgs.ControlCmd.arg_f)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >&
+ControlCmd::_internal_arg_f() const {
+  return _impl_.arg_f_;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >&
+ControlCmd::arg_f() const {
+  // @@protoc_insertion_point(field_list:dtproto.robot_msgs.ControlCmd.arg_f)
+  return _internal_arg_f();
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >*
+ControlCmd::_internal_mutable_arg_f() {
+  return &_impl_.arg_f_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >*
+ControlCmd::mutable_arg_f() {
+  // @@protoc_insertion_point(field_mutable_list:dtproto.robot_msgs.ControlCmd.arg_f)
+  return _internal_mutable_arg_f();
 }
 
 // -------------------------------------------------------------------
