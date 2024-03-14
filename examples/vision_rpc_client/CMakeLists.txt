@@ -20,4 +20,5 @@ target_link_libraries(${PROJECT_NAME}
     gRPC::grpc++
     gRPC::grpc++_reflection
     spdlog::spdlog
+    yaml-cpp
 )

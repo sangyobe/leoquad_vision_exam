@@ -7,22 +7,30 @@
 NotifySteppableAreaCall::NotifySteppableAreaCall(ServiceType::Stub *stub, grpc::CompletionQueue *cq, void *udata)
 : dtCore::dtServiceCallerGrpc<ServiceType>::Call(stub, cq, udata), _steppables((SteppableArea*)udata) 
 {
-    for (int i=0; i<5; i++) {
+    for (int i=0; i<_steppables->steppableAreaCount; i++) {
         _request.mutable_area()->add_steppables();
-        _request.mutable_area()->add_unsteppables();
-        for (int j=0; j<10; j++) {
+        for (int j=0; j<_steppables->steppableArea[i].vertex_count; j++) {
             _request.mutable_area()->mutable_steppables(i)->add_vertex();
+        }
+        _request.mutable_area()->mutable_steppables(i)->set_vertex_count(_steppables->steppableArea[i].vertex_count);
+    }
+    _request.mutable_area()->set_steppables_count(_steppables->steppableAreaCount);
+
+    for (int i=0; i<_steppables->unsteppableAreaCount; i++) {
+        _request.mutable_area()->add_unsteppables();
+        for (int j=0; j<_steppables->unsteppableArea[i].vertex_count; j++) {
             _request.mutable_area()->mutable_unsteppables(i)->add_vertex();
         }
+        _request.mutable_area()->mutable_unsteppables(i)->set_vertex_count(_steppables->unsteppableArea[i].vertex_count);
     }
+    _request.mutable_area()->set_unsteppables_count(_steppables->unsteppableAreaCount);
 
     LOG(info) << "NotifySteppableAreaCall[" << _id << "] NEW call.";
-    _request.mutable_area()->set_steppables_count(99);
-    _request.mutable_area()->set_unsteppables_count(1);
+
+    this->_call_state = CallState::WAIT_FINISH;
     _responder = _stub->PrepareAsyncNotifySteppableArea(&(this->_ctx), _request, this->_cq);
     _responder->StartCall();
     _responder->Finish(&_response, &(this->_status), (void*)this);
-    this->_call_state = CallState::WAIT_FINISH;
     LOG(info) << "NotifySteppableAreaCall[" << _id << "] Wait for response.";
 }
 
@@ -74,8 +82,8 @@ bool NotifySteppableAreaCall::OnCompletionEvent(bool ok) {
             }
         }
         else {
-            GPR_ASSERT(false && "Invalid Call State.");
             LOG(err) << "NotifySteppableAreaCall[" << _id << "] Invalid call state (" << static_cast<int>(_call_state) << ")";
+            GPR_ASSERT(false && "Invalid Call State.");
             return false;
         }
     }

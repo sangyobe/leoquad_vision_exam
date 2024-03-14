@@ -62,8 +62,8 @@ bool OnRequestOdometry::OnCompletionEvent(bool ok) {
             return false;
         }
         else {
-            GPR_ASSERT(false && "Invalid Session Status.");
             LOG(err) << "OnRequestOdometry[" << _id << "] Invalid session status (" << static_cast<int>(_call_state) << ")";
+            GPR_ASSERT(false && "Invalid Session Status.");
             return false;
         }
     }

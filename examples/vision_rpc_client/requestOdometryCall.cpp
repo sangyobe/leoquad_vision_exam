@@ -12,10 +12,11 @@ RequestOdometryCall::RequestOdometryCall(ServiceType::Stub *stub, grpc::Completi
     _request.mutable_odom()->mutable_pose()->mutable_orientation()->set_y(_odomData->orientation.y);
     _request.mutable_odom()->mutable_pose()->mutable_orientation()->set_z(_odomData->orientation.z);
     _request.mutable_odom()->mutable_pose()->mutable_orientation()->set_w(_odomData->orientation.w);
+
+    this->_call_state = CallState::WAIT_FINISH;
     _responder = _stub->PrepareAsyncRequestOdometry(&(this->_ctx), _request, this->_cq);
     _responder->StartCall();
     _responder->Finish(&_response, &(this->_status), (void*)this);
-    this->_call_state = CallState::WAIT_FINISH;
     LOG(info) << "RequestOdometryCall[" << _id << "] Wait for response.";
 }
 
@@ -54,15 +55,31 @@ bool RequestOdometryCall::OnCompletionEvent(bool ok) {
 
                 LOG(info) << "RequestOdometryCall[" << _id << "] Get response.";
                 {
-                    LOG(trace) << "RequestOdometryCall[" << this->_id << "]\tposition.x : " << _response.odom().pose().position().x();
-                    LOG(trace) << "RequestOdometryCall[" << this->_id << "]\tposition.y : " << _response.odom().pose().position().y();
-                    LOG(trace) << "RequestOdometryCall[" << this->_id << "]\tposition.z : " << _response.odom().pose().position().z();
-                    LOG(trace) << "RequestOdometryCall[" << this->_id << "]\torientation.x : " << _response.odom().pose().orientation().x();
-                    LOG(trace) << "RequestOdometryCall[" << this->_id << "]\torientation.y : " << _response.odom().pose().orientation().y();
-                    LOG(trace) << "RequestOdometryCall[" << this->_id << "]\torientation.z : " << _response.odom().pose().orientation().z();
-                    LOG(trace) << "RequestOdometryCall[" << this->_id << "]\torientation.w : " << _response.odom().pose().orientation().w();
-                    for (int j=0; j<12 && j<_response.joint_pos_size(); j++) {
-                        LOG(trace) << "RequestOdometryCall[" << this->_id << "]\tjoint_pos[" << j << "] : " << _response.joint_pos(j);
+                    LOG(trace).format("RequestOdometryCall[{:d}]\tposition=({:+6.3f},{:+6.3f},{:+6.3f})",
+                                      this->_id,
+                                      _response.odom().pose().position().x(),
+                                      _response.odom().pose().position().y(),
+                                      _response.odom().pose().position().z());
+                    LOG(trace).format("RequestOdometryCall[{:d}]\torientation=({:+6.3f},{:+6.3f},{:+6.3f},{:+6.3f})",
+                                      this->_id,
+                                      _response.odom().pose().orientation().x(),
+                                      _response.odom().pose().orientation().y(),
+                                      _response.odom().pose().orientation().z(),
+                                      _response.odom().pose().orientation().w());
+                    for (int i=0; i<12 && i<_response.joint_pos_size(); i++) {
+                        LOG(trace).format("RequestOdometryCall[{:d}]\tjoint_pos[{:d}]=({:+5.2f} / {:+5.2f})",
+                                          this->_id,
+                                          i,
+                                          _response.joint_pos(i),
+                                          _response.joint_pos(i) * 180.0 / 3.141592);
+                    }
+                    for (int i=0; i<4 && i<_response.foot_pos_size(); i++) {
+                        LOG(trace).format("RequestOdometryCall[{:d}]\tfoot_pos[{:d}]=({:+6.3f},{:+6.3f},{:+6.3f})",
+                                          this->_id,
+                                          i,
+                                          _response.foot_pos(i).x(),
+                                          _response.foot_pos(i).y(),
+                                          _response.foot_pos(i).z());
                     }
 
                     std::lock_guard<std::mutex> lock(this->_proc_mtx);
@@ -76,8 +93,8 @@ bool RequestOdometryCall::OnCompletionEvent(bool ok) {
             }
         }
         else {
-            GPR_ASSERT(false && "Invalid Call State.");
             LOG(err) << "RequestOdometryCall[" << _id << "] Invalid call state (" << static_cast<int>(_call_state) << ")";
+            GPR_ASSERT(false && "Invalid Call State.");
             return false;
         }
     }
