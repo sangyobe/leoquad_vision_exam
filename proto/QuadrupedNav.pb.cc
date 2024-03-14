@@ -25,6 +25,7 @@ namespace quadruped {
 PROTOBUF_CONSTEXPR OdomWithJointPosTimeStamped::OdomWithJointPosTimeStamped(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.joint_pos_)*/{}
+  , /*decltype(_impl_.foot_pos_)*/{}
   , /*decltype(_impl_.header_)*/nullptr
   , /*decltype(_impl_.odom_)*/nullptr
   , /*decltype(_impl_._cached_size_)*/{}} {}
@@ -53,6 +54,7 @@ const uint32_t TableStruct_QuadrupedNav_2eproto::offsets[] PROTOBUF_SECTION_VARI
   PROTOBUF_FIELD_OFFSET(::dtproto::quadruped::OdomWithJointPosTimeStamped, _impl_.header_),
   PROTOBUF_FIELD_OFFSET(::dtproto::quadruped::OdomWithJointPosTimeStamped, _impl_.odom_),
   PROTOBUF_FIELD_OFFSET(::dtproto::quadruped::OdomWithJointPosTimeStamped, _impl_.joint_pos_),
+  PROTOBUF_FIELD_OFFSET(::dtproto::quadruped::OdomWithJointPosTimeStamped, _impl_.foot_pos_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::dtproto::quadruped::OdomWithJointPosTimeStamped)},
@@ -67,22 +69,25 @@ const char descriptor_table_protodef_QuadrupedNav_2eproto[] PROTOBUF_SECTION_VAR
   "\033dtProto/nav_msgs/Odom.proto\032$dtProto/na"
   "v_msgs/SteppableArea.proto\032\036dtProto/std_"
   "msgs/Request.proto\032\035dtProto/std_msgs/Hea"
-  "der.proto\"\200\001\n\033OdomWithJointPosTimeStampe"
-  "d\022(\n\006header\030\001 \001(\0132\030.dtproto.std_msgs.Hea"
-  "der\022$\n\004odom\030\002 \001(\0132\026.dtproto.nav_msgs.Odo"
-  "m\022\021\n\tjoint_pos\030\003 \003(\0012\224\003\n\003Nav\022d\n\017RequestO"
-  "dometry\022!.dtproto.nav_msgs.OdomTimeStamp"
-  "ed\032..dtproto.quadruped.OdomWithJointPosT"
-  "imeStamped\022]\n\023NotifySteppableArea\022*.dtpr"
-  "oto.nav_msgs.SteppableAreaTimeStamped\032\032."
-  "dtproto.std_msgs.Response\022g\n\016StreamOdome"
-  "try\022!.dtproto.nav_msgs.OdomTimeStamped\032."
-  ".dtproto.quadruped.OdomWithJointPosTimeS"
-  "tamped(\0010\001\022_\n\023StreamSteppableArea\022*.dtpr"
-  "oto.nav_msgs.SteppableAreaTimeStamped\032\032."
-  "dtproto.std_msgs.Response(\001b\006proto3"
+  "der.proto\032!dtProto/geometry_msgs/Point.p"
+  "roto\"\262\001\n\033OdomWithJointPosTimeStamped\022(\n\006"
+  "header\030\001 \001(\0132\030.dtproto.std_msgs.Header\022$"
+  "\n\004odom\030\002 \001(\0132\026.dtproto.nav_msgs.Odom\022\021\n\t"
+  "joint_pos\030\003 \003(\001\0220\n\010foot_pos\030\004 \003(\0132\036.dtpr"
+  "oto.geometry_msgs.Point3d2\224\003\n\003Nav\022d\n\017Req"
+  "uestOdometry\022!.dtproto.nav_msgs.OdomTime"
+  "Stamped\032..dtproto.quadruped.OdomWithJoin"
+  "tPosTimeStamped\022]\n\023NotifySteppableArea\022*"
+  ".dtproto.nav_msgs.SteppableAreaTimeStamp"
+  "ed\032\032.dtproto.std_msgs.Response\022g\n\016Stream"
+  "Odometry\022!.dtproto.nav_msgs.OdomTimeStam"
+  "ped\032..dtproto.quadruped.OdomWithJointPos"
+  "TimeStamped(\0010\001\022_\n\023StreamSteppableArea\022*"
+  ".dtproto.nav_msgs.SteppableAreaTimeStamp"
+  "ed\032\032.dtproto.std_msgs.Response(\001b\006proto3"
   ;
-static const ::_pbi::DescriptorTable* const descriptor_table_QuadrupedNav_2eproto_deps[4] = {
+static const ::_pbi::DescriptorTable* const descriptor_table_QuadrupedNav_2eproto_deps[5] = {
+  &::descriptor_table_dtProto_2fgeometry_5fmsgs_2fPoint_2eproto,
   &::descriptor_table_dtProto_2fnav_5fmsgs_2fOdom_2eproto,
   &::descriptor_table_dtProto_2fnav_5fmsgs_2fSteppableArea_2eproto,
   &::descriptor_table_dtProto_2fstd_5fmsgs_2fHeader_2eproto,
@@ -90,9 +95,9 @@ static const ::_pbi::DescriptorTable* const descriptor_table_QuadrupedNav_2eprot
 };
 static ::_pbi::once_flag descriptor_table_QuadrupedNav_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_QuadrupedNav_2eproto = {
-    false, false, 715, descriptor_table_protodef_QuadrupedNav_2eproto,
+    false, false, 800, descriptor_table_protodef_QuadrupedNav_2eproto,
     "QuadrupedNav.proto",
-    &descriptor_table_QuadrupedNav_2eproto_once, descriptor_table_QuadrupedNav_2eproto_deps, 4, 1,
+    &descriptor_table_QuadrupedNav_2eproto_once, descriptor_table_QuadrupedNav_2eproto_deps, 5, 1,
     schemas, file_default_instances, TableStruct_QuadrupedNav_2eproto::offsets,
     file_level_metadata_QuadrupedNav_2eproto, file_level_enum_descriptors_QuadrupedNav_2eproto,
     file_level_service_descriptors_QuadrupedNav_2eproto,
@@ -134,6 +139,9 @@ void OdomWithJointPosTimeStamped::clear_odom() {
   }
   _impl_.odom_ = nullptr;
 }
+void OdomWithJointPosTimeStamped::clear_foot_pos() {
+  _impl_.foot_pos_.Clear();
+}
 OdomWithJointPosTimeStamped::OdomWithJointPosTimeStamped(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -145,6 +153,7 @@ OdomWithJointPosTimeStamped::OdomWithJointPosTimeStamped(const OdomWithJointPosT
   OdomWithJointPosTimeStamped* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.joint_pos_){from._impl_.joint_pos_}
+    , decltype(_impl_.foot_pos_){from._impl_.foot_pos_}
     , decltype(_impl_.header_){nullptr}
     , decltype(_impl_.odom_){nullptr}
     , /*decltype(_impl_._cached_size_)*/{}};
@@ -165,6 +174,7 @@ inline void OdomWithJointPosTimeStamped::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.joint_pos_){arena}
+    , decltype(_impl_.foot_pos_){arena}
     , decltype(_impl_.header_){nullptr}
     , decltype(_impl_.odom_){nullptr}
     , /*decltype(_impl_._cached_size_)*/{}
@@ -183,6 +193,7 @@ OdomWithJointPosTimeStamped::~OdomWithJointPosTimeStamped() {
 inline void OdomWithJointPosTimeStamped::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.joint_pos_.~RepeatedField();
+  _impl_.foot_pos_.~RepeatedPtrField();
   if (this != internal_default_instance()) delete _impl_.header_;
   if (this != internal_default_instance()) delete _impl_.odom_;
 }
@@ -198,6 +209,7 @@ void OdomWithJointPosTimeStamped::Clear() {
   (void) cached_has_bits;
 
   _impl_.joint_pos_.Clear();
+  _impl_.foot_pos_.Clear();
   if (GetArenaForAllocation() == nullptr && _impl_.header_ != nullptr) {
     delete _impl_.header_;
   }
@@ -239,6 +251,19 @@ const char* OdomWithJointPosTimeStamped::_InternalParse(const char* ptr, ::_pbi:
         } else if (static_cast<uint8_t>(tag) == 25) {
           _internal_add_joint_pos(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr));
           ptr += sizeof(double);
+        } else
+          goto handle_unusual;
+        continue;
+      // repeated .dtproto.geometry_msgs.Point3d foot_pos = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_foot_pos(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<34>(ptr));
         } else
           goto handle_unusual;
         continue;
@@ -290,6 +315,14 @@ uint8_t* OdomWithJointPosTimeStamped::_InternalSerialize(
     target = stream->WriteFixedPacked(3, _internal_joint_pos(), target);
   }
 
+  // repeated .dtproto.geometry_msgs.Point3d foot_pos = 4;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_foot_pos_size()); i < n; i++) {
+    const auto& repfield = this->_internal_foot_pos(i);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+        InternalWriteMessage(4, repfield, repfield.GetCachedSize(), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -315,6 +348,13 @@ size_t OdomWithJointPosTimeStamped::ByteSizeLong() const {
         ::_pbi::WireFormatLite::Int32Size(static_cast<int32_t>(data_size));
     }
     total_size += data_size;
+  }
+
+  // repeated .dtproto.geometry_msgs.Point3d foot_pos = 4;
+  total_size += 1UL * this->_internal_foot_pos_size();
+  for (const auto& msg : this->_impl_.foot_pos_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
   // .dtproto.std_msgs.Header header = 1;
@@ -350,6 +390,7 @@ void OdomWithJointPosTimeStamped::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to
   (void) cached_has_bits;
 
   _this->_impl_.joint_pos_.MergeFrom(from._impl_.joint_pos_);
+  _this->_impl_.foot_pos_.MergeFrom(from._impl_.foot_pos_);
   if (from._internal_has_header()) {
     _this->_internal_mutable_header()->::dtproto::std_msgs::Header::MergeFrom(
         from._internal_header());
@@ -376,6 +417,7 @@ void OdomWithJointPosTimeStamped::InternalSwap(OdomWithJointPosTimeStamped* othe
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   _impl_.joint_pos_.InternalSwap(&other->_impl_.joint_pos_);
+  _impl_.foot_pos_.InternalSwap(&other->_impl_.foot_pos_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(OdomWithJointPosTimeStamped, _impl_.odom_)
       + sizeof(OdomWithJointPosTimeStamped::_impl_.odom_)

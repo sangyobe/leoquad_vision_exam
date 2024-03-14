@@ -34,6 +34,7 @@
 #include "dtProto/nav_msgs/SteppableArea.pb.h"
 #include "dtProto/std_msgs/Request.pb.h"
 #include "dtProto/std_msgs/Header.pb.h"
+#include "dtProto/geometry_msgs/Point.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_QuadrupedNav_2eproto
@@ -185,6 +186,7 @@ class OdomWithJointPosTimeStamped final :
 
   enum : int {
     kJointPosFieldNumber = 3,
+    kFootPosFieldNumber = 4,
     kHeaderFieldNumber = 1,
     kOdomFieldNumber = 2,
   };
@@ -209,6 +211,24 @@ class OdomWithJointPosTimeStamped final :
       joint_pos() const;
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
       mutable_joint_pos();
+
+  // repeated .dtproto.geometry_msgs.Point3d foot_pos = 4;
+  int foot_pos_size() const;
+  private:
+  int _internal_foot_pos_size() const;
+  public:
+  void clear_foot_pos();
+  ::dtproto::geometry_msgs::Point3d* mutable_foot_pos(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::geometry_msgs::Point3d >*
+      mutable_foot_pos();
+  private:
+  const ::dtproto::geometry_msgs::Point3d& _internal_foot_pos(int index) const;
+  ::dtproto::geometry_msgs::Point3d* _internal_add_foot_pos();
+  public:
+  const ::dtproto::geometry_msgs::Point3d& foot_pos(int index) const;
+  ::dtproto::geometry_msgs::Point3d* add_foot_pos();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::geometry_msgs::Point3d >&
+      foot_pos() const;
 
   // .dtproto.std_msgs.Header header = 1;
   bool has_header() const;
@@ -255,6 +275,7 @@ class OdomWithJointPosTimeStamped final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::RepeatedField< double > joint_pos_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::geometry_msgs::Point3d > foot_pos_;
     ::dtproto::std_msgs::Header* header_;
     ::dtproto::nav_msgs::Odom* odom_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -488,6 +509,43 @@ inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
 OdomWithJointPosTimeStamped::mutable_joint_pos() {
   // @@protoc_insertion_point(field_mutable_list:dtproto.quadruped.OdomWithJointPosTimeStamped.joint_pos)
   return _internal_mutable_joint_pos();
+}
+
+// repeated .dtproto.geometry_msgs.Point3d foot_pos = 4;
+inline int OdomWithJointPosTimeStamped::_internal_foot_pos_size() const {
+  return _impl_.foot_pos_.size();
+}
+inline int OdomWithJointPosTimeStamped::foot_pos_size() const {
+  return _internal_foot_pos_size();
+}
+inline ::dtproto::geometry_msgs::Point3d* OdomWithJointPosTimeStamped::mutable_foot_pos(int index) {
+  // @@protoc_insertion_point(field_mutable:dtproto.quadruped.OdomWithJointPosTimeStamped.foot_pos)
+  return _impl_.foot_pos_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::geometry_msgs::Point3d >*
+OdomWithJointPosTimeStamped::mutable_foot_pos() {
+  // @@protoc_insertion_point(field_mutable_list:dtproto.quadruped.OdomWithJointPosTimeStamped.foot_pos)
+  return &_impl_.foot_pos_;
+}
+inline const ::dtproto::geometry_msgs::Point3d& OdomWithJointPosTimeStamped::_internal_foot_pos(int index) const {
+  return _impl_.foot_pos_.Get(index);
+}
+inline const ::dtproto::geometry_msgs::Point3d& OdomWithJointPosTimeStamped::foot_pos(int index) const {
+  // @@protoc_insertion_point(field_get:dtproto.quadruped.OdomWithJointPosTimeStamped.foot_pos)
+  return _internal_foot_pos(index);
+}
+inline ::dtproto::geometry_msgs::Point3d* OdomWithJointPosTimeStamped::_internal_add_foot_pos() {
+  return _impl_.foot_pos_.Add();
+}
+inline ::dtproto::geometry_msgs::Point3d* OdomWithJointPosTimeStamped::add_foot_pos() {
+  ::dtproto::geometry_msgs::Point3d* _add = _internal_add_foot_pos();
+  // @@protoc_insertion_point(field_add:dtproto.quadruped.OdomWithJointPosTimeStamped.foot_pos)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::geometry_msgs::Point3d >&
+OdomWithJointPosTimeStamped::foot_pos() const {
+  // @@protoc_insertion_point(field_list:dtproto.quadruped.OdomWithJointPosTimeStamped.foot_pos)
+  return _impl_.foot_pos_;
 }
 
 #ifdef __GNUC__
