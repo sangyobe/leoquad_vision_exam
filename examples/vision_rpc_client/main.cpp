@@ -20,7 +20,7 @@ int main()
     dtCore::dtLog::Initialize("leoquad_vision_rpc_client"); //, "logs/leoquad_vision_rpc_client.txt");
     dtCore::dtLog::SetLogLevel(dtCore::dtLog::LogLevel::trace);
 
-    std::unique_ptr<RpcClient> rpcClient = std::make_unique<RpcClient>("localhost:50056"); // ("10.0.0.5:50056");
+    std::unique_ptr<RpcClient> rpcClient = std::make_unique<RpcClient>("10.0.0.1:50056"); // ("10.0.0.5:50056");
 
     std::atomic<bool> bRun{true};
 
@@ -29,20 +29,8 @@ int main()
         double dt_ = 0.01;
 
         while (bRun.load()) {
-
-            rpcClient->template StartCall<RequestOdometryCall>((void*)(&odomEmul.odom));std::thread rpc_caller = std::thread([&] () {
-        double t_ = 0.0;
-        double dt_ = 0.05;
-
-        while (bRun.load()) {
-
             rpcClient->template StartCall<RequestOdometryCall>((void*)(&odomEmul.odom));
-            rpcClient->template StartCall<NotifySteppableAreaCall>((void*)(&steppablesEmul.steppables));
-            std::this_thread::sleep_for(std::chrono::milliseconds(long(dt_ * 1000)));
-            t_ += dt_;
-        }
-    });
-            std::this_thread::sleep_for(std::chrono::milliseconds(long(dt_ * 1000)));
+           std::this_thread::sleep_for(std::chrono::milliseconds(long(dt_ * 1000)));
             t_ += dt_;
         }
     });
@@ -51,7 +39,6 @@ int main()
         double dt_ = 0.05;
 
         while (bRun.load()) {
-
             rpcClient->template StartCall<NotifySteppableAreaCall>((void*)(&steppablesEmul.steppables));
             std::this_thread::sleep_for(std::chrono::milliseconds(long(dt_ * 1000)));
             t_ += dt_;
