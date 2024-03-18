@@ -24,13 +24,34 @@ int main()
 
     std::atomic<bool> bRun{true};
 
-    std::thread rpc_caller = std::thread([&] () {
+    std::thread odom_caller = std::thread([&] () {
+        double t_ = 0.0;
+        double dt_ = 0.01;
+
+        while (bRun.load()) {
+
+            rpcClient->template StartCall<RequestOdometryCall>((void*)(&odomEmul.odom));std::thread rpc_caller = std::thread([&] () {
         double t_ = 0.0;
         double dt_ = 0.05;
 
         while (bRun.load()) {
 
             rpcClient->template StartCall<RequestOdometryCall>((void*)(&odomEmul.odom));
+            rpcClient->template StartCall<NotifySteppableAreaCall>((void*)(&steppablesEmul.steppables));
+            std::this_thread::sleep_for(std::chrono::milliseconds(long(dt_ * 1000)));
+            t_ += dt_;
+        }
+    });
+            std::this_thread::sleep_for(std::chrono::milliseconds(long(dt_ * 1000)));
+            t_ += dt_;
+        }
+    });
+    std::thread steppableArea_caller = std::thread([&] () {
+        double t_ = 0.0;
+        double dt_ = 0.05;
+
+        while (bRun.load()) {
+
             rpcClient->template StartCall<NotifySteppableAreaCall>((void*)(&steppablesEmul.steppables));
             std::this_thread::sleep_for(std::chrono::milliseconds(long(dt_ * 1000)));
             t_ += dt_;
@@ -48,7 +69,8 @@ int main()
         }
     }
     
-    rpc_caller.join();
+    odom_caller.join();
+    steppableArea_caller.join();
     dtCore::dtLog::Terminate(); // flush all log messages
     return 0;
 }
