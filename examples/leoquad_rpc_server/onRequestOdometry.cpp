@@ -6,6 +6,8 @@ OnRequestOdometry::OnRequestOdometry(dtCore::dtServiceListenerGrpc* server, grpc
 
     for (int j=0; j<12; j++)
         _response.add_joint_pos(0.0);
+    for (int l=0; l<4; l++)
+        _response.add_foot_pos();
 
     _call_state = CallState::WAIT_CONNECT;
     (static_cast<ServiceType*>(_service))->RequestRequestOdometry(&(_ctx), &_request, &_responder, _cq, _cq, this);
@@ -50,6 +52,15 @@ bool OnRequestOdometry::OnCompletionEvent(bool ok) {
                 _response.mutable_odom()->mutable_pose()->mutable_orientation()->set_w(_robotData->baseRot.w);
                 for (int j=0; j<12; j++)
                     _response.set_joint_pos(j, _robotData->jointPos[j]);
+                for (int i=0; i<4; i++) {
+                    _response.mutable_foot_pos(i)->set_x(_robotData->footPos[i].x);
+                    _response.mutable_foot_pos(i)->set_y(_robotData->footPos[i].y);
+                    _response.mutable_foot_pos(i)->set_z(_robotData->footPos[i].z);
+                }
+                _response.mutable_contact()->set_a1(_robotData->footContact[0]);
+                _response.mutable_contact()->set_a2(_robotData->footContact[1]);
+                _response.mutable_contact()->set_a3(_robotData->footContact[2]);
+                _response.mutable_contact()->set_a4(_robotData->footContact[3]);
 
                 _call_state = CallState::WAIT_FINISH;
                 _responder.Finish(_response, grpc::Status::OK, this);

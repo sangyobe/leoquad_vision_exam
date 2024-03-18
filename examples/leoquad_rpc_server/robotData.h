@@ -49,6 +49,12 @@ public:
     // joint position
     double jointPos[12];
 
+    // foot position
+    Point footPos[4];
+
+    // foot contact
+    bool footContact[4];
+
     // visual odom received
     Point visualOdomPos;
     Quaternion visualOdomRot;

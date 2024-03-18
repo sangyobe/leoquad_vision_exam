@@ -7,12 +7,14 @@ import "dtProto/nav_msgs/SteppableArea.proto";
 import "dtProto/std_msgs/Request.proto";
 import "dtProto/std_msgs/Header.proto";
 import "dtProto/geometry_msgs/Point.proto";
+import "dtProto/geometry_msgs/Vector.proto";
 
 message OdomWithJointPosTimeStamped {
     dtproto.std_msgs.Header header = 1;
     dtproto.nav_msgs.Odom odom = 2;
     repeated double joint_pos = 3;
     repeated dtproto.geometry_msgs.Point3d foot_pos = 4;
+    geometry_msgs.Vector4b contact = 5;
 }
 
 service Nav {

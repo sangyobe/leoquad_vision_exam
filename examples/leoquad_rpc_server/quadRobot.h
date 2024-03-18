@@ -27,6 +27,13 @@ public:
                     robotData.jointPos[j] = sin(t_ + j*(1.0/12.0)) * sin(t_ + j*(1.0/12.0));
                 }
 
+                for (int i = 0; i < 4; i++) {
+                    robotData.footPos[i].x = sin(2.0 * t_);
+                    robotData.footPos[i].y = cos(2.0 *t_);
+                    robotData.footPos[i].z = 0.4 + 0.1 * sin(2.0 *t_);
+                    robotData.footContact[i] = (((int)(t_) % 2) > 0 ? true : false);
+                }
+                
                 std::this_thread::sleep_for(std::chrono::milliseconds((long)(dt_ * 1000)));
                 t_ += dt_;
             }

@@ -81,6 +81,12 @@ bool RequestOdometryCall::OnCompletionEvent(bool ok) {
                                           _response.foot_pos(i).y(),
                                           _response.foot_pos(i).z());
                     }
+                    LOG(trace).format("RequestOdometryCall[{:d}]\tcontact=({}|{}|{}|{})",
+                                          this->_id,
+                                          (_response.contact().a1() ? "T" : " "),
+                                          (_response.contact().a2() ? "T" : " "),
+                                          (_response.contact().a3() ? "T" : " "),
+                                          (_response.contact().a4() ? "T" : " "));
 
                     std::lock_guard<std::mutex> lock(this->_proc_mtx);
                     _call_state = CallState::FINISHED;

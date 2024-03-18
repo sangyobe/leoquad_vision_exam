@@ -28,6 +28,7 @@ PROTOBUF_CONSTEXPR OdomWithJointPosTimeStamped::OdomWithJointPosTimeStamped(
   , /*decltype(_impl_.foot_pos_)*/{}
   , /*decltype(_impl_.header_)*/nullptr
   , /*decltype(_impl_.odom_)*/nullptr
+  , /*decltype(_impl_.contact_)*/nullptr
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct OdomWithJointPosTimeStampedDefaultTypeInternal {
   PROTOBUF_CONSTEXPR OdomWithJointPosTimeStampedDefaultTypeInternal()
@@ -55,6 +56,7 @@ const uint32_t TableStruct_QuadrupedNav_2eproto::offsets[] PROTOBUF_SECTION_VARI
   PROTOBUF_FIELD_OFFSET(::dtproto::quadruped::OdomWithJointPosTimeStamped, _impl_.odom_),
   PROTOBUF_FIELD_OFFSET(::dtproto::quadruped::OdomWithJointPosTimeStamped, _impl_.joint_pos_),
   PROTOBUF_FIELD_OFFSET(::dtproto::quadruped::OdomWithJointPosTimeStamped, _impl_.foot_pos_),
+  PROTOBUF_FIELD_OFFSET(::dtproto::quadruped::OdomWithJointPosTimeStamped, _impl_.contact_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::dtproto::quadruped::OdomWithJointPosTimeStamped)},
@@ -70,24 +72,28 @@ const char descriptor_table_protodef_QuadrupedNav_2eproto[] PROTOBUF_SECTION_VAR
   "v_msgs/SteppableArea.proto\032\036dtProto/std_"
   "msgs/Request.proto\032\035dtProto/std_msgs/Hea"
   "der.proto\032!dtProto/geometry_msgs/Point.p"
-  "roto\"\262\001\n\033OdomWithJointPosTimeStamped\022(\n\006"
-  "header\030\001 \001(\0132\030.dtproto.std_msgs.Header\022$"
-  "\n\004odom\030\002 \001(\0132\026.dtproto.nav_msgs.Odom\022\021\n\t"
-  "joint_pos\030\003 \003(\001\0220\n\010foot_pos\030\004 \003(\0132\036.dtpr"
-  "oto.geometry_msgs.Point3d2\224\003\n\003Nav\022d\n\017Req"
-  "uestOdometry\022!.dtproto.nav_msgs.OdomTime"
-  "Stamped\032..dtproto.quadruped.OdomWithJoin"
-  "tPosTimeStamped\022]\n\023NotifySteppableArea\022*"
-  ".dtproto.nav_msgs.SteppableAreaTimeStamp"
-  "ed\032\032.dtproto.std_msgs.Response\022g\n\016Stream"
-  "Odometry\022!.dtproto.nav_msgs.OdomTimeStam"
-  "ped\032..dtproto.quadruped.OdomWithJointPos"
-  "TimeStamped(\0010\001\022_\n\023StreamSteppableArea\022*"
-  ".dtproto.nav_msgs.SteppableAreaTimeStamp"
-  "ed\032\032.dtproto.std_msgs.Response(\001b\006proto3"
+  "roto\032\"dtProto/geometry_msgs/Vector.proto"
+  "\"\344\001\n\033OdomWithJointPosTimeStamped\022(\n\006head"
+  "er\030\001 \001(\0132\030.dtproto.std_msgs.Header\022$\n\004od"
+  "om\030\002 \001(\0132\026.dtproto.nav_msgs.Odom\022\021\n\tjoin"
+  "t_pos\030\003 \003(\001\0220\n\010foot_pos\030\004 \003(\0132\036.dtproto."
+  "geometry_msgs.Point3d\0220\n\007contact\030\005 \001(\0132\037"
+  ".dtproto.geometry_msgs.Vector4b2\224\003\n\003Nav\022"
+  "d\n\017RequestOdometry\022!.dtproto.nav_msgs.Od"
+  "omTimeStamped\032..dtproto.quadruped.OdomWi"
+  "thJointPosTimeStamped\022]\n\023NotifySteppable"
+  "Area\022*.dtproto.nav_msgs.SteppableAreaTim"
+  "eStamped\032\032.dtproto.std_msgs.Response\022g\n\016"
+  "StreamOdometry\022!.dtproto.nav_msgs.OdomTi"
+  "meStamped\032..dtproto.quadruped.OdomWithJo"
+  "intPosTimeStamped(\0010\001\022_\n\023StreamSteppable"
+  "Area\022*.dtproto.nav_msgs.SteppableAreaTim"
+  "eStamped\032\032.dtproto.std_msgs.Response(\001b\006"
+  "proto3"
   ;
-static const ::_pbi::DescriptorTable* const descriptor_table_QuadrupedNav_2eproto_deps[5] = {
+static const ::_pbi::DescriptorTable* const descriptor_table_QuadrupedNav_2eproto_deps[6] = {
   &::descriptor_table_dtProto_2fgeometry_5fmsgs_2fPoint_2eproto,
+  &::descriptor_table_dtProto_2fgeometry_5fmsgs_2fVector_2eproto,
   &::descriptor_table_dtProto_2fnav_5fmsgs_2fOdom_2eproto,
   &::descriptor_table_dtProto_2fnav_5fmsgs_2fSteppableArea_2eproto,
   &::descriptor_table_dtProto_2fstd_5fmsgs_2fHeader_2eproto,
@@ -95,9 +101,9 @@ static const ::_pbi::DescriptorTable* const descriptor_table_QuadrupedNav_2eprot
 };
 static ::_pbi::once_flag descriptor_table_QuadrupedNav_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_QuadrupedNav_2eproto = {
-    false, false, 800, descriptor_table_protodef_QuadrupedNav_2eproto,
+    false, false, 886, descriptor_table_protodef_QuadrupedNav_2eproto,
     "QuadrupedNav.proto",
-    &descriptor_table_QuadrupedNav_2eproto_once, descriptor_table_QuadrupedNav_2eproto_deps, 5, 1,
+    &descriptor_table_QuadrupedNav_2eproto_once, descriptor_table_QuadrupedNav_2eproto_deps, 6, 1,
     schemas, file_default_instances, TableStruct_QuadrupedNav_2eproto::offsets,
     file_level_metadata_QuadrupedNav_2eproto, file_level_enum_descriptors_QuadrupedNav_2eproto,
     file_level_service_descriptors_QuadrupedNav_2eproto,
@@ -117,6 +123,7 @@ class OdomWithJointPosTimeStamped::_Internal {
  public:
   static const ::dtproto::std_msgs::Header& header(const OdomWithJointPosTimeStamped* msg);
   static const ::dtproto::nav_msgs::Odom& odom(const OdomWithJointPosTimeStamped* msg);
+  static const ::dtproto::geometry_msgs::Vector4b& contact(const OdomWithJointPosTimeStamped* msg);
 };
 
 const ::dtproto::std_msgs::Header&
@@ -126,6 +133,10 @@ OdomWithJointPosTimeStamped::_Internal::header(const OdomWithJointPosTimeStamped
 const ::dtproto::nav_msgs::Odom&
 OdomWithJointPosTimeStamped::_Internal::odom(const OdomWithJointPosTimeStamped* msg) {
   return *msg->_impl_.odom_;
+}
+const ::dtproto::geometry_msgs::Vector4b&
+OdomWithJointPosTimeStamped::_Internal::contact(const OdomWithJointPosTimeStamped* msg) {
+  return *msg->_impl_.contact_;
 }
 void OdomWithJointPosTimeStamped::clear_header() {
   if (GetArenaForAllocation() == nullptr && _impl_.header_ != nullptr) {
@@ -142,6 +153,12 @@ void OdomWithJointPosTimeStamped::clear_odom() {
 void OdomWithJointPosTimeStamped::clear_foot_pos() {
   _impl_.foot_pos_.Clear();
 }
+void OdomWithJointPosTimeStamped::clear_contact() {
+  if (GetArenaForAllocation() == nullptr && _impl_.contact_ != nullptr) {
+    delete _impl_.contact_;
+  }
+  _impl_.contact_ = nullptr;
+}
 OdomWithJointPosTimeStamped::OdomWithJointPosTimeStamped(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -156,6 +173,7 @@ OdomWithJointPosTimeStamped::OdomWithJointPosTimeStamped(const OdomWithJointPosT
     , decltype(_impl_.foot_pos_){from._impl_.foot_pos_}
     , decltype(_impl_.header_){nullptr}
     , decltype(_impl_.odom_){nullptr}
+    , decltype(_impl_.contact_){nullptr}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -164,6 +182,9 @@ OdomWithJointPosTimeStamped::OdomWithJointPosTimeStamped(const OdomWithJointPosT
   }
   if (from._internal_has_odom()) {
     _this->_impl_.odom_ = new ::dtproto::nav_msgs::Odom(*from._impl_.odom_);
+  }
+  if (from._internal_has_contact()) {
+    _this->_impl_.contact_ = new ::dtproto::geometry_msgs::Vector4b(*from._impl_.contact_);
   }
   // @@protoc_insertion_point(copy_constructor:dtproto.quadruped.OdomWithJointPosTimeStamped)
 }
@@ -177,6 +198,7 @@ inline void OdomWithJointPosTimeStamped::SharedCtor(
     , decltype(_impl_.foot_pos_){arena}
     , decltype(_impl_.header_){nullptr}
     , decltype(_impl_.odom_){nullptr}
+    , decltype(_impl_.contact_){nullptr}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -196,6 +218,7 @@ inline void OdomWithJointPosTimeStamped::SharedDtor() {
   _impl_.foot_pos_.~RepeatedPtrField();
   if (this != internal_default_instance()) delete _impl_.header_;
   if (this != internal_default_instance()) delete _impl_.odom_;
+  if (this != internal_default_instance()) delete _impl_.contact_;
 }
 
 void OdomWithJointPosTimeStamped::SetCachedSize(int size) const {
@@ -218,6 +241,10 @@ void OdomWithJointPosTimeStamped::Clear() {
     delete _impl_.odom_;
   }
   _impl_.odom_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && _impl_.contact_ != nullptr) {
+    delete _impl_.contact_;
+  }
+  _impl_.contact_ = nullptr;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -264,6 +291,14 @@ const char* OdomWithJointPosTimeStamped::_InternalParse(const char* ptr, ::_pbi:
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<34>(ptr));
+        } else
+          goto handle_unusual;
+        continue;
+      // .dtproto.geometry_msgs.Vector4b contact = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
+          ptr = ctx->ParseMessage(_internal_mutable_contact(), ptr);
+          CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
@@ -323,6 +358,13 @@ uint8_t* OdomWithJointPosTimeStamped::_InternalSerialize(
         InternalWriteMessage(4, repfield, repfield.GetCachedSize(), target, stream);
   }
 
+  // .dtproto.geometry_msgs.Vector4b contact = 5;
+  if (this->_internal_has_contact()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(5, _Internal::contact(this),
+        _Internal::contact(this).GetCachedSize(), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -371,6 +413,13 @@ size_t OdomWithJointPosTimeStamped::ByteSizeLong() const {
         *_impl_.odom_);
   }
 
+  // .dtproto.geometry_msgs.Vector4b contact = 5;
+  if (this->_internal_has_contact()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.contact_);
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -399,6 +448,10 @@ void OdomWithJointPosTimeStamped::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to
     _this->_internal_mutable_odom()->::dtproto::nav_msgs::Odom::MergeFrom(
         from._internal_odom());
   }
+  if (from._internal_has_contact()) {
+    _this->_internal_mutable_contact()->::dtproto::geometry_msgs::Vector4b::MergeFrom(
+        from._internal_contact());
+  }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -419,8 +472,8 @@ void OdomWithJointPosTimeStamped::InternalSwap(OdomWithJointPosTimeStamped* othe
   _impl_.joint_pos_.InternalSwap(&other->_impl_.joint_pos_);
   _impl_.foot_pos_.InternalSwap(&other->_impl_.foot_pos_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(OdomWithJointPosTimeStamped, _impl_.odom_)
-      + sizeof(OdomWithJointPosTimeStamped::_impl_.odom_)
+      PROTOBUF_FIELD_OFFSET(OdomWithJointPosTimeStamped, _impl_.contact_)
+      + sizeof(OdomWithJointPosTimeStamped::_impl_.contact_)
       - PROTOBUF_FIELD_OFFSET(OdomWithJointPosTimeStamped, _impl_.header_)>(
           reinterpret_cast<char*>(&_impl_.header_),
           reinterpret_cast<char*>(&other->_impl_.header_));

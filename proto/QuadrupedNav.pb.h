@@ -35,6 +35,7 @@
 #include "dtProto/std_msgs/Request.pb.h"
 #include "dtProto/std_msgs/Header.pb.h"
 #include "dtProto/geometry_msgs/Point.pb.h"
+#include "dtProto/geometry_msgs/Vector.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_QuadrupedNav_2eproto
@@ -189,6 +190,7 @@ class OdomWithJointPosTimeStamped final :
     kFootPosFieldNumber = 4,
     kHeaderFieldNumber = 1,
     kOdomFieldNumber = 2,
+    kContactFieldNumber = 5,
   };
   // repeated double joint_pos = 3;
   int joint_pos_size() const;
@@ -266,6 +268,24 @@ class OdomWithJointPosTimeStamped final :
       ::dtproto::nav_msgs::Odom* odom);
   ::dtproto::nav_msgs::Odom* unsafe_arena_release_odom();
 
+  // .dtproto.geometry_msgs.Vector4b contact = 5;
+  bool has_contact() const;
+  private:
+  bool _internal_has_contact() const;
+  public:
+  void clear_contact();
+  const ::dtproto::geometry_msgs::Vector4b& contact() const;
+  PROTOBUF_NODISCARD ::dtproto::geometry_msgs::Vector4b* release_contact();
+  ::dtproto::geometry_msgs::Vector4b* mutable_contact();
+  void set_allocated_contact(::dtproto::geometry_msgs::Vector4b* contact);
+  private:
+  const ::dtproto::geometry_msgs::Vector4b& _internal_contact() const;
+  ::dtproto::geometry_msgs::Vector4b* _internal_mutable_contact();
+  public:
+  void unsafe_arena_set_allocated_contact(
+      ::dtproto::geometry_msgs::Vector4b* contact);
+  ::dtproto::geometry_msgs::Vector4b* unsafe_arena_release_contact();
+
   // @@protoc_insertion_point(class_scope:dtproto.quadruped.OdomWithJointPosTimeStamped)
  private:
   class _Internal;
@@ -278,6 +298,7 @@ class OdomWithJointPosTimeStamped final :
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::geometry_msgs::Point3d > foot_pos_;
     ::dtproto::std_msgs::Header* header_;
     ::dtproto::nav_msgs::Odom* odom_;
+    ::dtproto::geometry_msgs::Vector4b* contact_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -546,6 +567,91 @@ inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::geometry_msgs
 OdomWithJointPosTimeStamped::foot_pos() const {
   // @@protoc_insertion_point(field_list:dtproto.quadruped.OdomWithJointPosTimeStamped.foot_pos)
   return _impl_.foot_pos_;
+}
+
+// .dtproto.geometry_msgs.Vector4b contact = 5;
+inline bool OdomWithJointPosTimeStamped::_internal_has_contact() const {
+  return this != internal_default_instance() && _impl_.contact_ != nullptr;
+}
+inline bool OdomWithJointPosTimeStamped::has_contact() const {
+  return _internal_has_contact();
+}
+inline const ::dtproto::geometry_msgs::Vector4b& OdomWithJointPosTimeStamped::_internal_contact() const {
+  const ::dtproto::geometry_msgs::Vector4b* p = _impl_.contact_;
+  return p != nullptr ? *p : reinterpret_cast<const ::dtproto::geometry_msgs::Vector4b&>(
+      ::dtproto::geometry_msgs::_Vector4b_default_instance_);
+}
+inline const ::dtproto::geometry_msgs::Vector4b& OdomWithJointPosTimeStamped::contact() const {
+  // @@protoc_insertion_point(field_get:dtproto.quadruped.OdomWithJointPosTimeStamped.contact)
+  return _internal_contact();
+}
+inline void OdomWithJointPosTimeStamped::unsafe_arena_set_allocated_contact(
+    ::dtproto::geometry_msgs::Vector4b* contact) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.contact_);
+  }
+  _impl_.contact_ = contact;
+  if (contact) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:dtproto.quadruped.OdomWithJointPosTimeStamped.contact)
+}
+inline ::dtproto::geometry_msgs::Vector4b* OdomWithJointPosTimeStamped::release_contact() {
+  
+  ::dtproto::geometry_msgs::Vector4b* temp = _impl_.contact_;
+  _impl_.contact_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::dtproto::geometry_msgs::Vector4b* OdomWithJointPosTimeStamped::unsafe_arena_release_contact() {
+  // @@protoc_insertion_point(field_release:dtproto.quadruped.OdomWithJointPosTimeStamped.contact)
+  
+  ::dtproto::geometry_msgs::Vector4b* temp = _impl_.contact_;
+  _impl_.contact_ = nullptr;
+  return temp;
+}
+inline ::dtproto::geometry_msgs::Vector4b* OdomWithJointPosTimeStamped::_internal_mutable_contact() {
+  
+  if (_impl_.contact_ == nullptr) {
+    auto* p = CreateMaybeMessage<::dtproto::geometry_msgs::Vector4b>(GetArenaForAllocation());
+    _impl_.contact_ = p;
+  }
+  return _impl_.contact_;
+}
+inline ::dtproto::geometry_msgs::Vector4b* OdomWithJointPosTimeStamped::mutable_contact() {
+  ::dtproto::geometry_msgs::Vector4b* _msg = _internal_mutable_contact();
+  // @@protoc_insertion_point(field_mutable:dtproto.quadruped.OdomWithJointPosTimeStamped.contact)
+  return _msg;
+}
+inline void OdomWithJointPosTimeStamped::set_allocated_contact(::dtproto::geometry_msgs::Vector4b* contact) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.contact_);
+  }
+  if (contact) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(contact));
+    if (message_arena != submessage_arena) {
+      contact = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, contact, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.contact_ = contact;
+  // @@protoc_insertion_point(field_set_allocated:dtproto.quadruped.OdomWithJointPosTimeStamped.contact)
 }
 
 #ifdef __GNUC__
