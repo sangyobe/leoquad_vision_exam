@@ -20,8 +20,9 @@ int main()
     dtCore::dtLog::Initialize("leoquad_vision_rpc_client"); //, "logs/leoquad_vision_rpc_client.txt");
     dtCore::dtLog::SetLogLevel(dtCore::dtLog::LogLevel::trace);
 
-    std::unique_ptr<RpcClient> rpcClient = std::make_unique<RpcClient>("10.0.0.1:50056"); // ("10.0.0.5:50056");
-
+    std::unique_ptr<RpcClient> rpcClient = std::make_unique<RpcClient>("127.0.0.1:50056");
+    //std::unique_ptr<RpcClient> rpcClient = std::make_unique<RpcClient>("10.0.1.2:50056"); // ("10.0.0.5:50056");
+    
     std::atomic<bool> bRun{true};
 
     std::thread odom_caller = std::thread([&] () {

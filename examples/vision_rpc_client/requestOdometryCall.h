@@ -24,6 +24,7 @@ private:
     ::dtproto::quadruped::OdomWithJointPosTimeStamped _response;
     std::unique_ptr<::grpc::ClientAsyncResponseReader<::dtproto::quadruped::OdomWithJointPosTimeStamped>> _responder;
     OdomData* _odomData{nullptr};
+    static uint32_t _req_seq;
 };
 
 #endif // __REQUESTODOMETRYCALL_H__

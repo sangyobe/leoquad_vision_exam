@@ -1,10 +1,30 @@
 #include "requestOdometryCall.h"
 #include <dtCore/src/dtLog/dtLog.h>
 
+uint32_t RequestOdometryCall::_req_seq = 0;
+
 RequestOdometryCall::RequestOdometryCall(ServiceType::Stub *stub, grpc::CompletionQueue *cq, void *udata)
 : dtCore::dtServiceCallerGrpc<ServiceType>::Call(stub, cq, udata), _odomData((OdomData*)udata) 
 {
     LOG(info) << "RequestOdometryCall[" << _id << "] NEW call.";
+
+    _request.mutable_header()->set_seq(_req_seq++);
+#ifdef _WIN32
+    FILETIME ft;
+    GetSystemTimeAsFileTime(&ft);
+    UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;
+    // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z
+    // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.
+    _request.mutable_header()->mutable_time_stamp()->set_seconds(
+        (INT64)((ticks / 10000000) - 11644473600LL));
+    _request.mutable_header()->mutable_time_stamp()->set_nanos((INT32)((ticks % 10000000) * 100));
+#else
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    _request.mutable_header()->mutable_time_stamp()->set_seconds(tv.tv_sec);
+    _request.mutable_header()->mutable_time_stamp()->set_nanos(tv.tv_usec * 1000);
+#endif
+
     _request.mutable_odom()->mutable_pose()->mutable_position()->set_x(_odomData->position.x);
     _request.mutable_odom()->mutable_pose()->mutable_position()->set_y(_odomData->position.y);
     _request.mutable_odom()->mutable_pose()->mutable_position()->set_z(_odomData->position.z);

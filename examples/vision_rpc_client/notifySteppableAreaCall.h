@@ -24,6 +24,7 @@ private:
     ::dtproto::std_msgs::Response _response;
     std::unique_ptr<::grpc::ClientAsyncResponseReader<::dtproto::std_msgs::Response>> _responder;
     SteppableArea* _steppables{nullptr};
+    static uint32_t _req_seq;
 };
 
 #endif // __NOTIFYSTEPPABLEAREACALL_H__
