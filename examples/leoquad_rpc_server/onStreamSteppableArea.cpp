@@ -6,7 +6,7 @@ OnStreamSteppableArea::OnStreamSteppableArea(dtCore::dtServiceListenerGrpc *serv
 {
     _call_state = CallState::WAIT_CONNECT;
     (static_cast<ServiceType *>(_service))->RequestStreamSteppableArea(&(_ctx), &_responder, _cq, _cq, this);
-    LOG(info) << "OnStreamSteppableArea[" << _id << "] Waiting for new service call.";
+    LOG(debug) << "OnStreamSteppableArea[" << _id << "] Waiting for new service call.";
 }
 
 OnStreamSteppableArea::~OnStreamSteppableArea()
@@ -22,7 +22,7 @@ bool OnStreamSteppableArea::OnCompletionEvent(bool ok)
 
         if (_call_state == CallState::WAIT_CONNECT)
         {
-            LOG(info) << "OnStreamSteppableArea[" << _id << "] NEW service call.";
+            LOG(debug) << "OnStreamSteppableArea[" << _id << "] NEW service call.";
             // add another service listener
             _server->template AddSession<OnStreamSteppableArea>((void*)_robotData);
             // process incomming service call
@@ -34,7 +34,7 @@ bool OnStreamSteppableArea::OnCompletionEvent(bool ok)
         }
         else if (_call_state == CallState::WAIT_READ_DONE)
         {
-            LOG(info) << "OnStreamSteppableArea[" << _id << "] Received data.";
+            LOG(debug) << "OnStreamSteppableArea[" << _id << "] Received data.";
 
             LOG(trace) << "OnStreamSteppableArea[" << _id << "] \tSteppable area count = " << _request.area().steppables_count();
             LOG(trace) << "OnStreamSteppableArea[" << _id << "] \tUnsteppable area count = " << _request.area().unsteppables_count();

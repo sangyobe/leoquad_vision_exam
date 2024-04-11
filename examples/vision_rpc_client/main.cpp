@@ -18,7 +18,12 @@ SteppablesEmulator steppablesEmul;
 int main()
 {
     dtCore::dtLog::Initialize("leoquad_vision_rpc_client"); //, "logs/leoquad_vision_rpc_client.txt");
-    dtCore::dtLog::SetLogLevel(dtCore::dtLog::LogLevel::trace);
+    dtCore::dtLog::SetLogLevel(dtCore::dtLog::LogLevel::info);
+
+    dtCore::dtLog::Create("latency", "logs/delay.csv", true, true);
+    dtCore::dtLog::SetLogLevel("latency", dtCore::dtLog::LogLevel::info);
+    dtCore::dtLog::SetLogPattern("latency", dtCore::dtLog::LogPatternFlag::none, "");
+    LOG_U(latency, info) << "request_time_s,response_time_s,delay_req_ms,delay_res_ms,delay_tot_ms";
 
     std::unique_ptr<RpcClient> rpcClient = std::make_unique<RpcClient>("127.0.0.1:50056");
     //std::unique_ptr<RpcClient> rpcClient = std::make_unique<RpcClient>("10.0.1.2:50056"); // ("10.0.0.5:50056");

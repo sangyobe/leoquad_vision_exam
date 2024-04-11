@@ -11,10 +11,10 @@ OnRequestOdometry::OnRequestOdometry(dtCore::dtServiceListenerGrpc* server, grpc
 
     _call_state = CallState::WAIT_CONNECT;
     (static_cast<ServiceType*>(_service))->RequestRequestOdometry(&(_ctx), &_request, &_responder, _cq, _cq, this);
-    LOG(info) << "OnRequestOdometry[" << _id << "] Wait for new service call...";
+    LOG(debug) << "OnRequestOdometry[" << _id << "] Wait for new service call...";
 }
 OnRequestOdometry::~OnRequestOdometry() {
-    // LOG(info) << "OnRequestOdometry session deleted."; // Do not output log here. It might be after LOG system has been destroyed.
+    // LOG(debug) << "OnRequestOdometry session deleted."; // Do not output log here. It might be after LOG system has been destroyed.
 }
 bool OnRequestOdometry::OnCompletionEvent(bool ok) {
     if (_call_state == CallState::FINISHED) {
@@ -22,7 +22,7 @@ bool OnRequestOdometry::OnCompletionEvent(bool ok) {
     }
     else if (ok) {
         if (_call_state == CallState::WAIT_CONNECT) {
-            LOG(info) << "OnRequestOdometry[" << _id << "] NEW service call.";
+            LOG(debug) << "OnRequestOdometry[" << _id << "] NEW service call.";
 
             _server->template AddSession<OnRequestOdometry>((void*)_robotData);
             {
@@ -67,7 +67,7 @@ bool OnRequestOdometry::OnCompletionEvent(bool ok) {
             }
         } 
         else if (_call_state == CallState::WAIT_FINISH) {
-            LOG(info) << "OnRequestOdometry[" << _id << "] Finalize service.";
+            LOG(debug) << "OnRequestOdometry[" << _id << "] Finalize service.";
             // _call_state = CallState::FINISHED;
             // _server->RemoveSession(_id);
             return false;

@@ -6,7 +6,7 @@ OnStreamOdometry::OnStreamOdometry(dtCore::dtServiceListenerGrpc *server, grpc::
 {
     _call_state = CallState::WAIT_CONNECT;
     (static_cast<ServiceType *>(_service))->RequestStreamOdometry(&(_ctx), &_responder, _cq, _cq, this);
-    LOG(info) << "OnStreamOdometry[" << _id << "] Waiting for new service call.";
+    LOG(debug) << "OnStreamOdometry[" << _id << "] Waiting for new service call.";
 }
 
 OnStreamOdometry::~OnStreamOdometry()
@@ -22,7 +22,7 @@ bool OnStreamOdometry::OnCompletionEvent(bool ok)
 
         if (_call_state == CallState::WAIT_CONNECT)
         {
-            LOG(info) << "OnStreamOdometry[" << _id << "] NEW service call.";
+            LOG(debug) << "OnStreamOdometry[" << _id << "] NEW service call.";
             // add another service listener
             _server->template AddSession<OnStreamOdometry>((void*)_robotData);
             // process incomming service call

@@ -6,7 +6,7 @@ uint32_t RequestOdometryCall::_req_seq = 0;
 RequestOdometryCall::RequestOdometryCall(ServiceType::Stub *stub, grpc::CompletionQueue *cq, void *udata)
 : dtCore::dtServiceCallerGrpc<ServiceType>::Call(stub, cq, udata), _odomData((OdomData*)udata) 
 {
-    LOG(info) << "RequestOdometryCall[" << _id << "] NEW call.";
+    LOG(debug) << "RequestOdometryCall[" << _id << "] NEW call.";
 
     _request.mutable_header()->set_seq(_req_seq++);
 #ifdef _WIN32
@@ -19,10 +19,13 @@ RequestOdometryCall::RequestOdometryCall(ServiceType::Stub *stub, grpc::Completi
         (INT64)((ticks / 10000000) - 11644473600LL));
     _request.mutable_header()->mutable_time_stamp()->set_nanos((INT32)((ticks % 10000000) * 100));
 #else
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    _request.mutable_header()->mutable_time_stamp()->set_seconds(tv.tv_sec);
-    _request.mutable_header()->mutable_time_stamp()->set_nanos(tv.tv_usec * 1000);
+    struct timespec tp;
+    int err = clock_gettime(CLOCK_REALTIME, &tp);
+    // LOG(info).format("{:.6f}", tp.tv_sec + tp.tv_nsec * 1.0e-9);
+    if (err)
+        LOG(err).format("clock_gettime returns error({:})", err);
+    _request.mutable_header()->mutable_time_stamp()->set_seconds(tp.tv_sec);
+    _request.mutable_header()->mutable_time_stamp()->set_nanos(tp.tv_nsec);
 #endif
 
     _request.mutable_odom()->mutable_pose()->mutable_position()->set_x(_odomData->position.x);
@@ -37,11 +40,11 @@ RequestOdometryCall::RequestOdometryCall(ServiceType::Stub *stub, grpc::Completi
     _responder = _stub->PrepareAsyncRequestOdometry(&(this->_ctx), _request, this->_cq);
     _responder->StartCall();
     _responder->Finish(&_response, &(this->_status), (void*)this);
-    LOG(info) << "RequestOdometryCall[" << _id << "] Wait for response.";
+    LOG(debug) << "RequestOdometryCall[" << _id << "] Wait for response.";
 }
 
 RequestOdometryCall::~RequestOdometryCall() {
-    // LOG(info) << "RequestOdometryCall[" << _id << "] Delete call."; // Do not output log
+    // LOG(debug) << "RequestOdometryCall[" << _id << "] Delete call."; // Do not output log
     // here. It might be after LOG system has been destroyed.
 }
 
@@ -50,7 +53,7 @@ bool RequestOdometryCall::OnCompletionEvent(bool ok) {
         switch (this->_status.error_code()) {
             case grpc::OK:
             {
-                LOG(info) << "RequestOdometryCall[" << _id << "] Complete !!!";
+                LOG(debug) << "RequestOdometryCall[" << _id << "] Complete !!!";
             }
             break;
 
@@ -73,7 +76,33 @@ bool RequestOdometryCall::OnCompletionEvent(bool ok) {
         if (this->_call_state == CallState::WAIT_FINISH) {
             if (this->_status.ok()) {  // when the server's response message and status have been received.
 
-                LOG(info) << "RequestOdometryCall[" << _id << "] Get response.";
+                double delay_msec = 0.0;
+#ifdef _WIN32
+                FILETIME ft;
+                GetSystemTimeAsFileTime(&ft);
+                UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;
+                // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z
+                // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.
+                
+                delay_msec = 0.0;
+#else
+                struct timespec tp;
+                int err = clock_gettime(CLOCK_REALTIME, &tp);
+                // LOG(info).format("{:.6f}", tp.tv_sec + tp.tv_nsec * 1.0e-9);
+                if (err)
+                    LOG(err).format("clock_gettime returns error({:})", err);
+                
+                delay_msec = (double)(tp.tv_sec - _response.header().time_stamp().seconds()) * 1e3 + (double)(tp.tv_nsec - _response.header().time_stamp().nanos()) * 1.0e-6;
+#endif
+                LOG_U(latency, info).format("{:.6f},{:.6f},{:.3f},{:.3f},{:.3f}"
+                                            , (_response.header().time_stamp().seconds() + _response.header().time_stamp().nanos() * 1e-9)  // time(s) to request
+                                            , (tp.tv_sec + tp.tv_nsec * 1e-9)   // time(s) to receive a response from the server
+                                            , _response.odom().twist().angular().x()    // time consumed(ms) for a request to be received by the server
+                                            , (delay_msec - _response.odom().twist().angular().x())
+                                            , delay_msec);
+
+
+                LOG(debug) << "RequestOdometryCall[" << _id << "] Get response.";
                 {
                     LOG(trace).format("RequestOdometryCall[{:d}]\tposition=({:+6.3f},{:+6.3f},{:+6.3f})",
                                       this->_id,

@@ -70,17 +70,17 @@ NotifySteppableAreaCall::NotifySteppableAreaCall(ServiceType::Stub *stub, grpc::
     }
     _request.mutable_area()->set_unsteppables_count(_steppables->unsteppableAreaCount);
 
-    LOG(info) << "NotifySteppableAreaCall[" << _id << "] NEW call.";
+    LOG(debug) << "NotifySteppableAreaCall[" << _id << "] NEW call.";
 
     this->_call_state = CallState::WAIT_FINISH;
     _responder = _stub->PrepareAsyncNotifySteppableArea(&(this->_ctx), _request, this->_cq);
     _responder->StartCall();
     _responder->Finish(&_response, &(this->_status), (void*)this);
-    LOG(info) << "NotifySteppableAreaCall[" << _id << "] Wait for response.";
+    LOG(debug) << "NotifySteppableAreaCall[" << _id << "] Wait for response.";
 }
 
 NotifySteppableAreaCall::~NotifySteppableAreaCall() {
-    // LOG(info) << "NotifySteppableAreaCall[" << _id << "] Delete call."; // Do not output log
+    // LOG(debug) << "NotifySteppableAreaCall[" << _id << "] Delete call."; // Do not output log
     // here. It might be after LOG system has been destroyed.
 }
 
@@ -89,7 +89,7 @@ bool NotifySteppableAreaCall::OnCompletionEvent(bool ok) {
         switch (this->_status.error_code()) {
             case grpc::OK:
             {
-                LOG(info) << "NotifySteppableAreaCall[" << _id << "] Complete !!!";
+                LOG(debug) << "NotifySteppableAreaCall[" << _id << "] Complete !!!";
             }
             break;
 
@@ -111,7 +111,7 @@ bool NotifySteppableAreaCall::OnCompletionEvent(bool ok) {
 
         if (this->_call_state == CallState::WAIT_FINISH) {
             if (this->_status.ok()) {  // when the server's response message and status have been received.
-                LOG(info) << "NotifySteppableAreaCall[" << _id << "] Get response.";
+                LOG(debug) << "NotifySteppableAreaCall[" << _id << "] Get response.";
                 {
                     std::lock_guard<std::mutex> lock(this->_proc_mtx);
 

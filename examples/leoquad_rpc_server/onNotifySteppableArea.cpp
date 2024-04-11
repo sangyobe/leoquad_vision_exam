@@ -5,10 +5,10 @@ OnNotifySteppableArea::OnNotifySteppableArea(dtCore::dtServiceListenerGrpc* serv
 : dtCore::dtServiceListenerGrpc::Session(server, service, cq, udata), _responder(&_ctx), _robotData((RobotData*)udata) {
     _call_state = CallState::WAIT_CONNECT;
     (static_cast<ServiceType*>(_service))->RequestNotifySteppableArea(&(_ctx), &_request, &_responder, _cq, _cq, this);
-    LOG(info) << "OnNotifySteppableArea[" << _id << "] Wait for new service call...";
+    LOG(debug) << "OnNotifySteppableArea[" << _id << "] Wait for new service call...";
 }
 OnNotifySteppableArea::~OnNotifySteppableArea() {
-    // LOG(info) << "OnNotifySteppableArea session deleted."; // Do not output log here. It might be after LOG system has been destroyed.
+    // LOG(debug) << "OnNotifySteppableArea session deleted."; // Do not output log here. It might be after LOG system has been destroyed.
 }
 bool OnNotifySteppableArea::OnCompletionEvent(bool ok) {
     if (_call_state == CallState::FINISHED) {
@@ -16,7 +16,7 @@ bool OnNotifySteppableArea::OnCompletionEvent(bool ok) {
     }
     else if (ok) {
         if (_call_state == CallState::WAIT_CONNECT) {
-            LOG(info) << "OnNotifySteppableArea[" << _id << "] NEW service call.";
+            LOG(debug) << "OnNotifySteppableArea[" << _id << "] NEW service call.";
 
             _server->template AddSession<OnNotifySteppableArea>((void*)_robotData);
             {
@@ -33,7 +33,7 @@ bool OnNotifySteppableArea::OnCompletionEvent(bool ok) {
             }
         } 
         else if (_call_state == CallState::WAIT_FINISH) {
-            LOG(info) << "OnNotifySteppableArea[" << _id << "] Finalize service.";
+            LOG(debug) << "OnNotifySteppableArea[" << _id << "] Finalize service.";
             // _call_state = CallState::FINISHED;
             // _server->RemoveSession(_id);
             return false;
