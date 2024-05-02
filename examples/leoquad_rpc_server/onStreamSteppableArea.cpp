@@ -37,7 +37,6 @@ bool OnStreamSteppableArea::OnCompletionEvent(bool ok)
             LOG(debug) << "OnStreamSteppableArea[" << _id << "] Received data.";
 
             LOG(trace) << "OnStreamSteppableArea[" << _id << "] \tSteppable area count = " << _request.area().steppables_count();
-            LOG(trace) << "OnStreamSteppableArea[" << _id << "] \tUnsteppable area count = " << _request.area().unsteppables_count();
 
             std::lock_guard<std::mutex> lock(_proc_mtx);
             _responder.Read(&_request, (void *)this);

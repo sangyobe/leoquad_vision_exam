@@ -39,6 +39,13 @@ typedef struct _Polygon {
     uint32_t vertex_count;
 } Polygon;
 
+typedef struct _SteppablePolygon
+{
+    Polygon polygon;
+    uint32_t index;
+    uint32_t properties;
+} SteppablePolygon;
+
 class RobotData
 {
 public:
@@ -60,10 +67,8 @@ public:
     Quaternion visualOdomRot;
 
     // steppable and unsteppable areas
-    Polygon steppableArea[MAX_POLYGON];
-    Polygon unsteppableArea[MAX_POLYGON];
-    uint32_t steppableAreaCount;
-    uint32_t unsteppableAreaCount;
+    SteppablePolygon steppables[MAX_POLYGON];
+    uint32_t steppablesCount;
 };
 
 #endif // ROBOTDATA_H

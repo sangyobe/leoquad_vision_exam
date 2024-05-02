@@ -7,18 +7,24 @@
 #include <cmath>
 #include "yaml-cpp/yaml.h"
 
+#define MAX_POLYGON (48)
+typedef struct _SteppablePolygon
+{
+    Polygon polygon;
+    uint32_t index;
+    uint32_t properties;
+} SteppablePolygon;
+
 typedef struct _steppableArea
 {
-    Polygon steppableArea[MAX_POLYGON];
-    Polygon unsteppableArea[MAX_POLYGON];
-    uint32_t steppableAreaCount;
-    uint32_t unsteppableAreaCount;
+    SteppablePolygon steppables[MAX_POLYGON];
+    uint32_t steppablesCount;
 } SteppableArea;
 
 class SteppablesEmulator
 {
 public:
-    SteppableArea steppables;
+    SteppableArea area;
 
 public:
     SteppablesEmulator() 
@@ -32,38 +38,40 @@ public:
             if (!rootNode["polygons"][plg_name].IsDefined())
                 break;
 
-            steppables.steppableArea[plg_count].center.x = rootNode["polygons"][plg_name]["center"][0].as<double>();
-            steppables.steppableArea[plg_count].center.y = rootNode["polygons"][plg_name]["center"][1].as<double>();
-            steppables.steppableArea[plg_count].center.z = rootNode["polygons"][plg_name]["center"][2].as<double>();
+            area.steppables[plg_count].properties = (rootNode["polygons"][plg_name]["steppable"].as<uint32_t>() == 1 ? 0 : 1);
+            area.steppables[plg_count].index = rootNode["polygons"][plg_name]["index"].as<uint32_t>();
 
-            steppables.steppableArea[plg_count].normal.x = rootNode["polygons"][plg_name]["normal"][0].as<double>();
-            steppables.steppableArea[plg_count].normal.y = rootNode["polygons"][plg_name]["normal"][1].as<double>();
-            steppables.steppableArea[plg_count].normal.z = rootNode["polygons"][plg_name]["normal"][2].as<double>();
+            area.steppables[plg_count].polygon.center.x = rootNode["polygons"][plg_name]["center"][0].as<double>();
+            area.steppables[plg_count].polygon.center.y = rootNode["polygons"][plg_name]["center"][1].as<double>();
+            area.steppables[plg_count].polygon.center.z = rootNode["polygons"][plg_name]["center"][2].as<double>();
+
+            area.steppables[plg_count].polygon.normal.x = rootNode["polygons"][plg_name]["normal"][0].as<double>();
+            area.steppables[plg_count].polygon.normal.y = rootNode["polygons"][plg_name]["normal"][1].as<double>();
+            area.steppables[plg_count].polygon.normal.z = rootNode["polygons"][plg_name]["normal"][2].as<double>();
 
             vtx_count = rootNode["polygons"][plg_name]["points"].size();
             if (vtx_count > MAX_VERTEX)
                 vtx_count = MAX_VERTEX;
             for (int i=0; i<vtx_count; i++) {
-                steppables.steppableArea[plg_count].vertex[i].x = rootNode["polygons"][plg_name]["points"][i][0].as<double>();
-                steppables.steppableArea[plg_count].vertex[i].y = rootNode["polygons"][plg_name]["points"][i][1].as<double>();
-                steppables.steppableArea[plg_count].vertex[i].z = rootNode["polygons"][plg_name]["points"][i][2].as<double>();
+                area.steppables[plg_count].polygon.vertex[i].x = rootNode["polygons"][plg_name]["points"][i][0].as<double>();
+                area.steppables[plg_count].polygon.vertex[i].y = rootNode["polygons"][plg_name]["points"][i][1].as<double>();
+                area.steppables[plg_count].polygon.vertex[i].z = rootNode["polygons"][plg_name]["points"][i][2].as<double>();
             }
-            steppables.steppableArea[plg_count].vertex_count = vtx_count;
+            area.steppables[plg_count].polygon.vertex_count = vtx_count;
 
             plg_count++;
             if (plg_count >= MAX_POLYGON)
                 break;
         }
-        steppables.steppableAreaCount = plg_count;
-        steppables.unsteppableAreaCount = 0;
+        area.steppablesCount = plg_count;
 
         _dataUpdater = std::thread([this] {
             _runUpdater.store(true);
             double t_ = 0.0;
             double dt_ = 0.001;
             while (_runUpdater.load()) {
-                
-                steppables.steppableAreaCount = (((int)t_) % 5) + 1;
+
+                area.steppablesCount = (((int)t_) % 5) + 1;
 
                 std::this_thread::sleep_for(std::chrono::milliseconds((long)(dt_ * 1000)));
                 t_ += dt_;

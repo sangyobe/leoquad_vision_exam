@@ -33,7 +33,6 @@ typedef struct _Quaternion {
 } Quaternion;
 
 #define MAX_VERTEX (128)
-#define MAX_POLYGON (16)
 typedef struct _Polygon {
     Point center;
     Point normal;

@@ -35,26 +35,30 @@ const char descriptor_table_protodef_dtProto_2fService_2eproto[] PROTOBUF_SECTIO
   "proto\032\"dtProto/robot_msgs/RobotInfo.prot"
   "o\032#dtProto/robot_msgs/ControlCmd.proto\032$"
   "dtProto/robot_msgs/MoveControl.proto\032%dt"
-  "Proto/robot_msgs/JointControl.proto\032\033goo"
-  "gle/protobuf/empty.proto\032\036google/protobu"
-  "f/wrappers.proto2\261\003\n\tdtService\022\?\n\007Versio"
-  "n\022\026.google.protobuf.Empty\032\034.google.proto"
-  "buf.StringValue\022C\n\013StreamState\022\031.dtproto"
-  ".std_msgs.Request\032\027.dtproto.std_msgs.Sta"
-  "te0\001\022C\n\004Move\022\037.dtproto.robot_msgs.MoveCo"
-  "ntrol\032\032.dtproto.std_msgs.Response\022I\n\tMov"
-  "eJoint\022 .dtproto.robot_msgs.JointControl"
-  "\032\032.dtproto.std_msgs.Response\022E\n\007Command\022"
-  "\036.dtproto.robot_msgs.ControlCmd\032\032.dtprot"
-  "o.std_msgs.Response\022G\n\016QueryRobotInfo\022\026."
-  "google.protobuf.Empty\032\035.dtproto.robot_ms"
-  "gs.RobotInfob\006proto3"
+  "Proto/robot_msgs/JointControl.proto\032\035dtP"
+  "roto/sensor_msgs/Joy.proto\032\033google/proto"
+  "buf/empty.proto\032\036google/protobuf/wrapper"
+  "s.proto2\370\003\n\tdtService\022\?\n\007Version\022\026.googl"
+  "e.protobuf.Empty\032\034.google.protobuf.Strin"
+  "gValue\022C\n\013StreamState\022\031.dtproto.std_msgs"
+  ".Request\032\027.dtproto.std_msgs.State0\001\022C\n\004M"
+  "ove\022\037.dtproto.robot_msgs.MoveControl\032\032.d"
+  "tproto.std_msgs.Response\022I\n\tMoveJoint\022 ."
+  "dtproto.robot_msgs.JointControl\032\032.dtprot"
+  "o.std_msgs.Response\022E\n\007Command\022\036.dtproto"
+  ".robot_msgs.ControlCmd\032\032.dtproto.std_msg"
+  "s.Response\022E\n\tStreamJoy\022\030.dtproto.sensor"
+  "_msgs.Joy\032\032.dtproto.std_msgs.Response(\0010"
+  "\001\022G\n\016QueryRobotInfo\022\026.google.protobuf.Em"
+  "pty\032\035.dtproto.robot_msgs.RobotInfob\006prot"
+  "o3"
   ;
-static const ::_pbi::DescriptorTable* const descriptor_table_dtProto_2fService_2eproto_deps[9] = {
+static const ::_pbi::DescriptorTable* const descriptor_table_dtProto_2fService_2eproto_deps[10] = {
   &::descriptor_table_dtProto_2frobot_5fmsgs_2fControlCmd_2eproto,
   &::descriptor_table_dtProto_2frobot_5fmsgs_2fJointControl_2eproto,
   &::descriptor_table_dtProto_2frobot_5fmsgs_2fMoveControl_2eproto,
   &::descriptor_table_dtProto_2frobot_5fmsgs_2fRobotInfo_2eproto,
+  &::descriptor_table_dtProto_2fsensor_5fmsgs_2fJoy_2eproto,
   &::descriptor_table_dtProto_2fstd_5fmsgs_2fHeader_2eproto,
   &::descriptor_table_dtProto_2fstd_5fmsgs_2fRequest_2eproto,
   &::descriptor_table_dtProto_2fstd_5fmsgs_2fState_2eproto,
@@ -63,9 +67,9 @@ static const ::_pbi::DescriptorTable* const descriptor_table_dtProto_2fService_2
 };
 static ::_pbi::once_flag descriptor_table_dtProto_2fService_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_dtProto_2fService_2eproto = {
-    false, false, 780, descriptor_table_protodef_dtProto_2fService_2eproto,
+    false, false, 882, descriptor_table_protodef_dtProto_2fService_2eproto,
     "dtProto/Service.proto",
-    &descriptor_table_dtProto_2fService_2eproto_once, descriptor_table_dtProto_2fService_2eproto_deps, 9, 0,
+    &descriptor_table_dtProto_2fService_2eproto_once, descriptor_table_dtProto_2fService_2eproto_deps, 10, 0,
     schemas, file_default_instances, TableStruct_dtProto_2fService_2eproto::offsets,
     nullptr, file_level_enum_descriptors_dtProto_2fService_2eproto,
     file_level_service_descriptors_dtProto_2fService_2eproto,

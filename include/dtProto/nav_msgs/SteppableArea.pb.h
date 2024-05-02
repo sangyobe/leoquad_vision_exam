@@ -54,16 +54,199 @@ extern SteppableAreaDefaultTypeInternal _SteppableArea_default_instance_;
 class SteppableAreaTimeStamped;
 struct SteppableAreaTimeStampedDefaultTypeInternal;
 extern SteppableAreaTimeStampedDefaultTypeInternal _SteppableAreaTimeStamped_default_instance_;
+class SteppablePolygon;
+struct SteppablePolygonDefaultTypeInternal;
+extern SteppablePolygonDefaultTypeInternal _SteppablePolygon_default_instance_;
 }  // namespace nav_msgs
 }  // namespace dtproto
 PROTOBUF_NAMESPACE_OPEN
 template<> ::dtproto::nav_msgs::SteppableArea* Arena::CreateMaybeMessage<::dtproto::nav_msgs::SteppableArea>(Arena*);
 template<> ::dtproto::nav_msgs::SteppableAreaTimeStamped* Arena::CreateMaybeMessage<::dtproto::nav_msgs::SteppableAreaTimeStamped>(Arena*);
+template<> ::dtproto::nav_msgs::SteppablePolygon* Arena::CreateMaybeMessage<::dtproto::nav_msgs::SteppablePolygon>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace dtproto {
 namespace nav_msgs {
 
 // ===================================================================
+
+class SteppablePolygon final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:dtproto.nav_msgs.SteppablePolygon) */ {
+ public:
+  inline SteppablePolygon() : SteppablePolygon(nullptr) {}
+  ~SteppablePolygon() override;
+  explicit PROTOBUF_CONSTEXPR SteppablePolygon(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SteppablePolygon(const SteppablePolygon& from);
+  SteppablePolygon(SteppablePolygon&& from) noexcept
+    : SteppablePolygon() {
+    *this = ::std::move(from);
+  }
+
+  inline SteppablePolygon& operator=(const SteppablePolygon& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SteppablePolygon& operator=(SteppablePolygon&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SteppablePolygon& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SteppablePolygon* internal_default_instance() {
+    return reinterpret_cast<const SteppablePolygon*>(
+               &_SteppablePolygon_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    0;
+
+  friend void swap(SteppablePolygon& a, SteppablePolygon& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SteppablePolygon* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SteppablePolygon* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SteppablePolygon* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SteppablePolygon>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SteppablePolygon& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SteppablePolygon& from) {
+    SteppablePolygon::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SteppablePolygon* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "dtproto.nav_msgs.SteppablePolygon";
+  }
+  protected:
+  explicit SteppablePolygon(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPolygonFieldNumber = 1,
+    kIndexFieldNumber = 2,
+    kPropertiesFieldNumber = 3,
+  };
+  // .dtproto.geometry_msgs.Polygon3d polygon = 1;
+  bool has_polygon() const;
+  private:
+  bool _internal_has_polygon() const;
+  public:
+  void clear_polygon();
+  const ::dtproto::geometry_msgs::Polygon3d& polygon() const;
+  PROTOBUF_NODISCARD ::dtproto::geometry_msgs::Polygon3d* release_polygon();
+  ::dtproto::geometry_msgs::Polygon3d* mutable_polygon();
+  void set_allocated_polygon(::dtproto::geometry_msgs::Polygon3d* polygon);
+  private:
+  const ::dtproto::geometry_msgs::Polygon3d& _internal_polygon() const;
+  ::dtproto::geometry_msgs::Polygon3d* _internal_mutable_polygon();
+  public:
+  void unsafe_arena_set_allocated_polygon(
+      ::dtproto::geometry_msgs::Polygon3d* polygon);
+  ::dtproto::geometry_msgs::Polygon3d* unsafe_arena_release_polygon();
+
+  // uint32 index = 2;
+  void clear_index();
+  uint32_t index() const;
+  void set_index(uint32_t value);
+  private:
+  uint32_t _internal_index() const;
+  void _internal_set_index(uint32_t value);
+  public:
+
+  // uint32 properties = 3;
+  void clear_properties();
+  uint32_t properties() const;
+  void set_properties(uint32_t value);
+  private:
+  uint32_t _internal_properties() const;
+  void _internal_set_properties(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:dtproto.nav_msgs.SteppablePolygon)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::dtproto::geometry_msgs::Polygon3d* polygon_;
+    uint32_t index_;
+    uint32_t properties_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_dtProto_2fnav_5fmsgs_2fSteppableArea_2eproto;
+};
+// -------------------------------------------------------------------
 
 class SteppableArea final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:dtproto.nav_msgs.SteppableArea) */ {
@@ -113,7 +296,7 @@ class SteppableArea final :
                &_SteppableArea_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    0;
+    1;
 
   friend void swap(SteppableArea& a, SteppableArea& b) {
     a.Swap(&b);
@@ -187,45 +370,25 @@ class SteppableArea final :
 
   enum : int {
     kSteppablesFieldNumber = 1,
-    kUnsteppablesFieldNumber = 3,
     kSteppablesCountFieldNumber = 2,
-    kUnsteppablesCountFieldNumber = 4,
   };
-  // repeated .dtproto.geometry_msgs.Polygon3d steppables = 1;
+  // repeated .dtproto.nav_msgs.SteppablePolygon steppables = 1;
   int steppables_size() const;
   private:
   int _internal_steppables_size() const;
   public:
   void clear_steppables();
-  ::dtproto::geometry_msgs::Polygon3d* mutable_steppables(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::geometry_msgs::Polygon3d >*
+  ::dtproto::nav_msgs::SteppablePolygon* mutable_steppables(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::nav_msgs::SteppablePolygon >*
       mutable_steppables();
   private:
-  const ::dtproto::geometry_msgs::Polygon3d& _internal_steppables(int index) const;
-  ::dtproto::geometry_msgs::Polygon3d* _internal_add_steppables();
+  const ::dtproto::nav_msgs::SteppablePolygon& _internal_steppables(int index) const;
+  ::dtproto::nav_msgs::SteppablePolygon* _internal_add_steppables();
   public:
-  const ::dtproto::geometry_msgs::Polygon3d& steppables(int index) const;
-  ::dtproto::geometry_msgs::Polygon3d* add_steppables();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::geometry_msgs::Polygon3d >&
+  const ::dtproto::nav_msgs::SteppablePolygon& steppables(int index) const;
+  ::dtproto::nav_msgs::SteppablePolygon* add_steppables();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::nav_msgs::SteppablePolygon >&
       steppables() const;
-
-  // repeated .dtproto.geometry_msgs.Polygon3d unsteppables = 3;
-  int unsteppables_size() const;
-  private:
-  int _internal_unsteppables_size() const;
-  public:
-  void clear_unsteppables();
-  ::dtproto::geometry_msgs::Polygon3d* mutable_unsteppables(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::geometry_msgs::Polygon3d >*
-      mutable_unsteppables();
-  private:
-  const ::dtproto::geometry_msgs::Polygon3d& _internal_unsteppables(int index) const;
-  ::dtproto::geometry_msgs::Polygon3d* _internal_add_unsteppables();
-  public:
-  const ::dtproto::geometry_msgs::Polygon3d& unsteppables(int index) const;
-  ::dtproto::geometry_msgs::Polygon3d* add_unsteppables();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::geometry_msgs::Polygon3d >&
-      unsteppables() const;
 
   // uint32 steppables_count = 2;
   void clear_steppables_count();
@@ -236,15 +399,6 @@ class SteppableArea final :
   void _internal_set_steppables_count(uint32_t value);
   public:
 
-  // uint32 unsteppables_count = 4;
-  void clear_unsteppables_count();
-  uint32_t unsteppables_count() const;
-  void set_unsteppables_count(uint32_t value);
-  private:
-  uint32_t _internal_unsteppables_count() const;
-  void _internal_set_unsteppables_count(uint32_t value);
-  public:
-
   // @@protoc_insertion_point(class_scope:dtproto.nav_msgs.SteppableArea)
  private:
   class _Internal;
@@ -253,10 +407,8 @@ class SteppableArea final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::geometry_msgs::Polygon3d > steppables_;
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::geometry_msgs::Polygon3d > unsteppables_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::nav_msgs::SteppablePolygon > steppables_;
     uint32_t steppables_count_;
-    uint32_t unsteppables_count_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -312,7 +464,7 @@ class SteppableAreaTimeStamped final :
                &_SteppableAreaTimeStamped_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    2;
 
   friend void swap(SteppableAreaTimeStamped& a, SteppableAreaTimeStamped& b) {
     a.Swap(&b);
@@ -448,40 +600,172 @@ class SteppableAreaTimeStamped final :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
+// SteppablePolygon
+
+// .dtproto.geometry_msgs.Polygon3d polygon = 1;
+inline bool SteppablePolygon::_internal_has_polygon() const {
+  return this != internal_default_instance() && _impl_.polygon_ != nullptr;
+}
+inline bool SteppablePolygon::has_polygon() const {
+  return _internal_has_polygon();
+}
+inline const ::dtproto::geometry_msgs::Polygon3d& SteppablePolygon::_internal_polygon() const {
+  const ::dtproto::geometry_msgs::Polygon3d* p = _impl_.polygon_;
+  return p != nullptr ? *p : reinterpret_cast<const ::dtproto::geometry_msgs::Polygon3d&>(
+      ::dtproto::geometry_msgs::_Polygon3d_default_instance_);
+}
+inline const ::dtproto::geometry_msgs::Polygon3d& SteppablePolygon::polygon() const {
+  // @@protoc_insertion_point(field_get:dtproto.nav_msgs.SteppablePolygon.polygon)
+  return _internal_polygon();
+}
+inline void SteppablePolygon::unsafe_arena_set_allocated_polygon(
+    ::dtproto::geometry_msgs::Polygon3d* polygon) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.polygon_);
+  }
+  _impl_.polygon_ = polygon;
+  if (polygon) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:dtproto.nav_msgs.SteppablePolygon.polygon)
+}
+inline ::dtproto::geometry_msgs::Polygon3d* SteppablePolygon::release_polygon() {
+  
+  ::dtproto::geometry_msgs::Polygon3d* temp = _impl_.polygon_;
+  _impl_.polygon_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::dtproto::geometry_msgs::Polygon3d* SteppablePolygon::unsafe_arena_release_polygon() {
+  // @@protoc_insertion_point(field_release:dtproto.nav_msgs.SteppablePolygon.polygon)
+  
+  ::dtproto::geometry_msgs::Polygon3d* temp = _impl_.polygon_;
+  _impl_.polygon_ = nullptr;
+  return temp;
+}
+inline ::dtproto::geometry_msgs::Polygon3d* SteppablePolygon::_internal_mutable_polygon() {
+  
+  if (_impl_.polygon_ == nullptr) {
+    auto* p = CreateMaybeMessage<::dtproto::geometry_msgs::Polygon3d>(GetArenaForAllocation());
+    _impl_.polygon_ = p;
+  }
+  return _impl_.polygon_;
+}
+inline ::dtproto::geometry_msgs::Polygon3d* SteppablePolygon::mutable_polygon() {
+  ::dtproto::geometry_msgs::Polygon3d* _msg = _internal_mutable_polygon();
+  // @@protoc_insertion_point(field_mutable:dtproto.nav_msgs.SteppablePolygon.polygon)
+  return _msg;
+}
+inline void SteppablePolygon::set_allocated_polygon(::dtproto::geometry_msgs::Polygon3d* polygon) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.polygon_);
+  }
+  if (polygon) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(polygon));
+    if (message_arena != submessage_arena) {
+      polygon = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, polygon, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.polygon_ = polygon;
+  // @@protoc_insertion_point(field_set_allocated:dtproto.nav_msgs.SteppablePolygon.polygon)
+}
+
+// uint32 index = 2;
+inline void SteppablePolygon::clear_index() {
+  _impl_.index_ = 0u;
+}
+inline uint32_t SteppablePolygon::_internal_index() const {
+  return _impl_.index_;
+}
+inline uint32_t SteppablePolygon::index() const {
+  // @@protoc_insertion_point(field_get:dtproto.nav_msgs.SteppablePolygon.index)
+  return _internal_index();
+}
+inline void SteppablePolygon::_internal_set_index(uint32_t value) {
+  
+  _impl_.index_ = value;
+}
+inline void SteppablePolygon::set_index(uint32_t value) {
+  _internal_set_index(value);
+  // @@protoc_insertion_point(field_set:dtproto.nav_msgs.SteppablePolygon.index)
+}
+
+// uint32 properties = 3;
+inline void SteppablePolygon::clear_properties() {
+  _impl_.properties_ = 0u;
+}
+inline uint32_t SteppablePolygon::_internal_properties() const {
+  return _impl_.properties_;
+}
+inline uint32_t SteppablePolygon::properties() const {
+  // @@protoc_insertion_point(field_get:dtproto.nav_msgs.SteppablePolygon.properties)
+  return _internal_properties();
+}
+inline void SteppablePolygon::_internal_set_properties(uint32_t value) {
+  
+  _impl_.properties_ = value;
+}
+inline void SteppablePolygon::set_properties(uint32_t value) {
+  _internal_set_properties(value);
+  // @@protoc_insertion_point(field_set:dtproto.nav_msgs.SteppablePolygon.properties)
+}
+
+// -------------------------------------------------------------------
+
 // SteppableArea
 
-// repeated .dtproto.geometry_msgs.Polygon3d steppables = 1;
+// repeated .dtproto.nav_msgs.SteppablePolygon steppables = 1;
 inline int SteppableArea::_internal_steppables_size() const {
   return _impl_.steppables_.size();
 }
 inline int SteppableArea::steppables_size() const {
   return _internal_steppables_size();
 }
-inline ::dtproto::geometry_msgs::Polygon3d* SteppableArea::mutable_steppables(int index) {
+inline void SteppableArea::clear_steppables() {
+  _impl_.steppables_.Clear();
+}
+inline ::dtproto::nav_msgs::SteppablePolygon* SteppableArea::mutable_steppables(int index) {
   // @@protoc_insertion_point(field_mutable:dtproto.nav_msgs.SteppableArea.steppables)
   return _impl_.steppables_.Mutable(index);
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::geometry_msgs::Polygon3d >*
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::nav_msgs::SteppablePolygon >*
 SteppableArea::mutable_steppables() {
   // @@protoc_insertion_point(field_mutable_list:dtproto.nav_msgs.SteppableArea.steppables)
   return &_impl_.steppables_;
 }
-inline const ::dtproto::geometry_msgs::Polygon3d& SteppableArea::_internal_steppables(int index) const {
+inline const ::dtproto::nav_msgs::SteppablePolygon& SteppableArea::_internal_steppables(int index) const {
   return _impl_.steppables_.Get(index);
 }
-inline const ::dtproto::geometry_msgs::Polygon3d& SteppableArea::steppables(int index) const {
+inline const ::dtproto::nav_msgs::SteppablePolygon& SteppableArea::steppables(int index) const {
   // @@protoc_insertion_point(field_get:dtproto.nav_msgs.SteppableArea.steppables)
   return _internal_steppables(index);
 }
-inline ::dtproto::geometry_msgs::Polygon3d* SteppableArea::_internal_add_steppables() {
+inline ::dtproto::nav_msgs::SteppablePolygon* SteppableArea::_internal_add_steppables() {
   return _impl_.steppables_.Add();
 }
-inline ::dtproto::geometry_msgs::Polygon3d* SteppableArea::add_steppables() {
-  ::dtproto::geometry_msgs::Polygon3d* _add = _internal_add_steppables();
+inline ::dtproto::nav_msgs::SteppablePolygon* SteppableArea::add_steppables() {
+  ::dtproto::nav_msgs::SteppablePolygon* _add = _internal_add_steppables();
   // @@protoc_insertion_point(field_add:dtproto.nav_msgs.SteppableArea.steppables)
   return _add;
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::geometry_msgs::Polygon3d >&
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::nav_msgs::SteppablePolygon >&
 SteppableArea::steppables() const {
   // @@protoc_insertion_point(field_list:dtproto.nav_msgs.SteppableArea.steppables)
   return _impl_.steppables_;
@@ -505,63 +789,6 @@ inline void SteppableArea::_internal_set_steppables_count(uint32_t value) {
 inline void SteppableArea::set_steppables_count(uint32_t value) {
   _internal_set_steppables_count(value);
   // @@protoc_insertion_point(field_set:dtproto.nav_msgs.SteppableArea.steppables_count)
-}
-
-// repeated .dtproto.geometry_msgs.Polygon3d unsteppables = 3;
-inline int SteppableArea::_internal_unsteppables_size() const {
-  return _impl_.unsteppables_.size();
-}
-inline int SteppableArea::unsteppables_size() const {
-  return _internal_unsteppables_size();
-}
-inline ::dtproto::geometry_msgs::Polygon3d* SteppableArea::mutable_unsteppables(int index) {
-  // @@protoc_insertion_point(field_mutable:dtproto.nav_msgs.SteppableArea.unsteppables)
-  return _impl_.unsteppables_.Mutable(index);
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::geometry_msgs::Polygon3d >*
-SteppableArea::mutable_unsteppables() {
-  // @@protoc_insertion_point(field_mutable_list:dtproto.nav_msgs.SteppableArea.unsteppables)
-  return &_impl_.unsteppables_;
-}
-inline const ::dtproto::geometry_msgs::Polygon3d& SteppableArea::_internal_unsteppables(int index) const {
-  return _impl_.unsteppables_.Get(index);
-}
-inline const ::dtproto::geometry_msgs::Polygon3d& SteppableArea::unsteppables(int index) const {
-  // @@protoc_insertion_point(field_get:dtproto.nav_msgs.SteppableArea.unsteppables)
-  return _internal_unsteppables(index);
-}
-inline ::dtproto::geometry_msgs::Polygon3d* SteppableArea::_internal_add_unsteppables() {
-  return _impl_.unsteppables_.Add();
-}
-inline ::dtproto::geometry_msgs::Polygon3d* SteppableArea::add_unsteppables() {
-  ::dtproto::geometry_msgs::Polygon3d* _add = _internal_add_unsteppables();
-  // @@protoc_insertion_point(field_add:dtproto.nav_msgs.SteppableArea.unsteppables)
-  return _add;
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::dtproto::geometry_msgs::Polygon3d >&
-SteppableArea::unsteppables() const {
-  // @@protoc_insertion_point(field_list:dtproto.nav_msgs.SteppableArea.unsteppables)
-  return _impl_.unsteppables_;
-}
-
-// uint32 unsteppables_count = 4;
-inline void SteppableArea::clear_unsteppables_count() {
-  _impl_.unsteppables_count_ = 0u;
-}
-inline uint32_t SteppableArea::_internal_unsteppables_count() const {
-  return _impl_.unsteppables_count_;
-}
-inline uint32_t SteppableArea::unsteppables_count() const {
-  // @@protoc_insertion_point(field_get:dtproto.nav_msgs.SteppableArea.unsteppables_count)
-  return _internal_unsteppables_count();
-}
-inline void SteppableArea::_internal_set_unsteppables_count(uint32_t value) {
-  
-  _impl_.unsteppables_count_ = value;
-}
-inline void SteppableArea::set_unsteppables_count(uint32_t value) {
-  _internal_set_unsteppables_count(value);
-  // @@protoc_insertion_point(field_set:dtproto.nav_msgs.SteppableArea.unsteppables_count)
 }
 
 // -------------------------------------------------------------------
@@ -746,6 +973,8 @@ inline void SteppableAreaTimeStamped::set_allocated_area(::dtproto::nav_msgs::St
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

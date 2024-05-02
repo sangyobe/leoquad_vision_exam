@@ -45,13 +45,13 @@ int main()
         double dt_ = 0.05;
 
         while (bRun.load()) {
-            rpcClient->template StartCall<NotifySteppableAreaCall>((void*)(&steppablesEmul.steppables));
+            rpcClient->template StartCall<NotifySteppableAreaCall>((void *)(&steppablesEmul.area));
             std::this_thread::sleep_for(std::chrono::milliseconds(long(dt_ * 1000)));
             t_ += dt_;
         }
     });
     // rpcClient->template StartCall<StreamOdometryCall>((void*)(&odomEmul.odom));
-    // rpcClient->template StartCall<StreamSteppableAreaCall>((void*)(&steppablesEmul.steppables));
+    // rpcClient->template StartCall<StreamSteppableAreaCall>((void*)(&steppablesEmul.area));
 
     while (bRun.load()) {
         std::cout << "(type \'q\' to quit) >\n";

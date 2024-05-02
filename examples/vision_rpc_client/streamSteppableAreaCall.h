@@ -28,7 +28,7 @@ private:
   std::unique_ptr<
       ::grpc::ClientAsyncWriter<::dtproto::nav_msgs::SteppableAreaTimeStamped>>
       _responder;
-  SteppableArea *_steppables{nullptr};
+  SteppableArea *_steppableArea{nullptr};
   // FOR TESTING
   int _steppable_count{0};
 };

@@ -23,7 +23,6 @@ bool OnNotifySteppableArea::OnCompletionEvent(bool ok) {
                 std::lock_guard<std::mutex> lock(_proc_mtx);
 
                 LOG(trace) << "OnNotifySteppableArea[" << _id << "] \tSteppable area count = " << _request.area().steppables_count();
-                LOG(trace) << "OnNotifySteppableArea[" << _id << "] \tUnsteppable area count = " << _request.area().unsteppables_count();
 
                 _response.set_rtn(0);
                 _response.set_msg("success");

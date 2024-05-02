@@ -35,6 +35,7 @@
 #include "dtProto/robot_msgs/ControlCmd.pb.h"
 #include "dtProto/robot_msgs/MoveControl.pb.h"
 #include "dtProto/robot_msgs/JointControl.pb.h"
+#include "dtProto/sensor_msgs/Joy.pb.h"
 #include <google/protobuf/empty.pb.h>
 #include <google/protobuf/wrappers.pb.h>
 // @@protoc_insertion_point(includes)

@@ -7,7 +7,7 @@
 uint32_t NotifySteppableAreaCall::_req_seq = 0;
 
 NotifySteppableAreaCall::NotifySteppableAreaCall(ServiceType::Stub *stub, grpc::CompletionQueue *cq, void *udata)
-: dtCore::dtServiceCallerGrpc<ServiceType>::Call(stub, cq, udata), _steppables((SteppableArea*)udata) 
+    : dtCore::dtServiceCallerGrpc<ServiceType>::Call(stub, cq, udata), _steppableArea((SteppableArea *)udata)
 {
     _request.mutable_header()->set_seq(_req_seq++);
 #ifdef _WIN32
@@ -26,49 +26,32 @@ NotifySteppableAreaCall::NotifySteppableAreaCall(ServiceType::Stub *stub, grpc::
     _request.mutable_header()->mutable_time_stamp()->set_nanos(tv.tv_usec * 1000);
 #endif
 
-    for (int i=0; i<_steppables->steppableAreaCount; i++) {
+    for (int i = 0; i < _steppableArea->steppablesCount; i++)
+    {
         _request.mutable_area()->add_steppables();
 
-        _request.mutable_area()->mutable_steppables(i)->mutable_center()->set_x(_steppables->steppableArea[i].center.x);
-        _request.mutable_area()->mutable_steppables(i)->mutable_center()->set_y(_steppables->steppableArea[i].center.y);
-        _request.mutable_area()->mutable_steppables(i)->mutable_center()->set_z(_steppables->steppableArea[i].center.z);
-        
-        _request.mutable_area()->mutable_steppables(i)->mutable_normal()->set_x(_steppables->steppableArea[i].normal.x);
-        _request.mutable_area()->mutable_steppables(i)->mutable_normal()->set_y(_steppables->steppableArea[i].normal.y);
-        _request.mutable_area()->mutable_steppables(i)->mutable_normal()->set_z(_steppables->steppableArea[i].normal.z);
-        
-        for (int j=0; j<_steppables->steppableArea[i].vertex_count; j++) {
-            _request.mutable_area()->mutable_steppables(i)->add_vertex();
+        _request.mutable_area()->mutable_steppables(i)->set_index(_steppableArea->steppables[i].index);
+        _request.mutable_area()->mutable_steppables(i)->set_properties(_steppableArea->steppables[i].properties);
 
-            _request.mutable_area()->mutable_steppables(i)->mutable_vertex(j)->set_x(_steppables->steppableArea[i].vertex[j].x);
-            _request.mutable_area()->mutable_steppables(i)->mutable_vertex(j)->set_y(_steppables->steppableArea[i].vertex[j].y);
-            _request.mutable_area()->mutable_steppables(i)->mutable_vertex(j)->set_z(_steppables->steppableArea[i].vertex[j].z);
+        _request.mutable_area()->mutable_steppables(i)->mutable_polygon()->mutable_center()->set_x(_steppableArea->steppables[i].polygon.center.x);
+        _request.mutable_area()->mutable_steppables(i)->mutable_polygon()->mutable_center()->set_y(_steppableArea->steppables[i].polygon.center.y);
+        _request.mutable_area()->mutable_steppables(i)->mutable_polygon()->mutable_center()->set_z(_steppableArea->steppables[i].polygon.center.z);
+
+        _request.mutable_area()->mutable_steppables(i)->mutable_polygon()->mutable_normal()->set_x(_steppableArea->steppables[i].polygon.normal.x);
+        _request.mutable_area()->mutable_steppables(i)->mutable_polygon()->mutable_normal()->set_y(_steppableArea->steppables[i].polygon.normal.y);
+        _request.mutable_area()->mutable_steppables(i)->mutable_polygon()->mutable_normal()->set_z(_steppableArea->steppables[i].polygon.normal.z);
+
+        for (int j = 0; j < _steppableArea->steppables[i].polygon.vertex_count; j++)
+        {
+            _request.mutable_area()->mutable_steppables(i)->mutable_polygon()->add_vertex();
+
+            _request.mutable_area()->mutable_steppables(i)->mutable_polygon()->mutable_vertex(j)->set_x(_steppableArea->steppables[i].polygon.vertex[j].x);
+            _request.mutable_area()->mutable_steppables(i)->mutable_polygon()->mutable_vertex(j)->set_y(_steppableArea->steppables[i].polygon.vertex[j].y);
+            _request.mutable_area()->mutable_steppables(i)->mutable_polygon()->mutable_vertex(j)->set_z(_steppableArea->steppables[i].polygon.vertex[j].z);
         }
-        _request.mutable_area()->mutable_steppables(i)->set_vertex_count(_steppables->steppableArea[i].vertex_count);
+        _request.mutable_area()->mutable_steppables(i)->mutable_polygon()->set_vertex_count(_steppableArea->steppables[i].polygon.vertex_count);
     }
-    _request.mutable_area()->set_steppables_count(_steppables->steppableAreaCount);
-
-    for (int i=0; i<_steppables->unsteppableAreaCount; i++) {
-        _request.mutable_area()->add_unsteppables();
-
-        _request.mutable_area()->mutable_unsteppables(i)->mutable_center()->set_x(_steppables->unsteppableArea[i].center.x);
-        _request.mutable_area()->mutable_unsteppables(i)->mutable_center()->set_y(_steppables->unsteppableArea[i].center.y);
-        _request.mutable_area()->mutable_unsteppables(i)->mutable_center()->set_z(_steppables->unsteppableArea[i].center.z);
-        
-        _request.mutable_area()->mutable_unsteppables(i)->mutable_normal()->set_x(_steppables->unsteppableArea[i].normal.x);
-        _request.mutable_area()->mutable_unsteppables(i)->mutable_normal()->set_y(_steppables->unsteppableArea[i].normal.y);
-        _request.mutable_area()->mutable_unsteppables(i)->mutable_normal()->set_z(_steppables->unsteppableArea[i].normal.z);
-
-        for (int j=0; j<_steppables->unsteppableArea[i].vertex_count; j++) {
-            _request.mutable_area()->mutable_unsteppables(i)->add_vertex();
-
-            _request.mutable_area()->mutable_unsteppables(i)->mutable_vertex(j)->set_x(_steppables->unsteppableArea[i].vertex[j].x);
-            _request.mutable_area()->mutable_unsteppables(i)->mutable_vertex(j)->set_y(_steppables->unsteppableArea[i].vertex[j].y);
-            _request.mutable_area()->mutable_unsteppables(i)->mutable_vertex(j)->set_z(_steppables->unsteppableArea[i].vertex[j].z);
-        }
-        _request.mutable_area()->mutable_unsteppables(i)->set_vertex_count(_steppables->unsteppableArea[i].vertex_count);
-    }
-    _request.mutable_area()->set_unsteppables_count(_steppables->unsteppableAreaCount);
+    _request.mutable_area()->set_steppables_count(_steppableArea->steppablesCount);
 
     LOG(debug) << "NotifySteppableAreaCall[" << _id << "] NEW call.";
 

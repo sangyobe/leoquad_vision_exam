@@ -23,7 +23,7 @@ private:
     ::dtproto::nav_msgs::SteppableAreaTimeStamped _request;
     ::dtproto::std_msgs::Response _response;
     std::unique_ptr<::grpc::ClientAsyncResponseReader<::dtproto::std_msgs::Response>> _responder;
-    SteppableArea* _steppables{nullptr};
+    SteppableArea *_steppableArea{nullptr};
     static uint32_t _req_seq;
 };
 
