@@ -8,16 +8,18 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# check if ARTF_INSTALL_DIR environment variable is set.
+if ("$ENV{ARTF_INSTALL_DIR}" STREQUAL "")
+    message(FATAL_ERROR "ARTF_INSTALL_DIR is not set.")
+else()
+    message(STATUS "ARTF_INSTALL_DIR: $ENV{ARTF_INSTALL_DIR}")
+endif()
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
-include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${CMAKE_SOURCE_DIR}/proto)
-link_directories(${CMAKE_SOURCE_DIR}/lib)
-# include_directories(/usr/local/include)
-# link_directories(/usr/local/lib)
-include_directories($ENV{HOME}/.local/include)
-link_directories($ENV{HOME}/.local/lib)
-
+include_directories($ENV{ARTF_INSTALL_DIR}/include)
+link_directories($ENV{ARTF_INSTALL_DIR}/lib)
 
 # --------------------------------------------------------
 # Build examples

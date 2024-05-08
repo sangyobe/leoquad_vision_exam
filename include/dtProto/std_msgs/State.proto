@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-package dtproto.std_msgs;
-
-import "google/protobuf/any.proto";
-
-message State {
-  google.protobuf.Any state = 2;
-}

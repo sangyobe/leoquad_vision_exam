@@ -1,9 +1,6 @@
 #include "notifySteppableAreaCall.h"
 #include <dtCore/src/dtLog/dtLog.h>
 
-// #define MAX_VERTEX (128)
-// #define MAX_POLYGON (16)
-
 uint32_t NotifySteppableAreaCall::_req_seq = 0;
 
 NotifySteppableAreaCall::NotifySteppableAreaCall(ServiceType::Stub *stub, grpc::CompletionQueue *cq, void *udata)
