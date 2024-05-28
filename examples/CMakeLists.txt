@@ -17,3 +17,4 @@
 
 add_subdirectory(leoquad_rpc_server)
 add_subdirectory(vision_rpc_client)
+add_subdirectory(imu_subscriber)
