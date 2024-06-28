@@ -2,9 +2,10 @@
 #define __EMUL_ODOM_H__
 
 #include "dataTypes.h"
-#include <thread>
+#include <atomic>
 #include <chrono>
 #include <cmath>
+#include <thread>
 
 typedef struct _odomData
 {

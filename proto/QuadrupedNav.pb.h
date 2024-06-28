@@ -31,11 +31,13 @@
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/unknown_field_set.h>
 #include "dtProto/nav_msgs/Odom.pb.h"
+#include "dtProto/nav_msgs/Grid.pb.h"
 #include "dtProto/nav_msgs/SteppableArea.pb.h"
 #include "dtProto/std_msgs/Request.pb.h"
 #include "dtProto/std_msgs/Header.pb.h"
 #include "dtProto/geometry_msgs/Point.pb.h"
 #include "dtProto/geometry_msgs/Vector.pb.h"
+#include "dtProto/sensor_msgs/Imu.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_QuadrupedNav_2eproto

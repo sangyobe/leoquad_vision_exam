@@ -2,10 +2,11 @@
 #define __EMUL_STEPPABLES_H__
 
 #include "dataTypes.h"
-#include <thread>
+#include "yaml-cpp/yaml.h"
+#include <atomic>
 #include <chrono>
 #include <cmath>
-#include "yaml-cpp/yaml.h"
+#include <thread>
 
 #define MAX_POLYGON (48)
 typedef struct _SteppablePolygon

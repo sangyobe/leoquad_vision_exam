@@ -23,10 +23,11 @@ namespace dtproto {
 namespace quadruped {
 
 static const char* Nav_method_names[] = {
-  "/dtproto.quadruped.Nav/RequestOdometry",
-  "/dtproto.quadruped.Nav/NotifySteppableArea",
-  "/dtproto.quadruped.Nav/StreamOdometry",
-  "/dtproto.quadruped.Nav/StreamSteppableArea",
+  "/dtproto.quadruped.Nav/PublishOdomWithJointPos",
+  "/dtproto.quadruped.Nav/PublishImu",
+  "/dtproto.quadruped.Nav/SubscribeVisualOdom",
+  "/dtproto.quadruped.Nav/SubscribeLocalGridmap",
+  "/dtproto.quadruped.Nav/SubscribeSteppableArea",
 };
 
 std::unique_ptr< Nav::Stub> Nav::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -36,157 +37,178 @@ std::unique_ptr< Nav::Stub> Nav::NewStub(const std::shared_ptr< ::grpc::ChannelI
 }
 
 Nav::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
-  : channel_(channel), rpcmethod_RequestOdometry_(Nav_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_NotifySteppableArea_(Nav_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_StreamOdometry_(Nav_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
-  , rpcmethod_StreamSteppableArea_(Nav_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::CLIENT_STREAMING, channel)
+  : channel_(channel), rpcmethod_PublishOdomWithJointPos_(Nav_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_PublishImu_(Nav_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_SubscribeVisualOdom_(Nav_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::CLIENT_STREAMING, channel)
+  , rpcmethod_SubscribeLocalGridmap_(Nav_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::CLIENT_STREAMING, channel)
+  , rpcmethod_SubscribeSteppableArea_(Nav_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::CLIENT_STREAMING, channel)
   {}
 
-::grpc::Status Nav::Stub::RequestOdometry(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped& request, ::dtproto::quadruped::OdomWithJointPosTimeStamped* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RequestOdometry_, context, request, response);
+::grpc::ClientReader< ::dtproto::quadruped::OdomWithJointPosTimeStamped>* Nav::Stub::PublishOdomWithJointPosRaw(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request& request) {
+  return ::grpc::internal::ClientReaderFactory< ::dtproto::quadruped::OdomWithJointPosTimeStamped>::Create(channel_.get(), rpcmethod_PublishOdomWithJointPos_, context, request);
 }
 
-void Nav::Stub::async::RequestOdometry(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped* request, ::dtproto::quadruped::OdomWithJointPosTimeStamped* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RequestOdometry_, context, request, response, std::move(f));
+void Nav::Stub::async::PublishOdomWithJointPos(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request* request, ::grpc::ClientReadReactor< ::dtproto::quadruped::OdomWithJointPosTimeStamped>* reactor) {
+  ::grpc::internal::ClientCallbackReaderFactory< ::dtproto::quadruped::OdomWithJointPosTimeStamped>::Create(stub_->channel_.get(), stub_->rpcmethod_PublishOdomWithJointPos_, context, request, reactor);
 }
 
-void Nav::Stub::async::RequestOdometry(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped* request, ::dtproto::quadruped::OdomWithJointPosTimeStamped* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RequestOdometry_, context, request, response, reactor);
+::grpc::ClientAsyncReader< ::dtproto::quadruped::OdomWithJointPosTimeStamped>* Nav::Stub::AsyncPublishOdomWithJointPosRaw(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::dtproto::quadruped::OdomWithJointPosTimeStamped>::Create(channel_.get(), cq, rpcmethod_PublishOdomWithJointPos_, context, request, true, tag);
 }
 
-::grpc::ClientAsyncResponseReader< ::dtproto::quadruped::OdomWithJointPosTimeStamped>* Nav::Stub::PrepareAsyncRequestOdometryRaw(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::dtproto::quadruped::OdomWithJointPosTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RequestOdometry_, context, request);
+::grpc::ClientAsyncReader< ::dtproto::quadruped::OdomWithJointPosTimeStamped>* Nav::Stub::PrepareAsyncPublishOdomWithJointPosRaw(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::dtproto::quadruped::OdomWithJointPosTimeStamped>::Create(channel_.get(), cq, rpcmethod_PublishOdomWithJointPos_, context, request, false, nullptr);
 }
 
-::grpc::ClientAsyncResponseReader< ::dtproto::quadruped::OdomWithJointPosTimeStamped>* Nav::Stub::AsyncRequestOdometryRaw(::grpc::ClientContext* context, const ::dtproto::nav_msgs::OdomTimeStamped& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncRequestOdometryRaw(context, request, cq);
-  result->StartCall();
-  return result;
+::grpc::ClientReader< ::dtproto::sensor_msgs::ImuTimeStamped>* Nav::Stub::PublishImuRaw(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request& request) {
+  return ::grpc::internal::ClientReaderFactory< ::dtproto::sensor_msgs::ImuTimeStamped>::Create(channel_.get(), rpcmethod_PublishImu_, context, request);
 }
 
-::grpc::Status Nav::Stub::NotifySteppableArea(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped& request, ::dtproto::std_msgs::Response* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::dtproto::nav_msgs::SteppableAreaTimeStamped, ::dtproto::std_msgs::Response, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_NotifySteppableArea_, context, request, response);
+void Nav::Stub::async::PublishImu(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request* request, ::grpc::ClientReadReactor< ::dtproto::sensor_msgs::ImuTimeStamped>* reactor) {
+  ::grpc::internal::ClientCallbackReaderFactory< ::dtproto::sensor_msgs::ImuTimeStamped>::Create(stub_->channel_.get(), stub_->rpcmethod_PublishImu_, context, request, reactor);
 }
 
-void Nav::Stub::async::NotifySteppableArea(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped* request, ::dtproto::std_msgs::Response* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::dtproto::nav_msgs::SteppableAreaTimeStamped, ::dtproto::std_msgs::Response, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_NotifySteppableArea_, context, request, response, std::move(f));
+::grpc::ClientAsyncReader< ::dtproto::sensor_msgs::ImuTimeStamped>* Nav::Stub::AsyncPublishImuRaw(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::dtproto::sensor_msgs::ImuTimeStamped>::Create(channel_.get(), cq, rpcmethod_PublishImu_, context, request, true, tag);
 }
 
-void Nav::Stub::async::NotifySteppableArea(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped* request, ::dtproto::std_msgs::Response* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_NotifySteppableArea_, context, request, response, reactor);
+::grpc::ClientAsyncReader< ::dtproto::sensor_msgs::ImuTimeStamped>* Nav::Stub::PrepareAsyncPublishImuRaw(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::dtproto::sensor_msgs::ImuTimeStamped>::Create(channel_.get(), cq, rpcmethod_PublishImu_, context, request, false, nullptr);
 }
 
-::grpc::ClientAsyncResponseReader< ::dtproto::std_msgs::Response>* Nav::Stub::PrepareAsyncNotifySteppableAreaRaw(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::dtproto::std_msgs::Response, ::dtproto::nav_msgs::SteppableAreaTimeStamped, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_NotifySteppableArea_, context, request);
+::grpc::ClientWriter< ::dtproto::nav_msgs::OdomTimeStamped>* Nav::Stub::SubscribeVisualOdomRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response) {
+  return ::grpc::internal::ClientWriterFactory< ::dtproto::nav_msgs::OdomTimeStamped>::Create(channel_.get(), rpcmethod_SubscribeVisualOdom_, context, response);
 }
 
-::grpc::ClientAsyncResponseReader< ::dtproto::std_msgs::Response>* Nav::Stub::AsyncNotifySteppableAreaRaw(::grpc::ClientContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncNotifySteppableAreaRaw(context, request, cq);
-  result->StartCall();
-  return result;
+void Nav::Stub::async::SubscribeVisualOdom(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::ClientWriteReactor< ::dtproto::nav_msgs::OdomTimeStamped>* reactor) {
+  ::grpc::internal::ClientCallbackWriterFactory< ::dtproto::nav_msgs::OdomTimeStamped>::Create(stub_->channel_.get(), stub_->rpcmethod_SubscribeVisualOdom_, context, response, reactor);
 }
 
-::grpc::ClientReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>* Nav::Stub::StreamOdometryRaw(::grpc::ClientContext* context) {
-  return ::grpc::internal::ClientReaderWriterFactory< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>::Create(channel_.get(), rpcmethod_StreamOdometry_, context);
+::grpc::ClientAsyncWriter< ::dtproto::nav_msgs::OdomTimeStamped>* Nav::Stub::AsyncSubscribeVisualOdomRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncWriterFactory< ::dtproto::nav_msgs::OdomTimeStamped>::Create(channel_.get(), cq, rpcmethod_SubscribeVisualOdom_, context, response, true, tag);
 }
 
-void Nav::Stub::async::StreamOdometry(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::dtproto::nav_msgs::OdomTimeStamped,::dtproto::quadruped::OdomWithJointPosTimeStamped>* reactor) {
-  ::grpc::internal::ClientCallbackReaderWriterFactory< ::dtproto::nav_msgs::OdomTimeStamped,::dtproto::quadruped::OdomWithJointPosTimeStamped>::Create(stub_->channel_.get(), stub_->rpcmethod_StreamOdometry_, context, reactor);
+::grpc::ClientAsyncWriter< ::dtproto::nav_msgs::OdomTimeStamped>* Nav::Stub::PrepareAsyncSubscribeVisualOdomRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncWriterFactory< ::dtproto::nav_msgs::OdomTimeStamped>::Create(channel_.get(), cq, rpcmethod_SubscribeVisualOdom_, context, response, false, nullptr);
 }
 
-::grpc::ClientAsyncReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>* Nav::Stub::AsyncStreamOdometryRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
-  return ::grpc::internal::ClientAsyncReaderWriterFactory< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>::Create(channel_.get(), cq, rpcmethod_StreamOdometry_, context, true, tag);
+::grpc::ClientWriter< ::dtproto::nav_msgs::GridTimeStamped>* Nav::Stub::SubscribeLocalGridmapRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response) {
+  return ::grpc::internal::ClientWriterFactory< ::dtproto::nav_msgs::GridTimeStamped>::Create(channel_.get(), rpcmethod_SubscribeLocalGridmap_, context, response);
 }
 
-::grpc::ClientAsyncReaderWriter< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>* Nav::Stub::PrepareAsyncStreamOdometryRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncReaderWriterFactory< ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>::Create(channel_.get(), cq, rpcmethod_StreamOdometry_, context, false, nullptr);
+void Nav::Stub::async::SubscribeLocalGridmap(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::ClientWriteReactor< ::dtproto::nav_msgs::GridTimeStamped>* reactor) {
+  ::grpc::internal::ClientCallbackWriterFactory< ::dtproto::nav_msgs::GridTimeStamped>::Create(stub_->channel_.get(), stub_->rpcmethod_SubscribeLocalGridmap_, context, response, reactor);
 }
 
-::grpc::ClientWriter< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* Nav::Stub::StreamSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response) {
-  return ::grpc::internal::ClientWriterFactory< ::dtproto::nav_msgs::SteppableAreaTimeStamped>::Create(channel_.get(), rpcmethod_StreamSteppableArea_, context, response);
+::grpc::ClientAsyncWriter< ::dtproto::nav_msgs::GridTimeStamped>* Nav::Stub::AsyncSubscribeLocalGridmapRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncWriterFactory< ::dtproto::nav_msgs::GridTimeStamped>::Create(channel_.get(), cq, rpcmethod_SubscribeLocalGridmap_, context, response, true, tag);
 }
 
-void Nav::Stub::async::StreamSteppableArea(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::ClientWriteReactor< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* reactor) {
-  ::grpc::internal::ClientCallbackWriterFactory< ::dtproto::nav_msgs::SteppableAreaTimeStamped>::Create(stub_->channel_.get(), stub_->rpcmethod_StreamSteppableArea_, context, response, reactor);
+::grpc::ClientAsyncWriter< ::dtproto::nav_msgs::GridTimeStamped>* Nav::Stub::PrepareAsyncSubscribeLocalGridmapRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncWriterFactory< ::dtproto::nav_msgs::GridTimeStamped>::Create(channel_.get(), cq, rpcmethod_SubscribeLocalGridmap_, context, response, false, nullptr);
 }
 
-::grpc::ClientAsyncWriter< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* Nav::Stub::AsyncStreamSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq, void* tag) {
-  return ::grpc::internal::ClientAsyncWriterFactory< ::dtproto::nav_msgs::SteppableAreaTimeStamped>::Create(channel_.get(), cq, rpcmethod_StreamSteppableArea_, context, response, true, tag);
+::grpc::ClientWriter< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* Nav::Stub::SubscribeSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response) {
+  return ::grpc::internal::ClientWriterFactory< ::dtproto::nav_msgs::SteppableAreaTimeStamped>::Create(channel_.get(), rpcmethod_SubscribeSteppableArea_, context, response);
 }
 
-::grpc::ClientAsyncWriter< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* Nav::Stub::PrepareAsyncStreamSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncWriterFactory< ::dtproto::nav_msgs::SteppableAreaTimeStamped>::Create(channel_.get(), cq, rpcmethod_StreamSteppableArea_, context, response, false, nullptr);
+void Nav::Stub::async::SubscribeSteppableArea(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::ClientWriteReactor< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* reactor) {
+  ::grpc::internal::ClientCallbackWriterFactory< ::dtproto::nav_msgs::SteppableAreaTimeStamped>::Create(stub_->channel_.get(), stub_->rpcmethod_SubscribeSteppableArea_, context, response, reactor);
+}
+
+::grpc::ClientAsyncWriter< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* Nav::Stub::AsyncSubscribeSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncWriterFactory< ::dtproto::nav_msgs::SteppableAreaTimeStamped>::Create(channel_.get(), cq, rpcmethod_SubscribeSteppableArea_, context, response, true, tag);
+}
+
+::grpc::ClientAsyncWriter< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* Nav::Stub::PrepareAsyncSubscribeSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncWriterFactory< ::dtproto::nav_msgs::SteppableAreaTimeStamped>::Create(channel_.get(), cq, rpcmethod_SubscribeSteppableArea_, context, response, false, nullptr);
 }
 
 Nav::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       Nav_method_names[0],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Nav::Service, ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      ::grpc::internal::RpcMethod::SERVER_STREAMING,
+      new ::grpc::internal::ServerStreamingHandler< Nav::Service, ::dtproto::std_msgs::Request, ::dtproto::quadruped::OdomWithJointPosTimeStamped>(
           [](Nav::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::dtproto::nav_msgs::OdomTimeStamped* req,
-             ::dtproto::quadruped::OdomWithJointPosTimeStamped* resp) {
-               return service->RequestOdometry(ctx, req, resp);
+             const ::dtproto::std_msgs::Request* req,
+             ::grpc::ServerWriter<::dtproto::quadruped::OdomWithJointPosTimeStamped>* writer) {
+               return service->PublishOdomWithJointPos(ctx, req, writer);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       Nav_method_names[1],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< Nav::Service, ::dtproto::nav_msgs::SteppableAreaTimeStamped, ::dtproto::std_msgs::Response, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      ::grpc::internal::RpcMethod::SERVER_STREAMING,
+      new ::grpc::internal::ServerStreamingHandler< Nav::Service, ::dtproto::std_msgs::Request, ::dtproto::sensor_msgs::ImuTimeStamped>(
           [](Nav::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::dtproto::nav_msgs::SteppableAreaTimeStamped* req,
-             ::dtproto::std_msgs::Response* resp) {
-               return service->NotifySteppableArea(ctx, req, resp);
+             const ::dtproto::std_msgs::Request* req,
+             ::grpc::ServerWriter<::dtproto::sensor_msgs::ImuTimeStamped>* writer) {
+               return service->PublishImu(ctx, req, writer);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       Nav_method_names[2],
-      ::grpc::internal::RpcMethod::BIDI_STREAMING,
-      new ::grpc::internal::BidiStreamingHandler< Nav::Service, ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::quadruped::OdomWithJointPosTimeStamped>(
+      ::grpc::internal::RpcMethod::CLIENT_STREAMING,
+      new ::grpc::internal::ClientStreamingHandler< Nav::Service, ::dtproto::nav_msgs::OdomTimeStamped, ::dtproto::std_msgs::Response>(
           [](Nav::Service* service,
              ::grpc::ServerContext* ctx,
-             ::grpc::ServerReaderWriter<::dtproto::quadruped::OdomWithJointPosTimeStamped,
-             ::dtproto::nav_msgs::OdomTimeStamped>* stream) {
-               return service->StreamOdometry(ctx, stream);
+             ::grpc::ServerReader<::dtproto::nav_msgs::OdomTimeStamped>* reader,
+             ::dtproto::std_msgs::Response* resp) {
+               return service->SubscribeVisualOdom(ctx, reader, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       Nav_method_names[3],
+      ::grpc::internal::RpcMethod::CLIENT_STREAMING,
+      new ::grpc::internal::ClientStreamingHandler< Nav::Service, ::dtproto::nav_msgs::GridTimeStamped, ::dtproto::std_msgs::Response>(
+          [](Nav::Service* service,
+             ::grpc::ServerContext* ctx,
+             ::grpc::ServerReader<::dtproto::nav_msgs::GridTimeStamped>* reader,
+             ::dtproto::std_msgs::Response* resp) {
+               return service->SubscribeLocalGridmap(ctx, reader, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Nav_method_names[4],
       ::grpc::internal::RpcMethod::CLIENT_STREAMING,
       new ::grpc::internal::ClientStreamingHandler< Nav::Service, ::dtproto::nav_msgs::SteppableAreaTimeStamped, ::dtproto::std_msgs::Response>(
           [](Nav::Service* service,
              ::grpc::ServerContext* ctx,
              ::grpc::ServerReader<::dtproto::nav_msgs::SteppableAreaTimeStamped>* reader,
              ::dtproto::std_msgs::Response* resp) {
-               return service->StreamSteppableArea(ctx, reader, resp);
+               return service->SubscribeSteppableArea(ctx, reader, resp);
              }, this)));
 }
 
 Nav::Service::~Service() {
 }
 
-::grpc::Status Nav::Service::RequestOdometry(::grpc::ServerContext* context, const ::dtproto::nav_msgs::OdomTimeStamped* request, ::dtproto::quadruped::OdomWithJointPosTimeStamped* response) {
+::grpc::Status Nav::Service::PublishOdomWithJointPos(::grpc::ServerContext* context, const ::dtproto::std_msgs::Request* request, ::grpc::ServerWriter< ::dtproto::quadruped::OdomWithJointPosTimeStamped>* writer) {
   (void) context;
   (void) request;
+  (void) writer;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status Nav::Service::PublishImu(::grpc::ServerContext* context, const ::dtproto::std_msgs::Request* request, ::grpc::ServerWriter< ::dtproto::sensor_msgs::ImuTimeStamped>* writer) {
+  (void) context;
+  (void) request;
+  (void) writer;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status Nav::Service::SubscribeVisualOdom(::grpc::ServerContext* context, ::grpc::ServerReader< ::dtproto::nav_msgs::OdomTimeStamped>* reader, ::dtproto::std_msgs::Response* response) {
+  (void) context;
+  (void) reader;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status Nav::Service::NotifySteppableArea(::grpc::ServerContext* context, const ::dtproto::nav_msgs::SteppableAreaTimeStamped* request, ::dtproto::std_msgs::Response* response) {
+::grpc::Status Nav::Service::SubscribeLocalGridmap(::grpc::ServerContext* context, ::grpc::ServerReader< ::dtproto::nav_msgs::GridTimeStamped>* reader, ::dtproto::std_msgs::Response* response) {
   (void) context;
-  (void) request;
+  (void) reader;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status Nav::Service::StreamOdometry(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::dtproto::quadruped::OdomWithJointPosTimeStamped, ::dtproto::nav_msgs::OdomTimeStamped>* stream) {
-  (void) context;
-  (void) stream;
-  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-}
-
-::grpc::Status Nav::Service::StreamSteppableArea(::grpc::ServerContext* context, ::grpc::ServerReader< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* reader, ::dtproto::std_msgs::Response* response) {
+::grpc::Status Nav::Service::SubscribeSteppableArea(::grpc::ServerContext* context, ::grpc::ServerReader< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* reader, ::dtproto::std_msgs::Response* response) {
   (void) context;
   (void) reader;
   (void) response;

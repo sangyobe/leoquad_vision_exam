@@ -68,42 +68,47 @@ static const ::_pb::Message* const file_default_instances[] = {
 
 const char descriptor_table_protodef_QuadrupedNav_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\022QuadrupedNav.proto\022\021dtproto.quadruped\032"
-  "\033dtProto/nav_msgs/Odom.proto\032$dtProto/na"
-  "v_msgs/SteppableArea.proto\032\036dtProto/std_"
-  "msgs/Request.proto\032\035dtProto/std_msgs/Hea"
-  "der.proto\032!dtProto/geometry_msgs/Point.p"
-  "roto\032\"dtProto/geometry_msgs/Vector.proto"
-  "\"\344\001\n\033OdomWithJointPosTimeStamped\022(\n\006head"
-  "er\030\001 \001(\0132\030.dtproto.std_msgs.Header\022$\n\004od"
-  "om\030\002 \001(\0132\026.dtproto.nav_msgs.Odom\022\021\n\tjoin"
-  "t_pos\030\003 \003(\001\0220\n\010foot_pos\030\004 \003(\0132\036.dtproto."
-  "geometry_msgs.Point3d\0220\n\007contact\030\005 \001(\0132\037"
-  ".dtproto.geometry_msgs.Vector4b2\224\003\n\003Nav\022"
-  "d\n\017RequestOdometry\022!.dtproto.nav_msgs.Od"
-  "omTimeStamped\032..dtproto.quadruped.OdomWi"
-  "thJointPosTimeStamped\022]\n\023NotifySteppable"
-  "Area\022*.dtproto.nav_msgs.SteppableAreaTim"
-  "eStamped\032\032.dtproto.std_msgs.Response\022g\n\016"
-  "StreamOdometry\022!.dtproto.nav_msgs.OdomTi"
-  "meStamped\032..dtproto.quadruped.OdomWithJo"
-  "intPosTimeStamped(\0010\001\022_\n\023StreamSteppable"
-  "Area\022*.dtproto.nav_msgs.SteppableAreaTim"
-  "eStamped\032\032.dtproto.std_msgs.Response(\001b\006"
-  "proto3"
+  "\033dtProto/nav_msgs/Odom.proto\032\033dtProto/na"
+  "v_msgs/Grid.proto\032$dtProto/nav_msgs/Step"
+  "pableArea.proto\032\036dtProto/std_msgs/Reques"
+  "t.proto\032\035dtProto/std_msgs/Header.proto\032!"
+  "dtProto/geometry_msgs/Point.proto\032\"dtPro"
+  "to/geometry_msgs/Vector.proto\032\035dtProto/s"
+  "ensor_msgs/Imu.proto\"\344\001\n\033OdomWithJointPo"
+  "sTimeStamped\022(\n\006header\030\001 \001(\0132\030.dtproto.s"
+  "td_msgs.Header\022$\n\004odom\030\002 \001(\0132\026.dtproto.n"
+  "av_msgs.Odom\022\021\n\tjoint_pos\030\003 \003(\001\0220\n\010foot_"
+  "pos\030\004 \003(\0132\036.dtproto.geometry_msgs.Point3"
+  "d\0220\n\007contact\030\005 \001(\0132\037.dtproto.geometry_ms"
+  "gs.Vector4b2\323\003\n\003Nav\022f\n\027PublishOdomWithJo"
+  "intPos\022\031.dtproto.std_msgs.Request\032..dtpr"
+  "oto.quadruped.OdomWithJointPosTimeStampe"
+  "d0\001\022N\n\nPublishImu\022\031.dtproto.std_msgs.Req"
+  "uest\032#.dtproto.sensor_msgs.ImuTimeStampe"
+  "d0\001\022V\n\023SubscribeVisualOdom\022!.dtproto.nav"
+  "_msgs.OdomTimeStamped\032\032.dtproto.std_msgs"
+  ".Response(\001\022X\n\025SubscribeLocalGridmap\022!.d"
+  "tproto.nav_msgs.GridTimeStamped\032\032.dtprot"
+  "o.std_msgs.Response(\001\022b\n\026SubscribeSteppa"
+  "bleArea\022*.dtproto.nav_msgs.SteppableArea"
+  "TimeStamped\032\032.dtproto.std_msgs.Response("
+  "\001b\006proto3"
   ;
-static const ::_pbi::DescriptorTable* const descriptor_table_QuadrupedNav_2eproto_deps[6] = {
+static const ::_pbi::DescriptorTable* const descriptor_table_QuadrupedNav_2eproto_deps[8] = {
   &::descriptor_table_dtProto_2fgeometry_5fmsgs_2fPoint_2eproto,
   &::descriptor_table_dtProto_2fgeometry_5fmsgs_2fVector_2eproto,
+  &::descriptor_table_dtProto_2fnav_5fmsgs_2fGrid_2eproto,
   &::descriptor_table_dtProto_2fnav_5fmsgs_2fOdom_2eproto,
   &::descriptor_table_dtProto_2fnav_5fmsgs_2fSteppableArea_2eproto,
+  &::descriptor_table_dtProto_2fsensor_5fmsgs_2fImu_2eproto,
   &::descriptor_table_dtProto_2fstd_5fmsgs_2fHeader_2eproto,
   &::descriptor_table_dtProto_2fstd_5fmsgs_2fRequest_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_QuadrupedNav_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_QuadrupedNav_2eproto = {
-    false, false, 886, descriptor_table_protodef_QuadrupedNav_2eproto,
+    false, false, 1009, descriptor_table_protodef_QuadrupedNav_2eproto,
     "QuadrupedNav.proto",
-    &descriptor_table_QuadrupedNav_2eproto_once, descriptor_table_QuadrupedNav_2eproto_deps, 6, 1,
+    &descriptor_table_QuadrupedNav_2eproto_once, descriptor_table_QuadrupedNav_2eproto_deps, 8, 1,
     schemas, file_default_instances, TableStruct_QuadrupedNav_2eproto::offsets,
     file_level_metadata_QuadrupedNav_2eproto, file_level_enum_descriptors_QuadrupedNav_2eproto,
     file_level_service_descriptors_QuadrupedNav_2eproto,
