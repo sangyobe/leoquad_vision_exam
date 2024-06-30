@@ -28,8 +28,8 @@ bool PubGridmap::Publish(const GridmapData &gridmap)
         _request.mutable_grid()->mutable_acquisition_time()->set_seconds(0);
         _request.mutable_grid()->mutable_acquisition_time()->set_nanos(0);
         _request.mutable_grid()->set_frame_id("odom");
-        _request.mutable_grid()->mutable_pose_offset()->mutable_position()->set_x(0.0);
-        _request.mutable_grid()->mutable_pose_offset()->mutable_position()->set_y(0.0);
+        _request.mutable_grid()->mutable_pose_offset()->mutable_position()->set_x(gridmap.offset.x);
+        _request.mutable_grid()->mutable_pose_offset()->mutable_position()->set_y(gridmap.offset.y);
         _request.mutable_grid()->mutable_pose_offset()->mutable_position()->set_z(0.0);
         _request.mutable_grid()->set_row_count(120);
         _request.mutable_grid()->set_col_count(120);

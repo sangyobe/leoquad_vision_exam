@@ -17,6 +17,7 @@ class OdomEmulator
 {
 public:
     OdomData odom;
+    OdomData kodom;
 
 public:
     OdomEmulator() 
@@ -26,11 +27,11 @@ public:
             double t_ = 0.0;
             double dt_ = 0.001;
             while (_runUpdater.load()) {
-                odom.position.x = sin(t_) * sin(t_);
-                odom.position.y = cos(t_) * cos(t_);
-                odom.position.z = 0.0;
-
-                odom.orientation.fromEuler(0.0, 0.0, t_);
+                // odom.position.x = sin(t_) * sin(t_);
+                // odom.position.y = cos(t_) * cos(t_);
+                // odom.position.z = 0.0;
+                // odom.orientation.fromEuler(0.0, 0.0, t_);
+                odom = kodom;
 
                 std::this_thread::sleep_for(std::chrono::milliseconds((long)(dt_ * 1000)));
                 t_ += dt_;

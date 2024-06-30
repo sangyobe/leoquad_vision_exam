@@ -10,6 +10,7 @@
 typedef struct _gridmapData
 {
     float hmap[120][120];
+    Point offset;
 } GridmapData;
 
 class GridmapEmulator
@@ -30,7 +31,8 @@ public:
                 {
                     for (int icol = 0; icol < 120; icol++)
                     {
-                        gridmap.hmap[irow][icol] = -0.04 + 0.2 * std::sin(3.0 * t_ + 5.0 * 0.05 * irow) * 0.05 * icol;
+                        // gridmap.hmap[irow][icol] = -0.04 + 0.2 * std::sin(3.0 * t_ + 5.0 * 0.05 * irow) * 0.05 * icol;
+                        gridmap.hmap[irow][icol] = 0.01 * (float)(irow + icol);
                     }
                 }
 

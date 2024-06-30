@@ -59,9 +59,23 @@ int main()
                    << msg.contact().a2() << "|"
                    << msg.contact().a3() << "|"
                    << msg.contact().a4();
+
+        odomEmul.kodom.position.x = msg.odom().pose().position().x();
+        odomEmul.kodom.position.y = msg.odom().pose().position().y();
+        odomEmul.kodom.position.z = msg.odom().pose().position().z();
+        odomEmul.kodom.orientation.w = msg.odom().pose().orientation().w();
+        odomEmul.kodom.orientation.x = msg.odom().pose().orientation().x();
+        odomEmul.kodom.orientation.y = msg.odom().pose().orientation().y();
+        odomEmul.kodom.orientation.z = msg.odom().pose().orientation().z();
+
+        //
+        gridmapEmul.gridmap.offset.x = odomEmul.kodom.position.x - 3.0;
+        gridmapEmul.gridmap.offset.y = odomEmul.kodom.position.y - 3.0;
+        gridmapEmul.gridmap.offset.z = 0.0;
+
     };
-    // std::unique_ptr<RpcSubscriber<dtproto::quadruped::OdomWithJointPosTimeStamped>> sub_odom_with_jointpos = std::make_unique<RpcSubscriber<dtproto::quadruped::OdomWithJointPosTimeStamped>>("Odom", "0.0.0.0:50055");
-    // sub_odom_with_jointpos->RegMessageHandler(handler_odom_with_jointpos);
+    std::unique_ptr<RpcSubscriber<dtproto::quadruped::OdomWithJointPosTimeStamped>> sub_odom_with_jointpos = std::make_unique<RpcSubscriber<dtproto::quadruped::OdomWithJointPosTimeStamped>>("Odom", "0.0.0.0:50055");
+    sub_odom_with_jointpos->RegMessageHandler(handler_odom_with_jointpos);
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //
