@@ -9,7 +9,7 @@
 
 typedef struct _gridmapData
 {
-    float hmap[120][120];
+    double hmap[120][120];
     Point offset;
 } GridmapData;
 

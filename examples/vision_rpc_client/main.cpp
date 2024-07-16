@@ -7,6 +7,7 @@
 #include <atomic>
 #include <chrono>
 #include <dtCore/src/dtLog/dtLog.h>
+#include <dtCore/src/dtUtils/dtStringHelper.hpp>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -14,6 +15,7 @@
 
 OdomEmulator odomEmul;
 GridmapEmulator gridmapEmul;
+std::string svrIp = "127.0.0.1";
 
 int main()
 {
@@ -74,7 +76,8 @@ int main()
         gridmapEmul.gridmap.offset.z = 0.0;
 
     };
-    std::unique_ptr<RpcSubscriber<dtproto::quadruped::OdomWithJointPosTimeStamped>> sub_odom_with_jointpos = std::make_unique<RpcSubscriber<dtproto::quadruped::OdomWithJointPosTimeStamped>>("Odom", "0.0.0.0:50055");
+    std::unique_ptr<RpcSubscriber<dtproto::quadruped::OdomWithJointPosTimeStamped>> sub_odom_with_jointpos =
+        std::make_unique<RpcSubscriber<dtproto::quadruped::OdomWithJointPosTimeStamped>>("Odom", "127.0.0.1:50055");
     sub_odom_with_jointpos->RegMessageHandler(handler_odom_with_jointpos);
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,14 +101,15 @@ int main()
                    << msg.imu().orientation().y() << "|"
                    << msg.imu().orientation().z();
     };
-    // std::unique_ptr<RpcSubscriber<dtproto::sensor_msgs::ImuTimeStamped>> sub_imu = std::make_unique<RpcSubscriber<dtproto::sensor_msgs::ImuTimeStamped>>("Imu", "0.0.0.0:50054");
+    // std::unique_ptr<RpcSubscriber<dtproto::sensor_msgs::ImuTimeStamped>> sub_imu =
+    //     std::make_unique<RpcSubscriber<dtproto::sensor_msgs::ImuTimeStamped>>("Imu", dtCore::string_format("%s:%d", svrIp.c_str(), 50054));
     // sub_imu->RegMessageHandler(handler_imu);
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //
     // RPC service client
     //
-    std::unique_ptr<RpcClient> rpcClient = std::make_unique<RpcClient>("127.0.0.1:50056");
+    std::unique_ptr<RpcClient> rpcClient = std::make_unique<RpcClient>(dtCore::string_format("%s:%d", svrIp.c_str(), 50056));
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //

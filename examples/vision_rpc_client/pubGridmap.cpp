@@ -33,8 +33,8 @@ bool PubGridmap::Publish(const GridmapData &gridmap)
         _request.mutable_grid()->mutable_pose_offset()->mutable_position()->set_z(0.0);
         _request.mutable_grid()->set_row_count(120);
         _request.mutable_grid()->set_col_count(120);
-        _request.mutable_grid()->set_cell_stride(4);
-        _request.mutable_grid()->set_cell_format(dtproto::nav_msgs::Grid_CellFormat::Grid_CellFormat_FLOAT32);
+        _request.mutable_grid()->set_cell_stride(8);
+        _request.mutable_grid()->set_cell_format(dtproto::nav_msgs::Grid_CellFormat::Grid_CellFormat_FLOAT64);
         _request.mutable_grid()->set_cell_size(0.05);
         _request.mutable_grid()->set_data(&gridmap.hmap[0][0], 120 * 120 * sizeof(gridmap.hmap[0][0]));
         _call_state = CallState::WAIT_WRITE_DONE;
