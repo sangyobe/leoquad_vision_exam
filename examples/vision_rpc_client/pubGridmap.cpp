@@ -2,7 +2,7 @@
 #include <dtCore/src/dtLog/dtLog.h>
 
 PubGridmap::PubGridmap(ServiceType::Stub *stub, grpc::CompletionQueue *cq, void *udata)
-    : dtCore::dtServiceCallerGrpc<ServiceType>::Call(stub, cq, udata), _gridmapData((GridmapData *)udata)
+    : dt::DAQ::ServiceCallerGrpc<ServiceType>::Call(stub, cq, udata), _gridmapData((GridmapData *)udata)
 {
     LOG(debug) << "PubGridmap[" << _id << "] NEW call.";
     _writer = _stub->PrepareAsyncSubscribeLocalGridmap(&(this->_ctx), &_response, this->_cq);

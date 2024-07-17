@@ -2,7 +2,7 @@
 #include <dtCore/src/dtLog/dtLog.h>
 
 PubVisualOdometry::PubVisualOdometry(ServiceType::Stub *stub, grpc::CompletionQueue *cq, void *udata)
-    : dtCore::dtServiceCallerGrpc<ServiceType>::Call(stub, cq, udata), _odomData((OdomData *)udata)
+    : dt::DAQ::ServiceCallerGrpc<ServiceType>::Call(stub, cq, udata), _odomData((OdomData *)udata)
 {
     LOG(debug) << "PubVisualOdometry[" << _id << "] NEW call.";
     _writer = _stub->PrepareAsyncSubscribeVisualOdom(&(this->_ctx), &_response, this->_cq);

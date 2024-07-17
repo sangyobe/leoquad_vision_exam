@@ -19,12 +19,12 @@ std::string svrIp = "127.0.0.1";
 
 int main()
 {
-    dtCore::dtLog::Initialize("leoquad_vision_rpc_client"); //, "logs/leoquad_vision_rpc_client.txt");
-    dtCore::dtLog::SetLogLevel(dtCore::dtLog::LogLevel::info);
+    dt::Log::Initialize("leoquad_vision_rpc_client"); //, "logs/leoquad_vision_rpc_client.txt");
+    dt::Log::SetLogLevel(dt::Log::LogLevel::info);
 
-    // dtCore::dtLog::Create("latency", "logs/delay.csv", true, true);
-    // dtCore::dtLog::SetLogLevel("latency", dtCore::dtLog::LogLevel::info);
-    // dtCore::dtLog::SetLogPattern("latency", dtCore::dtLog::LogPatternFlag::none, "");
+    // dt::Log::Create("latency", "logs/delay.csv", true, true);
+    // dt::Log::SetLogLevel("latency", dt::Log::LogLevel::info);
+    // dt::Log::SetLogPattern("latency", dt::Log::LogPatternFlag::none, "");
     // LOG_U(latency, info) << "request_time_s,response_time_s,delay_req_ms,delay_res_ms,delay_tot_ms";
 
     std::atomic<bool> bRun{true};
@@ -102,14 +102,14 @@ int main()
                    << msg.imu().orientation().z();
     };
     // std::unique_ptr<RpcSubscriber<dtproto::sensor_msgs::ImuTimeStamped>> sub_imu =
-    //     std::make_unique<RpcSubscriber<dtproto::sensor_msgs::ImuTimeStamped>>("Imu", dtCore::string_format("%s:%d", svrIp.c_str(), 50054));
+    //     std::make_unique<RpcSubscriber<dtproto::sensor_msgs::ImuTimeStamped>>("Imu", dt::Utils::string_format("%s:%d", svrIp.c_str(), 50054));
     // sub_imu->RegMessageHandler(handler_imu);
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //
     // RPC service client
     //
-    std::unique_ptr<RpcClient> rpcClient = std::make_unique<RpcClient>(dtCore::string_format("%s:%d", svrIp.c_str(), 50056));
+    std::unique_ptr<RpcClient> rpcClient = std::make_unique<RpcClient>(dt::Utils::string_format("%s:%d", svrIp.c_str(), 50056));
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //
@@ -120,7 +120,7 @@ int main()
         double dt_ = 0.05;
 
         uint64_t cid = rpcClient->template StartCall<PubVisualOdometry>((void *)(&odomEmul.odom));
-        std::shared_ptr<PubVisualOdometry> call = std::dynamic_pointer_cast<PubVisualOdometry, dtCore::dtServiceCallerGrpc<dtproto::quadruped::Nav>::Call>(rpcClient->GetCall(cid));
+        std::shared_ptr<PubVisualOdometry> call = std::dynamic_pointer_cast<PubVisualOdometry, dt::DAQ::ServiceCallerGrpc<dtproto::quadruped::Nav>::Call>(rpcClient->GetCall(cid));
         if (call == nullptr)
             return;
 
@@ -141,7 +141,7 @@ int main()
         double dt_ = 0.1;
 
         uint64_t cid = rpcClient->template StartCall<PubGridmap>((void *)(&gridmapEmul.gridmap));
-        std::shared_ptr<PubGridmap> call = std::dynamic_pointer_cast<PubGridmap, dtCore::dtServiceCallerGrpc<dtproto::quadruped::Nav>::Call>(rpcClient->GetCall(cid));
+        std::shared_ptr<PubGridmap> call = std::dynamic_pointer_cast<PubGridmap, dt::DAQ::ServiceCallerGrpc<dtproto::quadruped::Nav>::Call>(rpcClient->GetCall(cid));
         if (call == nullptr)
             return;
 
@@ -168,6 +168,6 @@ int main()
 
     odom_publisher.join();
     gridmap_publisher.join();
-    dtCore::dtLog::Terminate(); // flush all log messages
+    dt::Log::Terminate(); // flush all log messages
     return 0;
 }

@@ -7,11 +7,11 @@
 
 using ServiceType = dtproto::quadruped::Nav;
 
-class RpcClient : public dtCore::dtServiceCallerGrpc<ServiceType>
+class RpcClient : public dt::DAQ::ServiceCallerGrpc<ServiceType>
 {
 public:
     RpcClient(const std::string &server_address)
-        : dtCore::dtServiceCallerGrpc<ServiceType>(server_address) {}
+        : dt::DAQ::ServiceCallerGrpc<ServiceType>(server_address) {}
 };
 
 #endif // RPCCLIENT_H

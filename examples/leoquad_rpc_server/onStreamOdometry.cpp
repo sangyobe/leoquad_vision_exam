@@ -1,8 +1,8 @@
 // #include "onStreamOdometry.h"
 // #include <dtCore/src/dtLog/dtLog.h>
 
-// OnStreamOdometry::OnStreamOdometry(dtCore::dtServiceListenerGrpc *server, grpc::Service *service, grpc::ServerCompletionQueue *cq, void *udata)
-//     : dtCore::dtServiceListenerGrpc::Session(server, service, cq, udata), _responder(&_ctx), _robotData((RobotData*)udata)
+// OnStreamOdometry::OnStreamOdometry(dt::DAQ::ServiceListenerGrpc *server, grpc::Service *service, grpc::ServerCompletionQueue *cq, void *udata)
+//     : dt::DAQ::ServiceListenerGrpc::Session(server, service, cq, udata), _responder(&_ctx), _robotData((RobotData*)udata)
 // {
 //     _call_state = CallState::WAIT_CONNECT;
 //     (static_cast<ServiceType *>(_service))->RequestStreamOdometry(&(_ctx), &_responder, _cq, _cq, this);

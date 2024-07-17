@@ -9,9 +9,9 @@
 
 using ServiceType = dtproto::quadruped::Nav;
 
-class PubVisualOdometry : public dtCore::dtServiceCallerGrpc<ServiceType>::Call
+class PubVisualOdometry : public dt::DAQ::ServiceCallerGrpc<ServiceType>::Call
 {
-    using CallState = typename dtCore::dtServiceCallerGrpc<ServiceType>::Call::CallState;
+    using CallState = typename dt::DAQ::ServiceCallerGrpc<ServiceType>::Call::CallState;
 
 public:
     PubVisualOdometry(ServiceType::Stub *stub, grpc::CompletionQueue *cq, void *udata = nullptr);

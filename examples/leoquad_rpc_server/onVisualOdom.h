@@ -9,13 +9,13 @@
 #include <memory>
 #include <string>
 
-class OnVisualOdom : public dtCore::dtServiceListenerGrpc::Session
+class OnVisualOdom : public dt::DAQ::ServiceListenerGrpc::Session
 {
-    using CallState = typename dtCore::dtServiceListenerGrpc::Session::CallState;
+    using CallState = typename dt::DAQ::ServiceListenerGrpc::Session::CallState;
     using ServiceType = dtproto::quadruped::Nav::AsyncService;
 
 public:
-    OnVisualOdom(dtCore::dtServiceListenerGrpc *server, grpc::Service *service, grpc::ServerCompletionQueue *cq, void *udata = nullptr);
+    OnVisualOdom(dt::DAQ::ServiceListenerGrpc *server, grpc::Service *service, grpc::ServerCompletionQueue *cq, void *udata = nullptr);
     ~OnVisualOdom();
     bool OnCompletionEvent(bool ok) override;
 

@@ -7,13 +7,13 @@
 // #include "QuadrupedNav.grpc.pb.h"
 // #include "robotData.h"
 
-// class OnRequestOdometry : public dtCore::dtServiceListenerGrpc::Session
+// class OnRequestOdometry : public dt::DAQ::ServiceListenerGrpc::Session
 // {
-//     using CallState = typename dtCore::dtServiceListenerGrpc::Session::CallState;
+//     using CallState = typename dt::DAQ::ServiceListenerGrpc::Session::CallState;
 //     using ServiceType = dtproto::quadruped::Nav::AsyncService;
 
 // public:
-//     OnRequestOdometry(dtCore::dtServiceListenerGrpc *server, grpc::Service *service, grpc::ServerCompletionQueue *cq, void *udata = nullptr);
+//     OnRequestOdometry(dt::DAQ::ServiceListenerGrpc *server, grpc::Service *service, grpc::ServerCompletionQueue *cq, void *udata = nullptr);
 //     ~OnRequestOdometry();
 //     bool OnCompletionEvent(bool ok) override;
 

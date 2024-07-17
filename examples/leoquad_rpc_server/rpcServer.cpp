@@ -10,8 +10,8 @@
 /////////////////////////////////////////////////////////////////////////
 // RpcServer implementation
 //
-RpcServer::RpcServer(const std::string &server_address, void* robotData)
-    : _listener(std::make_unique<dtCore::dtServiceListenerGrpc>(std::make_unique<dtproto::quadruped::Nav::AsyncService>(), server_address))
+RpcServer::RpcServer(const std::string &server_address, void *robotData)
+    : _listener(std::make_unique<dt::DAQ::ServiceListenerGrpc>(std::make_unique<dtproto::quadruped::Nav::AsyncService>(), server_address))
 {
     _listener->AddSession<OnVisualOdom>(robotData);
 }

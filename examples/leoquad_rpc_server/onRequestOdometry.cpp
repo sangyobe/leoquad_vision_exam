@@ -1,8 +1,8 @@
 // #include "onRequestOdometry.h"
 // #include <dtCore/src/dtLog/dtLog.h>
 
-// OnRequestOdometry::OnRequestOdometry(dtCore::dtServiceListenerGrpc* server, grpc::Service* service, grpc::ServerCompletionQueue* cq, void* udata)
-// : dtCore::dtServiceListenerGrpc::Session(server, service, cq, udata), _responder(&_ctx), _robotData((RobotData*)udata) {
+// OnRequestOdometry::OnRequestOdometry(dt::DAQ::ServiceListenerGrpc* server, grpc::Service* service, grpc::ServerCompletionQueue* cq, void* udata)
+// : dt::DAQ::ServiceListenerGrpc::Session(server, service, cq, udata), _responder(&_ctx), _robotData((RobotData*)udata) {
 
 //     for (int j=0; j<12; j++)
 //         _response.add_joint_pos(0.0);

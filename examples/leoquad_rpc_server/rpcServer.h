@@ -15,7 +15,7 @@ public:
     void Stop();
 
 private:
-    std::unique_ptr<dtCore::dtServiceListenerGrpc> _listener{nullptr};
+    std::unique_ptr<dt::DAQ::ServiceListenerGrpc> _listener{nullptr};
 };
 
 #endif // __RPCSERVER_H__

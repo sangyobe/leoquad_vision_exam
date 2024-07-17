@@ -7,8 +7,8 @@ QuadRobot quadRobot;
 
 int main()
 {
-    dtCore::dtLog::Initialize("leoquad_vision_rpc_server"); //, "logs/leoquad_vision_rpc_server.txt");
-    dtCore::dtLog::SetLogLevel(dtCore::dtLog::LogLevel::trace);
+    dt::Log::Initialize("leoquad_vision_rpc_server"); //, "logs/leoquad_vision_rpc_server.txt");
+    dt::Log::SetLogLevel(dt::Log::LogLevel::trace);
 
     RpcServer rpcServer("0.0.0.0:50056", (void*)&(quadRobot.robotData));
     rpcServer.Run();
@@ -25,6 +25,6 @@ int main()
     }
     rpcServer.Stop();
 
-    dtCore::dtLog::Terminate(); // flush all log messages
+    dt::Log::Terminate(); // flush all log messages
     return 0;
 }

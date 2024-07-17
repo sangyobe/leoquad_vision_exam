@@ -9,9 +9,9 @@
 
 using ServiceType = dtproto::quadruped::Nav;
 
-class PubGridmap : public dtCore::dtServiceCallerGrpc<ServiceType>::Call
+class PubGridmap : public dt::DAQ::ServiceCallerGrpc<ServiceType>::Call
 {
-    using CallState = typename dtCore::dtServiceCallerGrpc<ServiceType>::Call::CallState;
+    using CallState = typename dt::DAQ::ServiceCallerGrpc<ServiceType>::Call::CallState;
 
 public:
     PubGridmap(ServiceType::Stub *stub, grpc::CompletionQueue *cq, void *udata = nullptr);

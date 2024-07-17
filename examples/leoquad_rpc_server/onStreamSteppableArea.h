@@ -7,13 +7,13 @@
 // #include "QuadrupedNav.grpc.pb.h"
 // #include "robotData.h"
 
-// class OnStreamSteppableArea : public dtCore::dtServiceListenerGrpc::Session
+// class OnStreamSteppableArea : public dt::DAQ::ServiceListenerGrpc::Session
 // {
-//     using CallState = typename dtCore::dtServiceListenerGrpc::Session::CallState;
+//     using CallState = typename dt::DAQ::ServiceListenerGrpc::Session::CallState;
 //     using ServiceType = dtproto::quadruped::Nav::AsyncService;
 
 // public:
-//     OnStreamSteppableArea(dtCore::dtServiceListenerGrpc *server, grpc::Service *service, grpc::ServerCompletionQueue *cq, void *udata = nullptr);
+//     OnStreamSteppableArea(dt::DAQ::ServiceListenerGrpc *server, grpc::Service *service, grpc::ServerCompletionQueue *cq, void *udata = nullptr);
 //     ~OnStreamSteppableArea();
 //     bool OnCompletionEvent(bool ok) override;
 

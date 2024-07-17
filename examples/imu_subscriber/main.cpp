@@ -4,8 +4,8 @@
 
 int main(int argc, char **argv)
 {
-    dtCore::dtLog::Initialize("grpc_imu_sub");
-    dtCore::dtLog::SetLogLevel(dtCore::dtLog::LogLevel::trace);
+    dt::Log::Initialize("grpc_imu_sub");
+    dt::Log::SetLogLevel(dt::Log::LogLevel::trace);
 
     std::function<void(dtproto::sensor_msgs::ImuTimeStamped &)> on_imu = [](dtproto::sensor_msgs::ImuTimeStamped &msg) {
         LOG(trace) << "-------------------------------------------------------------------------------------";
@@ -15,7 +15,7 @@ int main(int argc, char **argv)
         LOG(trace) << "Linear Acceleration  = (" << msg.imu().linear_acceleration().a1() << ", " << msg.imu().linear_acceleration().a2() << ", " << msg.imu().linear_acceleration().a3() << ") [m/s^2]";
         LOG(trace) << "";
     };
-    std::unique_ptr<dtCore::dtStateSubscriberGrpc<dtproto::sensor_msgs::ImuTimeStamped>> sub_imu = std::make_unique<dtCore::dtStateSubscriberGrpc<dtproto::sensor_msgs::ImuTimeStamped>>("Imu", "10.0.0.2:50054");
+    std::unique_ptr<dt::DAQ::StateSubscriberGrpc<dtproto::sensor_msgs::ImuTimeStamped>> sub_imu = std::make_unique<dt::DAQ::StateSubscriberGrpc<dtproto::sensor_msgs::ImuTimeStamped>>("Imu", "10.0.0.2:50054");
     sub_imu->RegMessageHandler(on_imu);
 
     //
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
     }
 
     proc_reconnector.join();
-    dtCore::dtLog::Terminate();
+    dt::Log::Terminate();
 
     return 0;
 }

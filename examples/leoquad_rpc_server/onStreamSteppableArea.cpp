@@ -1,8 +1,8 @@
 // #include "onStreamSteppableArea.h"
 // #include <dtCore/src/dtLog/dtLog.h>
 
-// OnStreamSteppableArea::OnStreamSteppableArea(dtCore::dtServiceListenerGrpc *server, grpc::Service *service, grpc::ServerCompletionQueue *cq, void *udata)
-//     : dtCore::dtServiceListenerGrpc::Session(server, service, cq, udata), _responder(&_ctx), _robotData((RobotData*)udata)
+// OnStreamSteppableArea::OnStreamSteppableArea(dt::DAQ::ServiceListenerGrpc *server, grpc::Service *service, grpc::ServerCompletionQueue *cq, void *udata)
+//     : dt::DAQ::ServiceListenerGrpc::Session(server, service, cq, udata), _responder(&_ctx), _robotData((RobotData*)udata)
 // {
 //     _call_state = CallState::WAIT_CONNECT;
 //     (static_cast<ServiceType *>(_service))->RequestStreamSteppableArea(&(_ctx), &_responder, _cq, _cq, this);
