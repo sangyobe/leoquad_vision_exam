@@ -49,13 +49,13 @@ bool OnVisualOdom::OnCompletionEvent(bool ok)
             _robotData->visualOdomRot.y = _request.odom().pose().orientation().y();
             _robotData->visualOdomRot.z = _request.odom().pose().orientation().z();
             _robotData->visualOdomRot.w = _request.odom().pose().orientation().w();
-            LOG(trace) << "OnRequestOdometry[" << _id << "] \tPosition.x = " << _request.odom().pose().position().x();
-            LOG(trace) << "OnRequestOdometry[" << _id << "] \tPosition.y = " << _request.odom().pose().position().y();
-            LOG(trace) << "OnRequestOdometry[" << _id << "] \tPosition.z = " << _request.odom().pose().position().z();
-            LOG(trace) << "OnRequestOdometry[" << _id << "] \tOrientation.x = " << _request.odom().pose().orientation().x();
-            LOG(trace) << "OnRequestOdometry[" << _id << "] \tOrientation.y = " << _request.odom().pose().orientation().y();
-            LOG(trace) << "OnRequestOdometry[" << _id << "] \tOrientation.z = " << _request.odom().pose().orientation().z();
-            LOG(trace) << "OnRequestOdometry[" << _id << "] \tOrientation.w = " << _request.odom().pose().orientation().w();
+            LOG(trace) << "OnVisualOdom[" << _id << "] \tPosition.x = " << _request.odom().pose().position().x();
+            LOG(trace) << "OnVisualOdom[" << _id << "] \tPosition.y = " << _request.odom().pose().position().y();
+            LOG(trace) << "OnVisualOdom[" << _id << "] \tPosition.z = " << _request.odom().pose().position().z();
+            LOG(trace) << "OnVisualOdom[" << _id << "] \tOrientation.x = " << _request.odom().pose().orientation().x();
+            LOG(trace) << "OnVisualOdom[" << _id << "] \tOrientation.y = " << _request.odom().pose().orientation().y();
+            LOG(trace) << "OnVisualOdom[" << _id << "] \tOrientation.z = " << _request.odom().pose().orientation().z();
+            LOG(trace) << "OnVisualOdom[" << _id << "] \tOrientation.w = " << _request.odom().pose().orientation().w();
 
             _responder.Read(&_request, (void *)this);
             _call_state = CallState::WAIT_READ_DONE;

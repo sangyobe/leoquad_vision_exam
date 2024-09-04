@@ -19,13 +19,14 @@ public:
 
     bool OnCompletionEvent(bool ok) override;
 
-    bool Publish(const GridmapData &gridmap);
+    bool Publish(const Gridmap &gridmap);
 
 private:
     ::dtproto::nav_msgs::GridTimeStamped _request;
     ::dtproto::std_msgs::Response _response;
     std::unique_ptr<::grpc::ClientAsyncWriter<::dtproto::nav_msgs::GridTimeStamped>> _writer;
-    GridmapData *_gridmapData{nullptr};
+    Gridmap *_gridmapData{nullptr};
+    uint32_t _msgSeq{0};
 };
 
 #endif // __PUBGRIDMAP_H__

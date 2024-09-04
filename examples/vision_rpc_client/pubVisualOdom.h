@@ -19,13 +19,13 @@ public:
 
     bool OnCompletionEvent(bool ok) override;
 
-    bool Publish(const OdomData &odom);
+    bool Publish(const Odom &odom);
 
 private:
     ::dtproto::nav_msgs::OdomTimeStamped _request;
     ::dtproto::std_msgs::Response _response;
     std::unique_ptr<::grpc::ClientAsyncWriter<::dtproto::nav_msgs::OdomTimeStamped>> _writer;
-    OdomData *_odomData{nullptr};
+    Odom *_odomData{nullptr};
 };
 
 #endif // __PUBVISUALODOM_H__

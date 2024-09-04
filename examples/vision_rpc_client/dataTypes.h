@@ -32,12 +32,21 @@ typedef struct _Quaternion {
     }
 } Quaternion;
 
-#define MAX_VERTEX (128)
-typedef struct _Polygon {
-    Point center;
-    Point normal;
-    Point vertex[MAX_VERTEX];
-    uint32_t vertex_count;
-} Polygon;
+typedef struct _Gridmap
+{
+    double hmap[120][120];          // cell height in meter
+    uint8_t steppability[120][120]; // 0:non-steppable, 1:steppable
+    Point offset{0.0, 0.0, 0.0};
+    Point center{0.0, 0.0, 0.0};
+    double resolution{0.05};
+    uint32_t dim_x{120};
+    uint32_t dim_y{120};
+} Gridmap;
+
+typedef struct _Odom
+{
+    Point position;
+    Quaternion orientation;
+} Odom;
 
 #endif // __DATA_TYPES_H__

@@ -18,14 +18,25 @@ public:
             double t_ = 0.0;
             double dt_ = 0.001;
             while (_runUpdater.load()) {
-                robotData.basePos.x = sin(t_);
-                robotData.basePos.y = cos(t_);
+                // robotData.basePos.x = sin(t_);
+                // robotData.basePos.y = cos(t_);
+                // robotData.baseRot.fromEuler(0.0, 0.0, t_);
 
-                robotData.baseRot.fromEuler(0.0, 0.0, t_);
+                robotData.jointPos[0] = 0.0;
+                robotData.jointPos[1] = 0.7 * sin(3.14 * t_) * sin(3.14 * t_);
+                robotData.jointPos[2] = -2.0 * robotData.jointPos[1];
 
-                for (int j = 0; j < 12; j++) {
-                    robotData.jointPos[j] = sin(t_ + j*(1.0/12.0)) * sin(t_ + j*(1.0/12.0));
-                }
+                robotData.jointPos[3] = 0.0;
+                robotData.jointPos[4] = 0.7 * cos(3.14 * t_) * cos(3.14 * t_);
+                robotData.jointPos[5] = -2.0 * robotData.jointPos[4];
+
+                robotData.jointPos[6] = 0.0;
+                robotData.jointPos[7] = 0.7 * cos(3.14 * t_) * cos(3.14 * t_);
+                robotData.jointPos[8] = -2.0 * robotData.jointPos[7];
+
+                robotData.jointPos[9] = 0.0;
+                robotData.jointPos[10] = 0.7 * sin(3.14 * t_) * sin(3.14 * t_);
+                robotData.jointPos[11] = -2.0 * robotData.jointPos[10];
 
                 for (int i = 0; i < 4; i++) {
                     robotData.footPos[i].x = sin(2.0 * t_);

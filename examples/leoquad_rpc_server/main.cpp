@@ -10,7 +10,7 @@ int main()
     dt::Log::Initialize("leoquad_vision_rpc_server"); //, "logs/leoquad_vision_rpc_server.txt");
     dt::Log::SetLogLevel(dt::Log::LogLevel::trace);
 
-    RpcServer rpcServer("0.0.0.0:50056", (void*)&(quadRobot.robotData));
+    RpcServer rpcServer((void *)&(quadRobot.robotData));
     rpcServer.Run();
 
     std::atomic<bool> bRun;

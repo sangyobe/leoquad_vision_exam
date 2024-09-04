@@ -2,7 +2,7 @@
 #include <dtCore/src/dtLog/dtLog.h>
 
 PubVisualOdometry::PubVisualOdometry(ServiceType::Stub *stub, grpc::CompletionQueue *cq, void *udata)
-    : dt::DAQ::ServiceCallerGrpc<ServiceType>::Call(stub, cq, udata), _odomData((OdomData *)udata)
+    : dt::DAQ::ServiceCallerGrpc<ServiceType>::Call(stub, cq, udata), _odomData((Odom *)udata)
 {
     LOG(debug) << "PubVisualOdometry[" << _id << "] NEW call.";
     _writer = _stub->PrepareAsyncSubscribeVisualOdom(&(this->_ctx), &_response, this->_cq);
@@ -16,7 +16,7 @@ PubVisualOdometry::~PubVisualOdometry()
     // here. It might be after LOG system has been destroyed.
 }
 
-bool PubVisualOdometry::Publish(const OdomData &odom)
+bool PubVisualOdometry::Publish(const Odom &odom)
 {
     if (this->_call_state != CallState::READY_TO_WRITE)
         return false;

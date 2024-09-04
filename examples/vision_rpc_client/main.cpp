@@ -76,9 +76,9 @@ int main()
         gridmapEmul.gridmap.offset.z = 0.0;
 
     };
-    std::unique_ptr<RpcSubscriber<dtproto::quadruped::OdomWithJointPosTimeStamped>> sub_odom_with_jointpos =
-        std::make_unique<RpcSubscriber<dtproto::quadruped::OdomWithJointPosTimeStamped>>("Odom", "127.0.0.1:50055");
-    sub_odom_with_jointpos->RegMessageHandler(handler_odom_with_jointpos);
+    // std::unique_ptr<RpcSubscriber<dtproto::quadruped::OdomWithJointPosTimeStamped>> sub_odom_with_jointpos =
+    //     std::make_unique<RpcSubscriber<dtproto::quadruped::OdomWithJointPosTimeStamped>>("Odom", "127.0.0.1:50055");
+    // sub_odom_with_jointpos->RegMessageHandler(handler_odom_with_jointpos);
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //
@@ -101,9 +101,9 @@ int main()
                    << msg.imu().orientation().y() << "|"
                    << msg.imu().orientation().z();
     };
-    // std::unique_ptr<RpcSubscriber<dtproto::sensor_msgs::ImuTimeStamped>> sub_imu =
-    //     std::make_unique<RpcSubscriber<dtproto::sensor_msgs::ImuTimeStamped>>("Imu", dt::Utils::string_format("%s:%d", svrIp.c_str(), 50054));
-    // sub_imu->RegMessageHandler(handler_imu);
+    std::unique_ptr<RpcSubscriber<dtproto::sensor_msgs::ImuTimeStamped>> sub_imu =
+        std::make_unique<RpcSubscriber<dtproto::sensor_msgs::ImuTimeStamped>>("Imu", dt::Utils::string_format("%s:%d", svrIp.c_str(), 50054));
+    sub_imu->RegMessageHandler(handler_imu);
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //

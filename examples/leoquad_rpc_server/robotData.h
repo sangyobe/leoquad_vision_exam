@@ -30,21 +30,16 @@ typedef struct _Quaternion {
     }
 } Quaternion;
 
-#define MAX_VERTEX (128)
-#define MAX_POLYGON (48)
-typedef struct _Polygon {
-    Point center;
-    Point normal;
-    Point vertex[MAX_VERTEX];
-    uint32_t vertex_count;
-} Polygon;
-
-typedef struct _SteppablePolygon
+typedef struct _Gridmap
 {
-    Polygon polygon;
-    uint32_t index;
-    uint32_t properties;
-} SteppablePolygon;
+    double hmap[120][120];         // cell height in meter
+    double steppability[120][120]; // 0:non-steppable, 1:steppable
+    Point offset{0.0, 0.0, 0.0};
+    Point center{0.0, 0.0, 0.0};
+    double resolution{0.05};
+    uint32_t dim_x{120};
+    uint32_t dim_y{120};
+} Gridmap;
 
 class RobotData
 {
@@ -66,9 +61,8 @@ public:
     Point visualOdomPos;
     Quaternion visualOdomRot;
 
-    // steppable and unsteppable areas
-    SteppablePolygon steppables[MAX_POLYGON];
-    uint32_t steppablesCount;
+    // local grid map
+    Gridmap gridmap;
 };
 
 #endif // ROBOTDATA_H
