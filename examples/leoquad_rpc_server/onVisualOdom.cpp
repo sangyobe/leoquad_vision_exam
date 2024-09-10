@@ -57,6 +57,8 @@ bool OnVisualOdom::OnCompletionEvent(bool ok)
             LOG(trace) << "OnVisualOdom[" << _id << "] \tOrientation.z = " << _request.odom().pose().orientation().z();
             LOG(trace) << "OnVisualOdom[" << _id << "] \tOrientation.w = " << _request.odom().pose().orientation().w();
 
+            _robotData->visualOdomMsgSeq++;
+
             _responder.Read(&_request, (void *)this);
             _call_state = CallState::WAIT_READ_DONE;
         }

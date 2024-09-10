@@ -1,9 +1,10 @@
 #ifndef __DATA_TYPES_H__
 #define __DATA_TYPES_H__
 
-#include <thread>
+#include "config.h"
 #include <chrono>
 #include <cmath>
+#include <thread>
 
 typedef struct _Point {
     double x;
@@ -34,13 +35,13 @@ typedef struct _Quaternion {
 
 typedef struct _Gridmap
 {
-    double hmap[120][120];          // cell height in meter
-    uint8_t steppability[120][120]; // 0:non-steppable, 1:steppable
+    double hmap[GRIDMAP_DIM_X][GRIDMAP_DIM_Y];          // cell height in meter
+    uint8_t steppability[GRIDMAP_DIM_X][GRIDMAP_DIM_Y]; // 0:non-steppable, 1:steppable
     Point offset{0.0, 0.0, 0.0};
     Point center{0.0, 0.0, 0.0};
-    double resolution{0.05};
-    uint32_t dim_x{120};
-    uint32_t dim_y{120};
+    double resolution{GRIDMAP_RES};
+    uint32_t dim_x{GRIDMAP_DIM_X};
+    uint32_t dim_y{GRIDMAP_DIM_Y};
 } Gridmap;
 
 typedef struct _Odom

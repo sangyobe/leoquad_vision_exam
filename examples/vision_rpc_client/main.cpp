@@ -71,9 +71,9 @@ int main()
         odomEmul.kodom.orientation.z = msg.odom().pose().orientation().z();
 
         //
-        gridmapEmul.gridmap.offset.x = odomEmul.kodom.position.x - 3.0;
-        gridmapEmul.gridmap.offset.y = odomEmul.kodom.position.y - 3.0;
-        gridmapEmul.gridmap.offset.z = 0.0;
+        // gridmapEmul.gridmap.offset.x = odomEmul.kodom.position.x - 3.0;
+        // gridmapEmul.gridmap.offset.y = odomEmul.kodom.position.y - 3.0;
+        // gridmapEmul.gridmap.offset.z = 0.0;
 
     };
     // std::unique_ptr<RpcSubscriber<dtproto::quadruped::OdomWithJointPosTimeStamped>> sub_odom_with_jointpos =
@@ -117,7 +117,7 @@ int main()
     //
     std::thread odom_publisher = std::thread([&]() {
         double t_ = 0.0;
-        double dt_ = 0.05;
+        double dt_ = 1.0 / ODOM_PUB_RATE;
 
         uint64_t cid = rpcClient->template StartCall<PubVisualOdometry>((void *)(&odomEmul.odom));
         std::shared_ptr<PubVisualOdometry> call = std::dynamic_pointer_cast<PubVisualOdometry, dt::DAQ::ServiceCallerGrpc<dtproto::quadruped::Nav>::Call>(rpcClient->GetCall(cid));
@@ -138,7 +138,7 @@ int main()
     //
     std::thread gridmap_publisher = std::thread([&]() {
         double t_ = 0.0;
-        double dt_ = 0.1;
+        double dt_ = 1.0 / GRIDMAP_PUB_RATE;
 
         uint64_t cid = rpcClient->template StartCall<PubGridmap>((void *)(&gridmapEmul.gridmap));
         std::shared_ptr<PubGridmap> call = std::dynamic_pointer_cast<PubGridmap, dt::DAQ::ServiceCallerGrpc<dtproto::quadruped::Nav>::Call>(rpcClient->GetCall(cid));

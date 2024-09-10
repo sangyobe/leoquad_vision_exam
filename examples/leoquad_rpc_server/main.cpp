@@ -8,7 +8,7 @@ QuadRobot quadRobot;
 int main()
 {
     dt::Log::Initialize("leoquad_vision_rpc_server"); //, "logs/leoquad_vision_rpc_server.txt");
-    dt::Log::SetLogLevel(dt::Log::LogLevel::trace);
+    dt::Log::SetLogLevel(dt::Log::LogLevel::info);
 
     RpcServer rpcServer((void *)&(quadRobot.robotData));
     rpcServer.Run();

@@ -47,9 +47,19 @@ bool OnLocalGridmap::OnCompletionEvent(bool ok)
             _robotData->gridmap.resolution = _request.grid().cell_size().a1();
             _robotData->gridmap.dim_x = _request.grid().grid_dim().a1();
             _robotData->gridmap.dim_y = _request.grid().grid_dim().a2();
+            if (_request.grid().has_grid_center())
+            {
+                _robotData->gridmap.center.x = _request.grid().grid_center().position().x();
+                _robotData->gridmap.center.y = _request.grid().grid_center().position().y();
+            }
+            else
+            {
+                _robotData->gridmap.center.x = (double)_robotData->gridmap.dim_x * _robotData->gridmap.resolution * 0.5 + 1e-3;
+                _robotData->gridmap.center.y = (double)_robotData->gridmap.dim_y * _robotData->gridmap.resolution * 0.5 + 1e-3;
+            }
 
-            uint32_t row_count = _request.grid().grid_dim().a1();
-            uint32_t col_count = _request.grid().grid_dim().a2();
+            uint32_t row_count = _robotData->gridmap.dim_x;
+            uint32_t col_count = _robotData->gridmap.dim_y;
 
             for (const dtproto::nav_msgs::Grid_Layer &layer : _request.grid().layers())
             {
@@ -71,11 +81,14 @@ bool OnLocalGridmap::OnCompletionEvent(bool ok)
                     {
                         for (int icol = 0; icol < col_count; icol++)
                         {
-                            _robotData->gridmap.steppability[irow][icol] = (double)data[irow * col_count + icol];
+                            _robotData->gridmap.steppability[irow][icol] = data[irow * col_count + icol];
+                            _robotData->gridmap.costmap[irow][icol] = (_robotData->gridmap.steppability[irow][icol] < 0.5 ? 300.0 : 0.0);
                         }
                     }
                 }
             }
+
+            _robotData->gridmapMsgSeq++;
 
             _responder.Read(&_request, (void *)this);
             _call_state = CallState::WAIT_READ_DONE;

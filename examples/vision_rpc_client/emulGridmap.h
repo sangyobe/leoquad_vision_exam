@@ -15,13 +15,13 @@ public:
 public:
     GridmapEmulator()
     {
-        gridmap.resolution = 0.03;
-        gridmap.dim_x = 120;
-        gridmap.dim_y = 120;
-        gridmap.center.x = 0.0;
-        gridmap.center.y = 0.0;
-        gridmap.offset.x = -1.8;
-        gridmap.offset.y = -1.8;
+        gridmap.resolution = GRIDMAP_RES;
+        gridmap.dim_x = GRIDMAP_DIM_X;
+        gridmap.dim_y = GRIDMAP_DIM_Y;
+        gridmap.center.x = (double)(int)(0.5 * GRIDMAP_RES * 1e3 * GRIDMAP_DIM_X + 0.5) * 1e-3;
+        gridmap.center.y = (double)(int)(0.5 * GRIDMAP_RES * 1e3 * GRIDMAP_DIM_Y + 0.5) * 1e-3;
+        gridmap.offset.x = -(0.5 * GRIDMAP_RES * GRIDMAP_DIM_X);
+        gridmap.offset.y = -(0.5 * GRIDMAP_RES * GRIDMAP_DIM_Y);
 
         _dataUpdater = std::thread([this] {
             _runUpdater.store(true);
@@ -33,8 +33,8 @@ public:
                 {
                     for (int icol = 0; icol < gridmap.dim_y; icol++)
                     {
-                        // gridmap.hmap[irow][icol] = -0.04 + 0.2 * std::sin(3.0 * t_ + 5.0 * 0.05 * irow) * 0.05 * icol;
-                        gridmap.hmap[irow][icol] = 0.01 * (float)(irow + icol);
+                        gridmap.hmap[irow][icol] = -0.04 + 0.2 * std::sin(2.0 * t_ + 0.1 * irow) * std::sin(2.0 * t_ + 0.1 * icol);
+                        // gridmap.hmap[irow][icol] = 0.01 * (float)(irow + icol);
                         gridmap.steppability[irow][icol] = ((irow + icol) % 10 ? 1 : 0);
                     }
                 }

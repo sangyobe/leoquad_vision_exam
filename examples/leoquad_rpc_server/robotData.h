@@ -30,15 +30,20 @@ typedef struct _Quaternion {
     }
 } Quaternion;
 
+#define GRIDMAP_RES (0.03)
+#define GRIDMAP_DIM_X (120)
+#define GRIDMAP_DIM_Y (120)
+
 typedef struct _Gridmap
 {
-    double hmap[120][120];         // cell height in meter
-    double steppability[120][120]; // 0:non-steppable, 1:steppable
+    double hmap[GRIDMAP_DIM_X][GRIDMAP_DIM_Y];          // cell height in meter
+    uint8_t steppability[GRIDMAP_DIM_X][GRIDMAP_DIM_Y]; // 0:non-steppable, 1:steppable
+    double costmap[GRIDMAP_DIM_X][GRIDMAP_DIM_Y];       // cell height in meter
     Point offset{0.0, 0.0, 0.0};
     Point center{0.0, 0.0, 0.0};
-    double resolution{0.05};
-    uint32_t dim_x{120};
-    uint32_t dim_y{120};
+    double resolution{GRIDMAP_RES};
+    uint32_t dim_x{GRIDMAP_DIM_X};
+    uint32_t dim_y{GRIDMAP_DIM_Y};
 } Gridmap;
 
 class RobotData
@@ -60,9 +65,11 @@ public:
     // visual odom received
     Point visualOdomPos;
     Quaternion visualOdomRot;
+    uint32_t visualOdomMsgSeq{0};
 
     // local grid map
     Gridmap gridmap;
+    uint32_t gridmapMsgSeq{0};
 };
 
 #endif // ROBOTDATA_H

@@ -50,9 +50,9 @@ bool PubGridmap::Publish(const Gridmap &gridmap)
         _request.mutable_grid()->mutable_pose_offset()->mutable_position()->set_x(gridmap.offset.x);
         _request.mutable_grid()->mutable_pose_offset()->mutable_position()->set_y(gridmap.offset.y);
         _request.mutable_grid()->mutable_pose_offset()->mutable_position()->set_z(0.0);
-        // _request.mutable_grid()->mutable_grid_center()->mutable_position()->set_x(0.0);
-        // _request.mutable_grid()->mutable_grid_center()->mutable_position()->set_y(0.0);
-        // _request.mutable_grid()->mutable_grid_center()->mutable_position()->set_z(0.0);
+        _request.mutable_grid()->mutable_grid_center()->mutable_position()->set_x(gridmap.center.x);
+        _request.mutable_grid()->mutable_grid_center()->mutable_position()->set_y(gridmap.center.y);
+        _request.mutable_grid()->mutable_grid_center()->mutable_position()->set_z(0.0);
         _request.mutable_grid()->mutable_layers(0)->set_data(&gridmap.hmap[0][0], gridmap.dim_x * gridmap.dim_y * sizeof(gridmap.hmap[0][0]));
         _request.mutable_grid()->mutable_layers(1)->set_data(&gridmap.steppability[0][0], gridmap.dim_x * gridmap.dim_y * sizeof(gridmap.steppability[0][0]));
 

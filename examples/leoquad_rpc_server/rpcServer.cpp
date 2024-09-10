@@ -30,8 +30,8 @@ RpcServer::RpcServer(void *robotData)
     _gridmapMsg.mutable_grid()->add_layers(); // height-map layer
     _gridmapMsg.mutable_grid()->mutable_layers(0)->set_layer_id("hmap");
     _gridmapMsg.mutable_grid()->mutable_layers(0)->set_cell_format(dtproto::nav_msgs::Grid_Layer_CellFormat_FLOAT64);
-    _gridmapMsg.mutable_grid()->add_layers(); // steppability layer
-    _gridmapMsg.mutable_grid()->mutable_layers(1)->set_layer_id("steppability");
+    _gridmapMsg.mutable_grid()->add_layers(); // foot-step cost layer
+    _gridmapMsg.mutable_grid()->mutable_layers(1)->set_layer_id("costmap");
     _gridmapMsg.mutable_grid()->mutable_layers(1)->set_cell_format(dtproto::nav_msgs::Grid_Layer_CellFormat_FLOAT64);
 }
 
@@ -46,6 +46,9 @@ void RpcServer::Run()
         _runUpdater.store(true);
         double t_ = 0.0;
         double dt_ = 0.1;
+        uint32_t prevVisualOdomMsgSeq = 0;
+        uint32_t prevGridmapMsgSeq = 0;
+        double prevStatTimeSec = t_;
         while (_runUpdater.load())
         {
             struct timespec tp;
@@ -60,14 +63,14 @@ void RpcServer::Run()
             _robotStateMsg.mutable_header()->mutable_time_stamp()->set_nanos(tp.tv_nsec);
             // set message body
             // robot position in {V-odom}
-            _robotStateMsg.mutable_state()->mutable_base_pose()->mutable_position()->set_x(_robotData->basePos.x);
-            _robotStateMsg.mutable_state()->mutable_base_pose()->mutable_position()->set_y(_robotData->basePos.y);
-            _robotStateMsg.mutable_state()->mutable_base_pose()->mutable_position()->set_z(_robotData->basePos.z);
+            _robotStateMsg.mutable_state()->mutable_base_pose()->mutable_position()->set_x(_robotData->visualOdomPos.x);
+            _robotStateMsg.mutable_state()->mutable_base_pose()->mutable_position()->set_y(_robotData->visualOdomPos.y);
+            _robotStateMsg.mutable_state()->mutable_base_pose()->mutable_position()->set_z(_robotData->visualOdomPos.z);
             // robot orientation in {V-odom}
-            _robotStateMsg.mutable_state()->mutable_base_pose()->mutable_orientation()->set_w(_robotData->baseRot.w);
-            _robotStateMsg.mutable_state()->mutable_base_pose()->mutable_orientation()->set_x(_robotData->baseRot.x);
-            _robotStateMsg.mutable_state()->mutable_base_pose()->mutable_orientation()->set_y(_robotData->baseRot.y);
-            _robotStateMsg.mutable_state()->mutable_base_pose()->mutable_orientation()->set_z(_robotData->baseRot.z);
+            _robotStateMsg.mutable_state()->mutable_base_pose()->mutable_orientation()->set_w(_robotData->visualOdomRot.w);
+            _robotStateMsg.mutable_state()->mutable_base_pose()->mutable_orientation()->set_x(_robotData->visualOdomRot.x);
+            _robotStateMsg.mutable_state()->mutable_base_pose()->mutable_orientation()->set_y(_robotData->visualOdomRot.y);
+            _robotStateMsg.mutable_state()->mutable_base_pose()->mutable_orientation()->set_z(_robotData->visualOdomRot.z);
             // joint position
             for (int ji = 0; ji < 12; ji++)
             {
@@ -91,11 +94,11 @@ void RpcServer::Run()
             _gridmapMsg.mutable_grid()->mutable_pose_offset()->mutable_position()->set_x(_robotData->gridmap.offset.x);
             _gridmapMsg.mutable_grid()->mutable_pose_offset()->mutable_position()->set_y(_robotData->gridmap.offset.y);
             _gridmapMsg.mutable_grid()->mutable_pose_offset()->mutable_position()->set_z(0.0);
-            // _gridmapMsg.mutable_grid()->mutable_grid_center()->mutable_position()->set_x(0.0);
-            // _gridmapMsg.mutable_grid()->mutable_grid_center()->mutable_position()->set_y(0.0);
-            // _gridmapMsg.mutable_grid()->mutable_grid_center()->mutable_position()->set_z(0.0);
+            _gridmapMsg.mutable_grid()->mutable_grid_center()->mutable_position()->set_x(_robotData->gridmap.center.x);
+            _gridmapMsg.mutable_grid()->mutable_grid_center()->mutable_position()->set_y(_robotData->gridmap.center.y);
+            _gridmapMsg.mutable_grid()->mutable_grid_center()->mutable_position()->set_z(0.0);
             _gridmapMsg.mutable_grid()->mutable_layers(0)->set_data(&_robotData->gridmap.hmap[0][0], _robotData->gridmap.dim_x * _robotData->gridmap.dim_y * sizeof(_robotData->gridmap.hmap[0][0]));
-            _gridmapMsg.mutable_grid()->mutable_layers(1)->set_data(&_robotData->gridmap.steppability[0][0], _robotData->gridmap.dim_x * _robotData->gridmap.dim_y * sizeof(_robotData->gridmap.steppability[0][0]));
+            _gridmapMsg.mutable_grid()->mutable_layers(1)->set_data(&_robotData->gridmap.costmap[0][0], _robotData->gridmap.dim_x * _robotData->gridmap.dim_y * sizeof(_robotData->gridmap.costmap[0][0]));
             // publish
             _gridmapPublisher->Publish(_gridmapMsg);
 
@@ -120,6 +123,20 @@ void RpcServer::Run()
             // publish
             _imuPublisher->Publish(_imuMsg);
 
+            // Log message rate
+            if (prevStatTimeSec + 1.0 < t_)
+            {
+                double delT = t_ - prevStatTimeSec;
+                uint32_t visualOdomMsgCount = _robotData->visualOdomMsgSeq - prevVisualOdomMsgSeq;
+                uint32_t gridmapMsgCount = _robotData->gridmapMsgSeq - prevGridmapMsgSeq;
+                LOG(info) << "Odometry: " << (double)(visualOdomMsgCount) / delT << "(hz)";
+                LOG(info) << "Gridmap: " << (double)(gridmapMsgCount) / delT << "(hz)";
+                prevVisualOdomMsgSeq = _robotData->visualOdomMsgSeq;
+                prevGridmapMsgSeq = _robotData->gridmapMsgSeq;
+                prevStatTimeSec = t_;
+            }
+
+            // Advance time
             std::this_thread::sleep_for(std::chrono::milliseconds((long)(dt_ * 1000)));
             t_ += dt_;
         }
