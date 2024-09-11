@@ -17,7 +17,7 @@ OdomEmulator odomEmul;
 GridmapEmulator gridmapEmul;
 std::string svrIp = "127.0.0.1";
 
-int main()
+int main(int argc, char *argv[])
 {
     dt::Log::Initialize("leoquad_vision_rpc_client"); //, "logs/leoquad_vision_rpc_client.txt");
     dt::Log::SetLogLevel(dt::Log::LogLevel::info);
@@ -26,6 +26,12 @@ int main()
     // dt::Log::SetLogLevel("latency", dt::Log::LogLevel::info);
     // dt::Log::SetLogPattern("latency", dt::Log::LogPatternFlag::none, "");
     // LOG_U(latency, info) << "request_time_s,response_time_s,delay_req_ms,delay_res_ms,delay_tot_ms";
+
+    if (argc > 1)
+    {
+        svrIp = argv[1];
+    }
+    LOG(info) << "vision_rpc_client, server_ip = " << svrIp;
 
     std::atomic<bool> bRun{true};
 

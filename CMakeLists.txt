@@ -20,6 +20,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 include_directories(${CMAKE_SOURCE_DIR}/proto)
 include_directories($ENV{ARTF_INSTALL_DIR}/include)
 link_directories($ENV{ARTF_INSTALL_DIR}/lib)
+link_directories($ENV{ARTF_INSTALL_DIR}/lib64)
 
 # --------------------------------------------------------
 # Build examples

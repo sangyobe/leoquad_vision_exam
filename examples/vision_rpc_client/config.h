@@ -1,7 +1,7 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
-#define GRIDMAP_RES (0.1)
+#define GRIDMAP_RES (0.03)
 #define GRIDMAP_DIM_X (120)
 #define GRIDMAP_DIM_Y (120)
 
