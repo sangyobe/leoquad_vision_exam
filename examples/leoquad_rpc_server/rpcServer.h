@@ -1,6 +1,7 @@
 #ifndef __RPCSERVER_H__
 #define __RPCSERVER_H__
 
+#include "QuadrupedNav.pb.h"
 #include <atomic>
 #include <dtCore/src/dtDAQ/grpc/dtServiceListenerGrpc.hpp>
 #include <dtCore/src/dtDAQ/grpc/dtStatePublisherGrpc.hpp>
@@ -28,6 +29,9 @@ private:
     std::unique_ptr<dt::DAQ::StatePublisherGrpc<dtproto::nav_msgs::GridTimeStamped>> _gridmapPublisher{nullptr};
     std::unique_ptr<dt::DAQ::StatePublisherGrpc<dtproto::robot_msgs::RobotStateTimeStamped>> _robotStatePublisher{nullptr};
     std::unique_ptr<dt::DAQ::StatePublisherGrpc<dtproto::sensor_msgs::ImuTimeStamped>> _imuPublisher{nullptr};
+    std::unique_ptr<dt::DAQ::StatePublisherGrpc<
+        dtproto::quadruped::OdomWithJointPosTimeStamped>>
+        _odomPublisher{nullptr};
 
 private:
     std::thread _dataUpdater;
@@ -36,6 +40,7 @@ private:
     dtproto::robot_msgs::RobotStateTimeStamped _robotStateMsg;
     dtproto::nav_msgs::GridTimeStamped _gridmapMsg;
     dtproto::sensor_msgs::ImuTimeStamped _imuMsg;
+    dtproto::quadruped::OdomWithJointPosTimeStamped _odomMsg;
 };
 
 #endif // __RPCSERVER_H__

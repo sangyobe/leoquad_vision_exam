@@ -82,9 +82,12 @@ int main(int argc, char *argv[])
         // gridmapEmul.gridmap.offset.z = 0.0;
 
     };
-    // std::unique_ptr<RpcSubscriber<dtproto::quadruped::OdomWithJointPosTimeStamped>> sub_odom_with_jointpos =
-    //     std::make_unique<RpcSubscriber<dtproto::quadruped::OdomWithJointPosTimeStamped>>("Odom", "127.0.0.1:50055");
-    // sub_odom_with_jointpos->RegMessageHandler(handler_odom_with_jointpos);
+    std::unique_ptr<
+        RpcSubscriber<dtproto::quadruped::OdomWithJointPosTimeStamped>>
+        sub_odom_with_jointpos = std::make_unique<
+            RpcSubscriber<dtproto::quadruped::OdomWithJointPosTimeStamped>>(
+            "Odom", "127.0.0.1:50055");
+    sub_odom_with_jointpos->RegMessageHandler(handler_odom_with_jointpos);
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //
