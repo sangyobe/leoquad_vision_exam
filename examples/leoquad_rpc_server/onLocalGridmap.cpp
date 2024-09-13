@@ -58,32 +58,27 @@ bool OnLocalGridmap::OnCompletionEvent(bool ok)
                 _robotData->gridmap.center.y = (double)_robotData->gridmap.dim_y * _robotData->gridmap.resolution * 0.5 + 1e-3;
             }
 
-            uint32_t row_count = _robotData->gridmap.dim_x;
-            uint32_t col_count = _robotData->gridmap.dim_y;
+            uint32_t col_count = _robotData->gridmap.dim_x;
+            uint32_t row_count = _robotData->gridmap.dim_y;
+            uint32_t data_count = col_count * row_count;
 
             for (const dtproto::nav_msgs::Grid_Layer &layer : _request.grid().layers())
             {
                 if (layer.layer_id() == "hmap")
                 {
                     const double *data = (const double *)(layer.data().c_str());
-                    for (int irow = 0; irow < row_count; irow++)
+                    for (int i = 0; i < data_count; i++)
                     {
-                        for (int icol = 0; icol < col_count; icol++)
-                        {
-                            _robotData->gridmap.hmap[irow][icol] = data[irow * col_count + icol];
-                        }
+                        _robotData->gridmap.hmap[i % col_count][i / col_count] = data[i];
                     }
                 }
                 else if (layer.layer_id() == "steppability")
                 {
                     const uint8_t *data = (const uint8_t *)(layer.data().c_str());
-                    for (int irow = 0; irow < row_count; irow++)
+                    for (int i = 0; i < data_count; i++)
                     {
-                        for (int icol = 0; icol < col_count; icol++)
-                        {
-                            _robotData->gridmap.steppability[irow][icol] = data[irow * col_count + icol];
-                            _robotData->gridmap.costmap[irow][icol] = (_robotData->gridmap.steppability[irow][icol] < 0.5 ? 300.0 : 0.0);
-                        }
+                        _robotData->gridmap.steppability[i % col_count][i / col_count] = data[i];
+                        _robotData->gridmap.costmap[i % col_count][i / col_count] = (data[i] == 0 ? 300.0 : 0.0);
                     }
                 }
             }

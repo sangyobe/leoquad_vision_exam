@@ -54,6 +54,7 @@ RpcServer::RpcServer(void *robotData)
     _gridmapMsg.mutable_grid()->mutable_layers(1)->set_cell_format(
         dtproto::nav_msgs::Grid_Layer_CellFormat_FLOAT64);
 
+    _odomMsg.mutable_header()->set_seq(0);
     _odomMsg.mutable_header()->set_frame_id("map");
     for (int ji = 0; ji < 12; ji++)
     {
@@ -215,7 +216,7 @@ void RpcServer::Run()
             // Publish Odom
             //
             // set message header
-            _odomMsg.mutable_header()->set_seq(0);
+            _odomMsg.mutable_header()->set_seq(_odomMsgSeq++);
             _odomMsg.mutable_header()->mutable_time_stamp()->set_seconds(
                 tp.tv_sec);
             _odomMsg.mutable_header()->mutable_time_stamp()->set_nanos(
@@ -291,4 +292,9 @@ void RpcServer::Stop()
     _dataUpdater.join();
 
     _navServiceListener->Stop();
+}
+
+void RpcServer::ResetOdom()
+{
+    _odomMsgSeq = 0;
 }

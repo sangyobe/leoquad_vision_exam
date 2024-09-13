@@ -22,6 +22,10 @@ int main()
         if (cmd == "q" || cmd == "quit") {
             bRun = false;
         }
+        else if (cmd == "r")
+        {
+            rpcServer.ResetOdom();
+        }
     }
     rpcServer.Stop();
 

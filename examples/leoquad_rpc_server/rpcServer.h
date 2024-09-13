@@ -23,6 +23,7 @@ public:
 public:
     void Run();
     void Stop();
+    void ResetOdom();
 
 private:
     std::unique_ptr<dt::DAQ::ServiceListenerGrpc> _navServiceListener{nullptr};
@@ -41,6 +42,7 @@ private:
     dtproto::nav_msgs::GridTimeStamped _gridmapMsg;
     dtproto::sensor_msgs::ImuTimeStamped _imuMsg;
     dtproto::quadruped::OdomWithJointPosTimeStamped _odomMsg;
+    uint32_t _odomMsgSeq{0};
 };
 
 #endif // __RPCSERVER_H__
