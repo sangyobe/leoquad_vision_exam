@@ -17,6 +17,8 @@ message OdomWithJointPosTimeStamped {
     repeated double joint_pos = 3;
     repeated dtproto.geometry_msgs.Point3d foot_pos = 4;
     geometry_msgs.Vector4b contact = 5;
+    geometry_msgs.Point3d gyro_bias = 6;
+    geometry_msgs.Point3d acc_bias = 7;
 }
 
 service Nav {

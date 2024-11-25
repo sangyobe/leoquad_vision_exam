@@ -29,6 +29,8 @@ PROTOBUF_CONSTEXPR OdomWithJointPosTimeStamped::OdomWithJointPosTimeStamped(
   , /*decltype(_impl_.header_)*/nullptr
   , /*decltype(_impl_.odom_)*/nullptr
   , /*decltype(_impl_.contact_)*/nullptr
+  , /*decltype(_impl_.gyro_bias_)*/nullptr
+  , /*decltype(_impl_.acc_bias_)*/nullptr
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct OdomWithJointPosTimeStampedDefaultTypeInternal {
   PROTOBUF_CONSTEXPR OdomWithJointPosTimeStampedDefaultTypeInternal()
@@ -57,6 +59,8 @@ const uint32_t TableStruct_QuadrupedNav_2eproto::offsets[] PROTOBUF_SECTION_VARI
   PROTOBUF_FIELD_OFFSET(::dtproto::quadruped::OdomWithJointPosTimeStamped, _impl_.joint_pos_),
   PROTOBUF_FIELD_OFFSET(::dtproto::quadruped::OdomWithJointPosTimeStamped, _impl_.foot_pos_),
   PROTOBUF_FIELD_OFFSET(::dtproto::quadruped::OdomWithJointPosTimeStamped, _impl_.contact_),
+  PROTOBUF_FIELD_OFFSET(::dtproto::quadruped::OdomWithJointPosTimeStamped, _impl_.gyro_bias_),
+  PROTOBUF_FIELD_OFFSET(::dtproto::quadruped::OdomWithJointPosTimeStamped, _impl_.acc_bias_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::dtproto::quadruped::OdomWithJointPosTimeStamped)},
@@ -74,25 +78,27 @@ const char descriptor_table_protodef_QuadrupedNav_2eproto[] PROTOBUF_SECTION_VAR
   "t.proto\032\035dtProto/std_msgs/Header.proto\032!"
   "dtProto/geometry_msgs/Point.proto\032\"dtPro"
   "to/geometry_msgs/Vector.proto\032\035dtProto/s"
-  "ensor_msgs/Imu.proto\"\344\001\n\033OdomWithJointPo"
+  "ensor_msgs/Imu.proto\"\311\002\n\033OdomWithJointPo"
   "sTimeStamped\022(\n\006header\030\001 \001(\0132\030.dtproto.s"
   "td_msgs.Header\022$\n\004odom\030\002 \001(\0132\026.dtproto.n"
   "av_msgs.Odom\022\021\n\tjoint_pos\030\003 \003(\001\0220\n\010foot_"
   "pos\030\004 \003(\0132\036.dtproto.geometry_msgs.Point3"
   "d\0220\n\007contact\030\005 \001(\0132\037.dtproto.geometry_ms"
-  "gs.Vector4b2\323\003\n\003Nav\022f\n\027PublishOdomWithJo"
-  "intPos\022\031.dtproto.std_msgs.Request\032..dtpr"
-  "oto.quadruped.OdomWithJointPosTimeStampe"
-  "d0\001\022N\n\nPublishImu\022\031.dtproto.std_msgs.Req"
-  "uest\032#.dtproto.sensor_msgs.ImuTimeStampe"
-  "d0\001\022V\n\023SubscribeVisualOdom\022!.dtproto.nav"
-  "_msgs.OdomTimeStamped\032\032.dtproto.std_msgs"
-  ".Response(\001\022X\n\025SubscribeLocalGridmap\022!.d"
-  "tproto.nav_msgs.GridTimeStamped\032\032.dtprot"
-  "o.std_msgs.Response(\001\022b\n\026SubscribeSteppa"
-  "bleArea\022*.dtproto.nav_msgs.SteppableArea"
-  "TimeStamped\032\032.dtproto.std_msgs.Response("
-  "\001b\006proto3"
+  "gs.Vector4b\0221\n\tgyro_bias\030\006 \001(\0132\036.dtproto"
+  ".geometry_msgs.Point3d\0220\n\010acc_bias\030\007 \001(\013"
+  "2\036.dtproto.geometry_msgs.Point3d2\323\003\n\003Nav"
+  "\022f\n\027PublishOdomWithJointPos\022\031.dtproto.st"
+  "d_msgs.Request\032..dtproto.quadruped.OdomW"
+  "ithJointPosTimeStamped0\001\022N\n\nPublishImu\022\031"
+  ".dtproto.std_msgs.Request\032#.dtproto.sens"
+  "or_msgs.ImuTimeStamped0\001\022V\n\023SubscribeVis"
+  "ualOdom\022!.dtproto.nav_msgs.OdomTimeStamp"
+  "ed\032\032.dtproto.std_msgs.Response(\001\022X\n\025Subs"
+  "cribeLocalGridmap\022!.dtproto.nav_msgs.Gri"
+  "dTimeStamped\032\032.dtproto.std_msgs.Response"
+  "(\001\022b\n\026SubscribeSteppableArea\022*.dtproto.n"
+  "av_msgs.SteppableAreaTimeStamped\032\032.dtpro"
+  "to.std_msgs.Response(\001b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_QuadrupedNav_2eproto_deps[8] = {
   &::descriptor_table_dtProto_2fgeometry_5fmsgs_2fPoint_2eproto,
@@ -106,7 +112,7 @@ static const ::_pbi::DescriptorTable* const descriptor_table_QuadrupedNav_2eprot
 };
 static ::_pbi::once_flag descriptor_table_QuadrupedNav_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_QuadrupedNav_2eproto = {
-    false, false, 1009, descriptor_table_protodef_QuadrupedNav_2eproto,
+    false, false, 1110, descriptor_table_protodef_QuadrupedNav_2eproto,
     "QuadrupedNav.proto",
     &descriptor_table_QuadrupedNav_2eproto_once, descriptor_table_QuadrupedNav_2eproto_deps, 8, 1,
     schemas, file_default_instances, TableStruct_QuadrupedNav_2eproto::offsets,
@@ -129,6 +135,8 @@ class OdomWithJointPosTimeStamped::_Internal {
   static const ::dtproto::std_msgs::Header& header(const OdomWithJointPosTimeStamped* msg);
   static const ::dtproto::nav_msgs::Odom& odom(const OdomWithJointPosTimeStamped* msg);
   static const ::dtproto::geometry_msgs::Vector4b& contact(const OdomWithJointPosTimeStamped* msg);
+  static const ::dtproto::geometry_msgs::Point3d& gyro_bias(const OdomWithJointPosTimeStamped* msg);
+  static const ::dtproto::geometry_msgs::Point3d& acc_bias(const OdomWithJointPosTimeStamped* msg);
 };
 
 const ::dtproto::std_msgs::Header&
@@ -142,6 +150,14 @@ OdomWithJointPosTimeStamped::_Internal::odom(const OdomWithJointPosTimeStamped* 
 const ::dtproto::geometry_msgs::Vector4b&
 OdomWithJointPosTimeStamped::_Internal::contact(const OdomWithJointPosTimeStamped* msg) {
   return *msg->_impl_.contact_;
+}
+const ::dtproto::geometry_msgs::Point3d&
+OdomWithJointPosTimeStamped::_Internal::gyro_bias(const OdomWithJointPosTimeStamped* msg) {
+  return *msg->_impl_.gyro_bias_;
+}
+const ::dtproto::geometry_msgs::Point3d&
+OdomWithJointPosTimeStamped::_Internal::acc_bias(const OdomWithJointPosTimeStamped* msg) {
+  return *msg->_impl_.acc_bias_;
 }
 void OdomWithJointPosTimeStamped::clear_header() {
   if (GetArenaForAllocation() == nullptr && _impl_.header_ != nullptr) {
@@ -164,6 +180,18 @@ void OdomWithJointPosTimeStamped::clear_contact() {
   }
   _impl_.contact_ = nullptr;
 }
+void OdomWithJointPosTimeStamped::clear_gyro_bias() {
+  if (GetArenaForAllocation() == nullptr && _impl_.gyro_bias_ != nullptr) {
+    delete _impl_.gyro_bias_;
+  }
+  _impl_.gyro_bias_ = nullptr;
+}
+void OdomWithJointPosTimeStamped::clear_acc_bias() {
+  if (GetArenaForAllocation() == nullptr && _impl_.acc_bias_ != nullptr) {
+    delete _impl_.acc_bias_;
+  }
+  _impl_.acc_bias_ = nullptr;
+}
 OdomWithJointPosTimeStamped::OdomWithJointPosTimeStamped(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -179,6 +207,8 @@ OdomWithJointPosTimeStamped::OdomWithJointPosTimeStamped(const OdomWithJointPosT
     , decltype(_impl_.header_){nullptr}
     , decltype(_impl_.odom_){nullptr}
     , decltype(_impl_.contact_){nullptr}
+    , decltype(_impl_.gyro_bias_){nullptr}
+    , decltype(_impl_.acc_bias_){nullptr}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -190,6 +220,12 @@ OdomWithJointPosTimeStamped::OdomWithJointPosTimeStamped(const OdomWithJointPosT
   }
   if (from._internal_has_contact()) {
     _this->_impl_.contact_ = new ::dtproto::geometry_msgs::Vector4b(*from._impl_.contact_);
+  }
+  if (from._internal_has_gyro_bias()) {
+    _this->_impl_.gyro_bias_ = new ::dtproto::geometry_msgs::Point3d(*from._impl_.gyro_bias_);
+  }
+  if (from._internal_has_acc_bias()) {
+    _this->_impl_.acc_bias_ = new ::dtproto::geometry_msgs::Point3d(*from._impl_.acc_bias_);
   }
   // @@protoc_insertion_point(copy_constructor:dtproto.quadruped.OdomWithJointPosTimeStamped)
 }
@@ -204,6 +240,8 @@ inline void OdomWithJointPosTimeStamped::SharedCtor(
     , decltype(_impl_.header_){nullptr}
     , decltype(_impl_.odom_){nullptr}
     , decltype(_impl_.contact_){nullptr}
+    , decltype(_impl_.gyro_bias_){nullptr}
+    , decltype(_impl_.acc_bias_){nullptr}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -224,6 +262,8 @@ inline void OdomWithJointPosTimeStamped::SharedDtor() {
   if (this != internal_default_instance()) delete _impl_.header_;
   if (this != internal_default_instance()) delete _impl_.odom_;
   if (this != internal_default_instance()) delete _impl_.contact_;
+  if (this != internal_default_instance()) delete _impl_.gyro_bias_;
+  if (this != internal_default_instance()) delete _impl_.acc_bias_;
 }
 
 void OdomWithJointPosTimeStamped::SetCachedSize(int size) const {
@@ -250,6 +290,14 @@ void OdomWithJointPosTimeStamped::Clear() {
     delete _impl_.contact_;
   }
   _impl_.contact_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && _impl_.gyro_bias_ != nullptr) {
+    delete _impl_.gyro_bias_;
+  }
+  _impl_.gyro_bias_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && _impl_.acc_bias_ != nullptr) {
+    delete _impl_.acc_bias_;
+  }
+  _impl_.acc_bias_ = nullptr;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -303,6 +351,22 @@ const char* OdomWithJointPosTimeStamped::_InternalParse(const char* ptr, ::_pbi:
       case 5:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
           ptr = ctx->ParseMessage(_internal_mutable_contact(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .dtproto.geometry_msgs.Point3d gyro_bias = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
+          ptr = ctx->ParseMessage(_internal_mutable_gyro_bias(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .dtproto.geometry_msgs.Point3d acc_bias = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
+          ptr = ctx->ParseMessage(_internal_mutable_acc_bias(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -370,6 +434,20 @@ uint8_t* OdomWithJointPosTimeStamped::_InternalSerialize(
         _Internal::contact(this).GetCachedSize(), target, stream);
   }
 
+  // .dtproto.geometry_msgs.Point3d gyro_bias = 6;
+  if (this->_internal_has_gyro_bias()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(6, _Internal::gyro_bias(this),
+        _Internal::gyro_bias(this).GetCachedSize(), target, stream);
+  }
+
+  // .dtproto.geometry_msgs.Point3d acc_bias = 7;
+  if (this->_internal_has_acc_bias()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(7, _Internal::acc_bias(this),
+        _Internal::acc_bias(this).GetCachedSize(), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -425,6 +503,20 @@ size_t OdomWithJointPosTimeStamped::ByteSizeLong() const {
         *_impl_.contact_);
   }
 
+  // .dtproto.geometry_msgs.Point3d gyro_bias = 6;
+  if (this->_internal_has_gyro_bias()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.gyro_bias_);
+  }
+
+  // .dtproto.geometry_msgs.Point3d acc_bias = 7;
+  if (this->_internal_has_acc_bias()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.acc_bias_);
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -457,6 +549,14 @@ void OdomWithJointPosTimeStamped::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to
     _this->_internal_mutable_contact()->::dtproto::geometry_msgs::Vector4b::MergeFrom(
         from._internal_contact());
   }
+  if (from._internal_has_gyro_bias()) {
+    _this->_internal_mutable_gyro_bias()->::dtproto::geometry_msgs::Point3d::MergeFrom(
+        from._internal_gyro_bias());
+  }
+  if (from._internal_has_acc_bias()) {
+    _this->_internal_mutable_acc_bias()->::dtproto::geometry_msgs::Point3d::MergeFrom(
+        from._internal_acc_bias());
+  }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -477,8 +577,8 @@ void OdomWithJointPosTimeStamped::InternalSwap(OdomWithJointPosTimeStamped* othe
   _impl_.joint_pos_.InternalSwap(&other->_impl_.joint_pos_);
   _impl_.foot_pos_.InternalSwap(&other->_impl_.foot_pos_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(OdomWithJointPosTimeStamped, _impl_.contact_)
-      + sizeof(OdomWithJointPosTimeStamped::_impl_.contact_)
+      PROTOBUF_FIELD_OFFSET(OdomWithJointPosTimeStamped, _impl_.acc_bias_)
+      + sizeof(OdomWithJointPosTimeStamped::_impl_.acc_bias_)
       - PROTOBUF_FIELD_OFFSET(OdomWithJointPosTimeStamped, _impl_.header_)>(
           reinterpret_cast<char*>(&_impl_.header_),
           reinterpret_cast<char*>(&other->_impl_.header_));

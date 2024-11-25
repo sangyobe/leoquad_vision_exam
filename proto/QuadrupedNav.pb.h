@@ -193,6 +193,8 @@ class OdomWithJointPosTimeStamped final :
     kHeaderFieldNumber = 1,
     kOdomFieldNumber = 2,
     kContactFieldNumber = 5,
+    kGyroBiasFieldNumber = 6,
+    kAccBiasFieldNumber = 7,
   };
   // repeated double joint_pos = 3;
   int joint_pos_size() const;
@@ -288,6 +290,42 @@ class OdomWithJointPosTimeStamped final :
       ::dtproto::geometry_msgs::Vector4b* contact);
   ::dtproto::geometry_msgs::Vector4b* unsafe_arena_release_contact();
 
+  // .dtproto.geometry_msgs.Point3d gyro_bias = 6;
+  bool has_gyro_bias() const;
+  private:
+  bool _internal_has_gyro_bias() const;
+  public:
+  void clear_gyro_bias();
+  const ::dtproto::geometry_msgs::Point3d& gyro_bias() const;
+  PROTOBUF_NODISCARD ::dtproto::geometry_msgs::Point3d* release_gyro_bias();
+  ::dtproto::geometry_msgs::Point3d* mutable_gyro_bias();
+  void set_allocated_gyro_bias(::dtproto::geometry_msgs::Point3d* gyro_bias);
+  private:
+  const ::dtproto::geometry_msgs::Point3d& _internal_gyro_bias() const;
+  ::dtproto::geometry_msgs::Point3d* _internal_mutable_gyro_bias();
+  public:
+  void unsafe_arena_set_allocated_gyro_bias(
+      ::dtproto::geometry_msgs::Point3d* gyro_bias);
+  ::dtproto::geometry_msgs::Point3d* unsafe_arena_release_gyro_bias();
+
+  // .dtproto.geometry_msgs.Point3d acc_bias = 7;
+  bool has_acc_bias() const;
+  private:
+  bool _internal_has_acc_bias() const;
+  public:
+  void clear_acc_bias();
+  const ::dtproto::geometry_msgs::Point3d& acc_bias() const;
+  PROTOBUF_NODISCARD ::dtproto::geometry_msgs::Point3d* release_acc_bias();
+  ::dtproto::geometry_msgs::Point3d* mutable_acc_bias();
+  void set_allocated_acc_bias(::dtproto::geometry_msgs::Point3d* acc_bias);
+  private:
+  const ::dtproto::geometry_msgs::Point3d& _internal_acc_bias() const;
+  ::dtproto::geometry_msgs::Point3d* _internal_mutable_acc_bias();
+  public:
+  void unsafe_arena_set_allocated_acc_bias(
+      ::dtproto::geometry_msgs::Point3d* acc_bias);
+  ::dtproto::geometry_msgs::Point3d* unsafe_arena_release_acc_bias();
+
   // @@protoc_insertion_point(class_scope:dtproto.quadruped.OdomWithJointPosTimeStamped)
  private:
   class _Internal;
@@ -301,6 +339,8 @@ class OdomWithJointPosTimeStamped final :
     ::dtproto::std_msgs::Header* header_;
     ::dtproto::nav_msgs::Odom* odom_;
     ::dtproto::geometry_msgs::Vector4b* contact_;
+    ::dtproto::geometry_msgs::Point3d* gyro_bias_;
+    ::dtproto::geometry_msgs::Point3d* acc_bias_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -654,6 +694,176 @@ inline void OdomWithJointPosTimeStamped::set_allocated_contact(::dtproto::geomet
   }
   _impl_.contact_ = contact;
   // @@protoc_insertion_point(field_set_allocated:dtproto.quadruped.OdomWithJointPosTimeStamped.contact)
+}
+
+// .dtproto.geometry_msgs.Point3d gyro_bias = 6;
+inline bool OdomWithJointPosTimeStamped::_internal_has_gyro_bias() const {
+  return this != internal_default_instance() && _impl_.gyro_bias_ != nullptr;
+}
+inline bool OdomWithJointPosTimeStamped::has_gyro_bias() const {
+  return _internal_has_gyro_bias();
+}
+inline const ::dtproto::geometry_msgs::Point3d& OdomWithJointPosTimeStamped::_internal_gyro_bias() const {
+  const ::dtproto::geometry_msgs::Point3d* p = _impl_.gyro_bias_;
+  return p != nullptr ? *p : reinterpret_cast<const ::dtproto::geometry_msgs::Point3d&>(
+      ::dtproto::geometry_msgs::_Point3d_default_instance_);
+}
+inline const ::dtproto::geometry_msgs::Point3d& OdomWithJointPosTimeStamped::gyro_bias() const {
+  // @@protoc_insertion_point(field_get:dtproto.quadruped.OdomWithJointPosTimeStamped.gyro_bias)
+  return _internal_gyro_bias();
+}
+inline void OdomWithJointPosTimeStamped::unsafe_arena_set_allocated_gyro_bias(
+    ::dtproto::geometry_msgs::Point3d* gyro_bias) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.gyro_bias_);
+  }
+  _impl_.gyro_bias_ = gyro_bias;
+  if (gyro_bias) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:dtproto.quadruped.OdomWithJointPosTimeStamped.gyro_bias)
+}
+inline ::dtproto::geometry_msgs::Point3d* OdomWithJointPosTimeStamped::release_gyro_bias() {
+  
+  ::dtproto::geometry_msgs::Point3d* temp = _impl_.gyro_bias_;
+  _impl_.gyro_bias_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::dtproto::geometry_msgs::Point3d* OdomWithJointPosTimeStamped::unsafe_arena_release_gyro_bias() {
+  // @@protoc_insertion_point(field_release:dtproto.quadruped.OdomWithJointPosTimeStamped.gyro_bias)
+  
+  ::dtproto::geometry_msgs::Point3d* temp = _impl_.gyro_bias_;
+  _impl_.gyro_bias_ = nullptr;
+  return temp;
+}
+inline ::dtproto::geometry_msgs::Point3d* OdomWithJointPosTimeStamped::_internal_mutable_gyro_bias() {
+  
+  if (_impl_.gyro_bias_ == nullptr) {
+    auto* p = CreateMaybeMessage<::dtproto::geometry_msgs::Point3d>(GetArenaForAllocation());
+    _impl_.gyro_bias_ = p;
+  }
+  return _impl_.gyro_bias_;
+}
+inline ::dtproto::geometry_msgs::Point3d* OdomWithJointPosTimeStamped::mutable_gyro_bias() {
+  ::dtproto::geometry_msgs::Point3d* _msg = _internal_mutable_gyro_bias();
+  // @@protoc_insertion_point(field_mutable:dtproto.quadruped.OdomWithJointPosTimeStamped.gyro_bias)
+  return _msg;
+}
+inline void OdomWithJointPosTimeStamped::set_allocated_gyro_bias(::dtproto::geometry_msgs::Point3d* gyro_bias) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.gyro_bias_);
+  }
+  if (gyro_bias) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(gyro_bias));
+    if (message_arena != submessage_arena) {
+      gyro_bias = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, gyro_bias, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.gyro_bias_ = gyro_bias;
+  // @@protoc_insertion_point(field_set_allocated:dtproto.quadruped.OdomWithJointPosTimeStamped.gyro_bias)
+}
+
+// .dtproto.geometry_msgs.Point3d acc_bias = 7;
+inline bool OdomWithJointPosTimeStamped::_internal_has_acc_bias() const {
+  return this != internal_default_instance() && _impl_.acc_bias_ != nullptr;
+}
+inline bool OdomWithJointPosTimeStamped::has_acc_bias() const {
+  return _internal_has_acc_bias();
+}
+inline const ::dtproto::geometry_msgs::Point3d& OdomWithJointPosTimeStamped::_internal_acc_bias() const {
+  const ::dtproto::geometry_msgs::Point3d* p = _impl_.acc_bias_;
+  return p != nullptr ? *p : reinterpret_cast<const ::dtproto::geometry_msgs::Point3d&>(
+      ::dtproto::geometry_msgs::_Point3d_default_instance_);
+}
+inline const ::dtproto::geometry_msgs::Point3d& OdomWithJointPosTimeStamped::acc_bias() const {
+  // @@protoc_insertion_point(field_get:dtproto.quadruped.OdomWithJointPosTimeStamped.acc_bias)
+  return _internal_acc_bias();
+}
+inline void OdomWithJointPosTimeStamped::unsafe_arena_set_allocated_acc_bias(
+    ::dtproto::geometry_msgs::Point3d* acc_bias) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.acc_bias_);
+  }
+  _impl_.acc_bias_ = acc_bias;
+  if (acc_bias) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:dtproto.quadruped.OdomWithJointPosTimeStamped.acc_bias)
+}
+inline ::dtproto::geometry_msgs::Point3d* OdomWithJointPosTimeStamped::release_acc_bias() {
+  
+  ::dtproto::geometry_msgs::Point3d* temp = _impl_.acc_bias_;
+  _impl_.acc_bias_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::dtproto::geometry_msgs::Point3d* OdomWithJointPosTimeStamped::unsafe_arena_release_acc_bias() {
+  // @@protoc_insertion_point(field_release:dtproto.quadruped.OdomWithJointPosTimeStamped.acc_bias)
+  
+  ::dtproto::geometry_msgs::Point3d* temp = _impl_.acc_bias_;
+  _impl_.acc_bias_ = nullptr;
+  return temp;
+}
+inline ::dtproto::geometry_msgs::Point3d* OdomWithJointPosTimeStamped::_internal_mutable_acc_bias() {
+  
+  if (_impl_.acc_bias_ == nullptr) {
+    auto* p = CreateMaybeMessage<::dtproto::geometry_msgs::Point3d>(GetArenaForAllocation());
+    _impl_.acc_bias_ = p;
+  }
+  return _impl_.acc_bias_;
+}
+inline ::dtproto::geometry_msgs::Point3d* OdomWithJointPosTimeStamped::mutable_acc_bias() {
+  ::dtproto::geometry_msgs::Point3d* _msg = _internal_mutable_acc_bias();
+  // @@protoc_insertion_point(field_mutable:dtproto.quadruped.OdomWithJointPosTimeStamped.acc_bias)
+  return _msg;
+}
+inline void OdomWithJointPosTimeStamped::set_allocated_acc_bias(::dtproto::geometry_msgs::Point3d* acc_bias) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.acc_bias_);
+  }
+  if (acc_bias) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(acc_bias));
+    if (message_arena != submessage_arena) {
+      acc_bias = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, acc_bias, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.acc_bias_ = acc_bias;
+  // @@protoc_insertion_point(field_set_allocated:dtproto.quadruped.OdomWithJointPosTimeStamped.acc_bias)
 }
 
 #ifdef __GNUC__
