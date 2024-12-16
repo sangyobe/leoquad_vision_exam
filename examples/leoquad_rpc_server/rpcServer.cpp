@@ -73,7 +73,7 @@ void RpcServer::Run()
     _dataUpdater = std::thread([this] {
         _runUpdater.store(true);
         double t_ = 0.0;
-        double dt_ = 0.1;
+        double dt_ = 0.01;
         uint32_t prevVisualOdomMsgSeq = 0;
         uint32_t prevGridmapMsgSeq = 0;
         double prevStatTimeSec = t_;
@@ -216,6 +216,7 @@ void RpcServer::Run()
             // Publish Odom
             //
             // set message header
+            if (_odomMsgSeq > 1000) _odomMsgSeq = 0;
             _odomMsg.mutable_header()->set_seq(_odomMsgSeq++);
             _odomMsg.mutable_header()->mutable_time_stamp()->set_seconds(
                 tp.tv_sec);

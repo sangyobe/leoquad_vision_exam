@@ -18,9 +18,10 @@ public:
             double t_ = 0.0;
             double dt_ = 0.001;
             while (_runUpdater.load()) {
-                // robotData.basePos.x = sin(t_);
-                // robotData.basePos.y = cos(t_);
-                // robotData.baseRot.fromEuler(0.0, 0.0, t_);
+                robotData.basePos.x = 0.0; // sin(t_);
+                robotData.basePos.y = 0.0; // cos(t_);
+                robotData.basePos.z = 0.45;
+                robotData.baseRot.fromEuler(0.0, 0.0, t_);
 
                 robotData.jointPos[0] = 0.0;
                 robotData.jointPos[1] = 0.7 * sin(3.14 * t_) * sin(3.14 * t_);
