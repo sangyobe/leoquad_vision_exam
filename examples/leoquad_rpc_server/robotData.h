@@ -2,6 +2,7 @@
 #define ROBOTDATA_H
 
 #include <cmath>
+#include <cstdint>
 
 typedef struct _Point {
     double x;

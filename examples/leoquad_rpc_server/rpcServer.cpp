@@ -1,6 +1,7 @@
 #include "rpcServer.h"
 #include "QuadrupedNav.grpc.pb.h"
 #include "onLocalGridmap.h"
+#include "onPerceivedObject.h"
 #include "onVisualOdom.h"
 #include "robotData.h"
 #include <dtCore/src/dtLog/dtLog.h>
@@ -12,6 +13,9 @@ RpcServer::RpcServer(void *robotData)
     : _navServiceListener(std::make_unique<dt::DAQ::ServiceListenerGrpc>(
           std::make_unique<dtproto::quadruped::Nav::AsyncService>(),
           "0.0.0.0:50056")),
+      _perceptionServiceListener(std::make_unique<dt::DAQ::ServiceListenerGrpc>(
+          std::make_unique<dtproto::perception::AsyncService>(),
+          "0.0.0.0:50059")),
       _robotStatePublisher(std::make_unique<dt::DAQ::StatePublisherGrpc<
                                dtproto::robot_msgs::RobotStateTimeStamped>>(
           "RobotState", "0.0.0.0:50053", 0)),
@@ -29,6 +33,8 @@ RpcServer::RpcServer(void *robotData)
 {
     _navServiceListener->AddSession<OnVisualOdom>(robotData);
     _navServiceListener->AddSession<OnLocalGridmap>(robotData);
+
+    _perceptionServiceListener->AddSession<OnPerceivedObjectArray>(robotData);
 
     // pre-allocate and initialize message structure
     _imuMsg.mutable_header()->set_frame_id("map");
@@ -66,7 +72,11 @@ RpcServer::RpcServer(void *robotData)
     }
 }
 
-RpcServer::~RpcServer() { _navServiceListener->Stop(); }
+RpcServer::~RpcServer()
+{
+    _navServiceListener->Stop();
+    _perceptionServiceListener->Stop();
+}
 
 void RpcServer::Run()
 {
@@ -293,6 +303,7 @@ void RpcServer::Stop()
     _dataUpdater.join();
 
     _navServiceListener->Stop();
+    _perceptionServiceListener->Stop();
 }
 
 void RpcServer::ResetOdom()

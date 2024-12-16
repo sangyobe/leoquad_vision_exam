@@ -7,14 +7,12 @@
 #include <memory>
 #include <string>
 
-using ServiceType = dtproto::quadruped::Nav;
-
-class PubGridmap : public dt::DAQ::ServiceCallerGrpc<ServiceType>::Call
+class PubGridmap : public dt::DAQ::ServiceCallerGrpc<dtproto::quadruped::Nav>::Call
 {
-    using CallState = typename dt::DAQ::ServiceCallerGrpc<ServiceType>::Call::CallState;
+    using CallState = typename dt::DAQ::ServiceCallerGrpc<dtproto::quadruped::Nav>::Call::CallState;
 
 public:
-    PubGridmap(ServiceType::Stub *stub, grpc::CompletionQueue *cq, void *udata = nullptr);
+    PubGridmap(dtproto::quadruped::Nav::Stub *stub, grpc::CompletionQueue *cq, void *udata = nullptr);
     ~PubGridmap();
 
     bool OnCompletionEvent(bool ok) override;

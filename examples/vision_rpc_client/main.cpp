@@ -1,6 +1,8 @@
 #include "emulGridmap.h"
+#include "emulObjectPerception.h"
 #include "emulOdom.h"
 #include "pubGridmap.h"
+#include "pubPerceivedObject.h"
 #include "pubVisualOdom.h"
 #include "rpcClient.h"     // main RPC client interface
 #include "rpcSubscriber.h" // simple RPC message subscriber
@@ -15,6 +17,7 @@
 
 OdomEmulator odomEmul;
 GridmapEmulator gridmapEmul;
+ObjectPerceptionEmulator objectPerceptionEmul;
 std::string svrIp = "127.0.0.1";
 
 int main(int argc, char *argv[])
@@ -131,7 +134,7 @@ int main(int argc, char *argv[])
     //
     // RPC service client
     //
-    std::unique_ptr<RpcClient> rpcClient = std::make_unique<RpcClient>(
+    std::unique_ptr<RpcClient<dtproto::quadruped::Nav>> rpcClient = std::make_unique<RpcClient<dtproto::quadruped::Nav>>(
         dt::Utils::string_format("%s:%d", svrIp.c_str(), 50056));
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -186,6 +189,38 @@ int main(int argc, char *argv[])
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //
+    // perception RPC service client
+    //
+    std::unique_ptr<RpcClient<dtproto::perception>> rpcClientPerception = std::make_unique<RpcClient<dtproto::perception>>(
+        dt::Utils::string_format("%s:%d", svrIp.c_str(), 50059));
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    // perceived objects publisher (client-side streamer)
+    //
+    std::thread object_publisher = std::thread([&]() {
+        double t_ = 0.0;
+        double dt_ = 1.0 / OBJECT_PUB_RATE;
+
+        uint64_t cid = rpcClientPerception->template StartCall<PubPerceivedObjectArray>(
+            (void *)(&objectPerceptionEmul.objmap));
+        std::shared_ptr<PubPerceivedObjectArray> call = std::dynamic_pointer_cast<
+            PubPerceivedObjectArray,
+            dt::DAQ::ServiceCallerGrpc<dtproto::perception>::Call>(
+            rpcClientPerception->GetCall(cid));
+        if (call == nullptr) return;
+
+        while (bRun.load())
+        {
+            call->Publish(objectPerceptionEmul.objmap);
+            std::this_thread::sleep_for(
+                std::chrono::milliseconds(long(dt_ * 1000)));
+            t_ += dt_;
+        }
+    });
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    //
     // main loop : wait user input
     //
     while (bRun.load())
@@ -198,6 +233,7 @@ int main(int argc, char *argv[])
 
     odom_publisher.join();
     gridmap_publisher.join();
+    object_publisher.join();
     dt::Log::Terminate(); // flush all log messages
     return 0;
 }

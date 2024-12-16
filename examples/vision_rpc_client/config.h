@@ -7,5 +7,6 @@
 
 #define GRIDMAP_PUB_RATE (30.0) // hz
 #define ODOM_PUB_RATE (100.0)   // hz
+#define OBJECT_PUB_RATE (30.0)  // hz
 
 #endif // __CONFIG_H__

@@ -27,6 +27,7 @@ public:
 
 private:
     std::unique_ptr<dt::DAQ::ServiceListenerGrpc> _navServiceListener{nullptr};
+    std::unique_ptr<dt::DAQ::ServiceListenerGrpc> _perceptionServiceListener{nullptr};
     std::unique_ptr<dt::DAQ::StatePublisherGrpc<dtproto::nav_msgs::GridTimeStamped>> _gridmapPublisher{nullptr};
     std::unique_ptr<dt::DAQ::StatePublisherGrpc<dtproto::robot_msgs::RobotStateTimeStamped>> _robotStatePublisher{nullptr};
     std::unique_ptr<dt::DAQ::StatePublisherGrpc<dtproto::sensor_msgs::ImuTimeStamped>> _imuPublisher{nullptr};

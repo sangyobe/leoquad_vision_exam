@@ -7,14 +7,12 @@
 #include <memory>
 #include <string>
 
-using ServiceType = dtproto::quadruped::Nav;
-
-class PubVisualOdometry : public dt::DAQ::ServiceCallerGrpc<ServiceType>::Call
+class PubVisualOdometry : public dt::DAQ::ServiceCallerGrpc<dtproto::quadruped::Nav>::Call
 {
-    using CallState = typename dt::DAQ::ServiceCallerGrpc<ServiceType>::Call::CallState;
+    using CallState = typename dt::DAQ::ServiceCallerGrpc<dtproto::quadruped::Nav>::Call::CallState;
 
 public:
-    PubVisualOdometry(ServiceType::Stub *stub, grpc::CompletionQueue *cq, void *udata = nullptr);
+    PubVisualOdometry(dtproto::quadruped::Nav::Stub *stub, grpc::CompletionQueue *cq, void *udata = nullptr);
     ~PubVisualOdometry();
 
     bool OnCompletionEvent(bool ok) override;

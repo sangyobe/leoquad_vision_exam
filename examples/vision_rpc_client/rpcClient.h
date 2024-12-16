@@ -5,8 +5,7 @@
 #include <dtCore/src/dtDAQ/grpc/dtServiceCallerGrpc.hpp>
 #include <string>
 
-using ServiceType = dtproto::quadruped::Nav;
-
+template <typename ServiceType>
 class RpcClient : public dt::DAQ::ServiceCallerGrpc<ServiceType>
 {
 public:
