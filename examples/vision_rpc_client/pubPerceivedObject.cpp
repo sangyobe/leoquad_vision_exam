@@ -7,6 +7,8 @@ PubPerceivedObjectArray::PubPerceivedObjectArray(ServiceType::Stub *stub, grpc::
     : dt::DAQ::ServiceCallerGrpc<ServiceType>::Call(stub, cq, udata), _objmapData((ObjectMap *)udata)
 {
     _request.mutable_object_array()->add_objects();
+    _request.mutable_object_array()->add_objects();
+    _request.mutable_object_array()->add_objects();
 
     LOG(debug) << "PubPerceivedObjectArray[" << _id << "] NEW call.";
     _writer = _stub->PrepareAsyncSubscribePerceivedObjects(&(this->_ctx), &_response, this->_cq);
@@ -41,6 +43,8 @@ bool PubPerceivedObjectArray::Publish(const ObjectMap &objmap)
             if (obj.valid)
             {
                 _request.mutable_object_array()->mutable_objects(0)->set_id(obj.id);
+                _request.mutable_object_array()->mutable_objects(1)->set_id(obj.id + 100);
+                _request.mutable_object_array()->mutable_objects(2)->set_id(obj.id + 200);
                 break;
             }
         }
