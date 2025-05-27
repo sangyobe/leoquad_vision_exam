@@ -28,6 +28,7 @@ static const char* Nav_method_names[] = {
   "/dtproto.quadruped.Nav/SubscribeVisualOdom",
   "/dtproto.quadruped.Nav/SubscribeLocalGridmap",
   "/dtproto.quadruped.Nav/SubscribeSteppableArea",
+  "/dtproto.quadruped.Nav/SubscribeRobotCommand",
 };
 
 std::unique_ptr< Nav::Stub> Nav::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -42,6 +43,7 @@ Nav::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const
   , rpcmethod_SubscribeVisualOdom_(Nav_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::CLIENT_STREAMING, channel)
   , rpcmethod_SubscribeLocalGridmap_(Nav_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::CLIENT_STREAMING, channel)
   , rpcmethod_SubscribeSteppableArea_(Nav_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::CLIENT_STREAMING, channel)
+  , rpcmethod_SubscribeRobotCommand_(Nav_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::CLIENT_STREAMING, channel)
   {}
 
 ::grpc::ClientReader< ::dtproto::quadruped::OdomWithJointPosTimeStamped>* Nav::Stub::PublishOdomWithJointPosRaw(::grpc::ClientContext* context, const ::dtproto::std_msgs::Request& request) {
@@ -124,6 +126,22 @@ void Nav::Stub::async::SubscribeSteppableArea(::grpc::ClientContext* context, ::
   return ::grpc::internal::ClientAsyncWriterFactory< ::dtproto::nav_msgs::SteppableAreaTimeStamped>::Create(channel_.get(), cq, rpcmethod_SubscribeSteppableArea_, context, response, false, nullptr);
 }
 
+::grpc::ClientWriter< ::dtproto::robot_msgs::RobotCommandTimeStamped>* Nav::Stub::SubscribeRobotCommandRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response) {
+  return ::grpc::internal::ClientWriterFactory< ::dtproto::robot_msgs::RobotCommandTimeStamped>::Create(channel_.get(), rpcmethod_SubscribeRobotCommand_, context, response);
+}
+
+void Nav::Stub::async::SubscribeRobotCommand(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::ClientWriteReactor< ::dtproto::robot_msgs::RobotCommandTimeStamped>* reactor) {
+  ::grpc::internal::ClientCallbackWriterFactory< ::dtproto::robot_msgs::RobotCommandTimeStamped>::Create(stub_->channel_.get(), stub_->rpcmethod_SubscribeRobotCommand_, context, response, reactor);
+}
+
+::grpc::ClientAsyncWriter< ::dtproto::robot_msgs::RobotCommandTimeStamped>* Nav::Stub::AsyncSubscribeRobotCommandRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncWriterFactory< ::dtproto::robot_msgs::RobotCommandTimeStamped>::Create(channel_.get(), cq, rpcmethod_SubscribeRobotCommand_, context, response, true, tag);
+}
+
+::grpc::ClientAsyncWriter< ::dtproto::robot_msgs::RobotCommandTimeStamped>* Nav::Stub::PrepareAsyncSubscribeRobotCommandRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncWriterFactory< ::dtproto::robot_msgs::RobotCommandTimeStamped>::Create(channel_.get(), cq, rpcmethod_SubscribeRobotCommand_, context, response, false, nullptr);
+}
+
 Nav::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       Nav_method_names[0],
@@ -175,6 +193,16 @@ Nav::Service::Service() {
              ::dtproto::std_msgs::Response* resp) {
                return service->SubscribeSteppableArea(ctx, reader, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Nav_method_names[5],
+      ::grpc::internal::RpcMethod::CLIENT_STREAMING,
+      new ::grpc::internal::ClientStreamingHandler< Nav::Service, ::dtproto::robot_msgs::RobotCommandTimeStamped, ::dtproto::std_msgs::Response>(
+          [](Nav::Service* service,
+             ::grpc::ServerContext* ctx,
+             ::grpc::ServerReader<::dtproto::robot_msgs::RobotCommandTimeStamped>* reader,
+             ::dtproto::std_msgs::Response* resp) {
+               return service->SubscribeRobotCommand(ctx, reader, resp);
+             }, this)));
 }
 
 Nav::Service::~Service() {
@@ -209,6 +237,13 @@ Nav::Service::~Service() {
 }
 
 ::grpc::Status Nav::Service::SubscribeSteppableArea(::grpc::ServerContext* context, ::grpc::ServerReader< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* reader, ::dtproto::std_msgs::Response* response) {
+  (void) context;
+  (void) reader;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status Nav::Service::SubscribeRobotCommand(::grpc::ServerContext* context, ::grpc::ServerReader< ::dtproto::robot_msgs::RobotCommandTimeStamped>* reader, ::dtproto::std_msgs::Response* response) {
   (void) context;
   (void) reader;
   (void) response;

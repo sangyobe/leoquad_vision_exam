@@ -83,6 +83,15 @@ class Nav final {
     std::unique_ptr< ::grpc::ClientAsyncWriterInterface< ::dtproto::nav_msgs::SteppableAreaTimeStamped>> PrepareAsyncSubscribeSteppableArea(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncWriterInterface< ::dtproto::nav_msgs::SteppableAreaTimeStamped>>(PrepareAsyncSubscribeSteppableAreaRaw(context, response, cq));
     }
+    std::unique_ptr< ::grpc::ClientWriterInterface< ::dtproto::robot_msgs::RobotCommandTimeStamped>> SubscribeRobotCommand(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response) {
+      return std::unique_ptr< ::grpc::ClientWriterInterface< ::dtproto::robot_msgs::RobotCommandTimeStamped>>(SubscribeRobotCommandRaw(context, response));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncWriterInterface< ::dtproto::robot_msgs::RobotCommandTimeStamped>> AsyncSubscribeRobotCommand(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncWriterInterface< ::dtproto::robot_msgs::RobotCommandTimeStamped>>(AsyncSubscribeRobotCommandRaw(context, response, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncWriterInterface< ::dtproto::robot_msgs::RobotCommandTimeStamped>> PrepareAsyncSubscribeRobotCommand(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncWriterInterface< ::dtproto::robot_msgs::RobotCommandTimeStamped>>(PrepareAsyncSubscribeRobotCommandRaw(context, response, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -93,6 +102,7 @@ class Nav final {
       virtual void SubscribeVisualOdom(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::ClientWriteReactor< ::dtproto::nav_msgs::OdomTimeStamped>* reactor) = 0;
       virtual void SubscribeLocalGridmap(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::ClientWriteReactor< ::dtproto::nav_msgs::GridTimeStamped>* reactor) = 0;
       virtual void SubscribeSteppableArea(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::ClientWriteReactor< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* reactor) = 0;
+      virtual void SubscribeRobotCommand(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::ClientWriteReactor< ::dtproto::robot_msgs::RobotCommandTimeStamped>* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -113,6 +123,9 @@ class Nav final {
     virtual ::grpc::ClientWriterInterface< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* SubscribeSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response) = 0;
     virtual ::grpc::ClientAsyncWriterInterface< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* AsyncSubscribeSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncWriterInterface< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* PrepareAsyncSubscribeSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientWriterInterface< ::dtproto::robot_msgs::RobotCommandTimeStamped>* SubscribeRobotCommandRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response) = 0;
+    virtual ::grpc::ClientAsyncWriterInterface< ::dtproto::robot_msgs::RobotCommandTimeStamped>* AsyncSubscribeRobotCommandRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncWriterInterface< ::dtproto::robot_msgs::RobotCommandTimeStamped>* PrepareAsyncSubscribeRobotCommandRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -162,6 +175,15 @@ class Nav final {
     std::unique_ptr< ::grpc::ClientAsyncWriter< ::dtproto::nav_msgs::SteppableAreaTimeStamped>> PrepareAsyncSubscribeSteppableArea(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncWriter< ::dtproto::nav_msgs::SteppableAreaTimeStamped>>(PrepareAsyncSubscribeSteppableAreaRaw(context, response, cq));
     }
+    std::unique_ptr< ::grpc::ClientWriter< ::dtproto::robot_msgs::RobotCommandTimeStamped>> SubscribeRobotCommand(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response) {
+      return std::unique_ptr< ::grpc::ClientWriter< ::dtproto::robot_msgs::RobotCommandTimeStamped>>(SubscribeRobotCommandRaw(context, response));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncWriter< ::dtproto::robot_msgs::RobotCommandTimeStamped>> AsyncSubscribeRobotCommand(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncWriter< ::dtproto::robot_msgs::RobotCommandTimeStamped>>(AsyncSubscribeRobotCommandRaw(context, response, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncWriter< ::dtproto::robot_msgs::RobotCommandTimeStamped>> PrepareAsyncSubscribeRobotCommand(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncWriter< ::dtproto::robot_msgs::RobotCommandTimeStamped>>(PrepareAsyncSubscribeRobotCommandRaw(context, response, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -170,6 +192,7 @@ class Nav final {
       void SubscribeVisualOdom(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::ClientWriteReactor< ::dtproto::nav_msgs::OdomTimeStamped>* reactor) override;
       void SubscribeLocalGridmap(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::ClientWriteReactor< ::dtproto::nav_msgs::GridTimeStamped>* reactor) override;
       void SubscribeSteppableArea(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::ClientWriteReactor< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* reactor) override;
+      void SubscribeRobotCommand(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::ClientWriteReactor< ::dtproto::robot_msgs::RobotCommandTimeStamped>* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -196,11 +219,15 @@ class Nav final {
     ::grpc::ClientWriter< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* SubscribeSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response) override;
     ::grpc::ClientAsyncWriter< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* AsyncSubscribeSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncWriter< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* PrepareAsyncSubscribeSteppableAreaRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientWriter< ::dtproto::robot_msgs::RobotCommandTimeStamped>* SubscribeRobotCommandRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response) override;
+    ::grpc::ClientAsyncWriter< ::dtproto::robot_msgs::RobotCommandTimeStamped>* AsyncSubscribeRobotCommandRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncWriter< ::dtproto::robot_msgs::RobotCommandTimeStamped>* PrepareAsyncSubscribeRobotCommandRaw(::grpc::ClientContext* context, ::dtproto::std_msgs::Response* response, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_PublishOdomWithJointPos_;
     const ::grpc::internal::RpcMethod rpcmethod_PublishImu_;
     const ::grpc::internal::RpcMethod rpcmethod_SubscribeVisualOdom_;
     const ::grpc::internal::RpcMethod rpcmethod_SubscribeLocalGridmap_;
     const ::grpc::internal::RpcMethod rpcmethod_SubscribeSteppableArea_;
+    const ::grpc::internal::RpcMethod rpcmethod_SubscribeRobotCommand_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -215,6 +242,7 @@ class Nav final {
     virtual ::grpc::Status SubscribeVisualOdom(::grpc::ServerContext* context, ::grpc::ServerReader< ::dtproto::nav_msgs::OdomTimeStamped>* reader, ::dtproto::std_msgs::Response* response);
     virtual ::grpc::Status SubscribeLocalGridmap(::grpc::ServerContext* context, ::grpc::ServerReader< ::dtproto::nav_msgs::GridTimeStamped>* reader, ::dtproto::std_msgs::Response* response);
     virtual ::grpc::Status SubscribeSteppableArea(::grpc::ServerContext* context, ::grpc::ServerReader< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* reader, ::dtproto::std_msgs::Response* response);
+    virtual ::grpc::Status SubscribeRobotCommand(::grpc::ServerContext* context, ::grpc::ServerReader< ::dtproto::robot_msgs::RobotCommandTimeStamped>* reader, ::dtproto::std_msgs::Response* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_PublishOdomWithJointPos : public BaseClass {
@@ -316,7 +344,27 @@ class Nav final {
       ::grpc::Service::RequestAsyncClientStreaming(4, context, reader, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_PublishOdomWithJointPos<WithAsyncMethod_PublishImu<WithAsyncMethod_SubscribeVisualOdom<WithAsyncMethod_SubscribeLocalGridmap<WithAsyncMethod_SubscribeSteppableArea<Service > > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_SubscribeRobotCommand : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_SubscribeRobotCommand() {
+      ::grpc::Service::MarkMethodAsync(5);
+    }
+    ~WithAsyncMethod_SubscribeRobotCommand() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SubscribeRobotCommand(::grpc::ServerContext* /*context*/, ::grpc::ServerReader< ::dtproto::robot_msgs::RobotCommandTimeStamped>* /*reader*/, ::dtproto::std_msgs::Response* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSubscribeRobotCommand(::grpc::ServerContext* context, ::grpc::ServerAsyncReader< ::dtproto::std_msgs::Response, ::dtproto::robot_msgs::RobotCommandTimeStamped>* reader, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncClientStreaming(5, context, reader, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_PublishOdomWithJointPos<WithAsyncMethod_PublishImu<WithAsyncMethod_SubscribeVisualOdom<WithAsyncMethod_SubscribeLocalGridmap<WithAsyncMethod_SubscribeSteppableArea<WithAsyncMethod_SubscribeRobotCommand<Service > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_PublishOdomWithJointPos : public BaseClass {
    private:
@@ -427,7 +475,29 @@ class Nav final {
     virtual ::grpc::ServerReadReactor< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* SubscribeSteppableArea(
       ::grpc::CallbackServerContext* /*context*/, ::dtproto::std_msgs::Response* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_PublishOdomWithJointPos<WithCallbackMethod_PublishImu<WithCallbackMethod_SubscribeVisualOdom<WithCallbackMethod_SubscribeLocalGridmap<WithCallbackMethod_SubscribeSteppableArea<Service > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_SubscribeRobotCommand : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_SubscribeRobotCommand() {
+      ::grpc::Service::MarkMethodCallback(5,
+          new ::grpc::internal::CallbackClientStreamingHandler< ::dtproto::robot_msgs::RobotCommandTimeStamped, ::dtproto::std_msgs::Response>(
+            [this](
+                   ::grpc::CallbackServerContext* context, ::dtproto::std_msgs::Response* response) { return this->SubscribeRobotCommand(context, response); }));
+    }
+    ~WithCallbackMethod_SubscribeRobotCommand() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SubscribeRobotCommand(::grpc::ServerContext* /*context*/, ::grpc::ServerReader< ::dtproto::robot_msgs::RobotCommandTimeStamped>* /*reader*/, ::dtproto::std_msgs::Response* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerReadReactor< ::dtproto::robot_msgs::RobotCommandTimeStamped>* SubscribeRobotCommand(
+      ::grpc::CallbackServerContext* /*context*/, ::dtproto::std_msgs::Response* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_PublishOdomWithJointPos<WithCallbackMethod_PublishImu<WithCallbackMethod_SubscribeVisualOdom<WithCallbackMethod_SubscribeLocalGridmap<WithCallbackMethod_SubscribeSteppableArea<WithCallbackMethod_SubscribeRobotCommand<Service > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_PublishOdomWithJointPos : public BaseClass {
@@ -510,6 +580,23 @@ class Nav final {
     }
     // disable synchronous version of this method
     ::grpc::Status SubscribeSteppableArea(::grpc::ServerContext* /*context*/, ::grpc::ServerReader< ::dtproto::nav_msgs::SteppableAreaTimeStamped>* /*reader*/, ::dtproto::std_msgs::Response* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_SubscribeRobotCommand : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_SubscribeRobotCommand() {
+      ::grpc::Service::MarkMethodGeneric(5);
+    }
+    ~WithGenericMethod_SubscribeRobotCommand() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SubscribeRobotCommand(::grpc::ServerContext* /*context*/, ::grpc::ServerReader< ::dtproto::robot_msgs::RobotCommandTimeStamped>* /*reader*/, ::dtproto::std_msgs::Response* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -612,6 +699,26 @@ class Nav final {
     }
     void RequestSubscribeSteppableArea(::grpc::ServerContext* context, ::grpc::ServerAsyncReader< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* reader, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncClientStreaming(4, context, reader, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_SubscribeRobotCommand : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_SubscribeRobotCommand() {
+      ::grpc::Service::MarkMethodRaw(5);
+    }
+    ~WithRawMethod_SubscribeRobotCommand() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SubscribeRobotCommand(::grpc::ServerContext* /*context*/, ::grpc::ServerReader< ::dtproto::robot_msgs::RobotCommandTimeStamped>* /*reader*/, ::dtproto::std_msgs::Response* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSubscribeRobotCommand(::grpc::ServerContext* context, ::grpc::ServerAsyncReader< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* reader, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncClientStreaming(5, context, reader, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -722,6 +829,28 @@ class Nav final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerReadReactor< ::grpc::ByteBuffer>* SubscribeSteppableArea(
+      ::grpc::CallbackServerContext* /*context*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_SubscribeRobotCommand : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_SubscribeRobotCommand() {
+      ::grpc::Service::MarkMethodRawCallback(5,
+          new ::grpc::internal::CallbackClientStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, ::grpc::ByteBuffer* response) { return this->SubscribeRobotCommand(context, response); }));
+    }
+    ~WithRawCallbackMethod_SubscribeRobotCommand() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SubscribeRobotCommand(::grpc::ServerContext* /*context*/, ::grpc::ServerReader< ::dtproto::robot_msgs::RobotCommandTimeStamped>* /*reader*/, ::dtproto::std_msgs::Response* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerReadReactor< ::grpc::ByteBuffer>* SubscribeRobotCommand(
       ::grpc::CallbackServerContext* /*context*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   typedef Service StreamedUnaryService;

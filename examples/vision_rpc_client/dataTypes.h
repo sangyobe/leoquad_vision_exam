@@ -73,4 +73,11 @@ typedef struct _ObjectMap
     Object objects[10];
 } ObjectMap;
 
+typedef struct _RobotCommand
+{
+    double x;
+    double y;
+    double th;
+} RobotCommand;
+
 #endif // __DATA_TYPES_H__

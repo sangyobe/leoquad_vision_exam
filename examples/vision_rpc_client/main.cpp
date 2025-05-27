@@ -1,8 +1,10 @@
 #include "emulGridmap.h"
 #include "emulObjectPerception.h"
 #include "emulOdom.h"
+#include "emulRobotCommand.h"
 #include "pubGridmap.h"
 #include "pubPerceivedObject.h"
+#include "pubRobotCommand.h"
 #include "pubVisualOdom.h"
 #include "rpcClient.h"     // main RPC client interface
 #include "rpcSubscriber.h" // simple RPC message subscriber
@@ -17,6 +19,7 @@
 
 OdomEmulator odomEmul;
 GridmapEmulator gridmapEmul;
+RobotCommandEmulator robotcmdEmul;
 ObjectPerceptionEmulator objectPerceptionEmul;
 std::string svrIp = "127.0.0.1";
 
@@ -189,6 +192,31 @@ int main(int argc, char *argv[])
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //
+    // robot command publisher (client-side streamer)
+    //
+    std::thread robotcmd_publisher = std::thread([&]() {
+        double t_ = 0.0;
+        double dt_ = 1.0 / ROBOTCMD_PUB_RATE;
+
+        uint64_t cid = rpcClient->template StartCall<PubRobotCommand>(
+            (void *)(&robotcmdEmul.cmd));
+        std::shared_ptr<PubRobotCommand> call = std::dynamic_pointer_cast<
+            PubRobotCommand,
+            dt::DAQ::ServiceCallerGrpc<dtproto::quadruped::Nav>::Call>(
+            rpcClient->GetCall(cid));
+        if (call == nullptr) return;
+
+        while (bRun.load())
+        {
+            call->Publish(robotcmdEmul.cmd);
+            std::this_thread::sleep_for(
+                std::chrono::milliseconds(long(dt_ * 1000)));
+            t_ += dt_;
+        }
+    });
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    //
     // perception RPC service client
     //
     std::unique_ptr<RpcClient<dtproto::perception>> rpcClientPerception = std::make_unique<RpcClient<dtproto::perception>>(
@@ -233,6 +261,7 @@ int main(int argc, char *argv[])
 
     odom_publisher.join();
     gridmap_publisher.join();
+    robotcmd_publisher.join();
     object_publisher.join();
     dt::Log::Terminate(); // flush all log messages
     return 0;

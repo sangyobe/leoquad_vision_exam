@@ -38,6 +38,7 @@
 #include "dtProto/geometry_msgs/Point.pb.h"
 #include "dtProto/geometry_msgs/Vector.pb.h"
 #include "dtProto/sensor_msgs/Imu.pb.h"
+#include "dtProto/robot_msgs/RobotCommand.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_QuadrupedNav_2eproto

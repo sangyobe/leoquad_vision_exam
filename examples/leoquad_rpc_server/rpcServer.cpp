@@ -2,6 +2,7 @@
 #include "QuadrupedNav.grpc.pb.h"
 #include "onLocalGridmap.h"
 #include "onPerceivedObject.h"
+#include "onRobotCommand.h"
 #include "onVisualOdom.h"
 #include "robotData.h"
 #include <dtCore/src/dtLog/dtLog.h>
@@ -33,6 +34,7 @@ RpcServer::RpcServer(void *robotData)
 {
     _navServiceListener->AddSession<OnVisualOdom>(robotData);
     _navServiceListener->AddSession<OnLocalGridmap>(robotData);
+    _navServiceListener->AddSession<OnRobotCommand>(robotData);
 
     _perceptionServiceListener->AddSession<OnPerceivedObjectArray>(robotData);
 
@@ -86,6 +88,7 @@ void RpcServer::Run()
         double dt_ = 0.01;
         uint32_t prevVisualOdomMsgSeq = 0;
         uint32_t prevGridmapMsgSeq = 0;
+        uint32_t prevRobotCommandMsgSeq = 0;
         double prevStatTimeSec = t_;
         while (_runUpdater.load())
         {
@@ -280,12 +283,17 @@ void RpcServer::Run()
                     _robotData->visualOdomMsgSeq - prevVisualOdomMsgSeq;
                 uint32_t gridmapMsgCount =
                     _robotData->gridmapMsgSeq - prevGridmapMsgSeq;
+                uint32_t robotCommandMsgCount =
+                    _robotData->robotCommandMsgSeq - prevRobotCommandMsgSeq;
                 LOG(info) << "Odometry: " << (double)(visualOdomMsgCount) / delT
                           << "(hz)";
                 LOG(info) << "Gridmap: " << (double)(gridmapMsgCount) / delT
                           << "(hz)";
+                LOG(info) << "RobotCommand: " << (double)(robotCommandMsgCount) / delT
+                          << "(hz)";
                 prevVisualOdomMsgSeq = _robotData->visualOdomMsgSeq;
                 prevGridmapMsgSeq = _robotData->gridmapMsgSeq;
+                prevRobotCommandMsgSeq = _robotData->robotCommandMsgSeq;
                 prevStatTimeSec = t_;
             }
 

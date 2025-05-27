@@ -47,6 +47,13 @@ typedef struct _Gridmap
     uint32_t dim_y{GRIDMAP_DIM_Y};
 } Gridmap;
 
+typedef struct _RobotCommand
+{
+    double x;
+    double y;
+    double th;
+} RobotCommand;
+
 class RobotData
 {
 public:
@@ -71,6 +78,10 @@ public:
     // local grid map
     Gridmap gridmap;
     uint32_t gridmapMsgSeq{0};
+
+    // robot command
+    RobotCommand robotCommand;
+    uint32_t robotCommandMsgSeq{0};
 };
 
 #endif // ROBOTDATA_H
