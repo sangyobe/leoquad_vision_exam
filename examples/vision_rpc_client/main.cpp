@@ -259,6 +259,8 @@ int main(int argc, char *argv[])
         if (cmd == "q" || cmd == "quit") { bRun = false; }
     }
 
+    sub_odom_with_jointpos.reset();
+    sub_imu.reset();
     odom_publisher.join();
     gridmap_publisher.join();
     robotcmd_publisher.join();

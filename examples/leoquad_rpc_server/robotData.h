@@ -3,6 +3,8 @@
 
 #include <cmath>
 #include <cstdint>
+#include <ctime>
+#include <dtCore/type.h>
 
 typedef struct _Point {
     double x;
@@ -47,11 +49,55 @@ typedef struct _Gridmap
     uint32_t dim_y{GRIDMAP_DIM_Y};
 } Gridmap;
 
-typedef struct _RobotCommand
+typedef struct _SE2Pose
 {
     double x;
     double y;
     double th;
+} SE2Pose;
+
+typedef struct _SE2Velocity
+{
+    double vx;
+    double vy;
+    double w;
+} SE2Velocity;
+
+#define NAVCOMMAND_TRAJ_MAX (32)
+
+typedef struct _SE2Trajectory
+{
+    typedef struct _SE2TrajectoryPoint
+    {
+        SE2Pose pose;
+        double duration;
+    } SE2TrajectoryPoint;
+    SE2TrajectoryPoint points[NAVCOMMAND_TRAJ_MAX];
+    dt::TimeStamp ref_time;
+    int nop; //<! number of valid points
+} SE2Trajectory;
+
+typedef struct _RobotCommand
+{
+    typedef struct _NavCommand
+    {
+        enum CommandType
+        {
+            NavCommandType_SE2Traj = 0,
+            NavCommandType_SE2Pose,
+            NavCommandType_SE2Vel,
+            // NavCommandType_SE3Traj,
+            // NavCommandType_SE3Pose,
+            // NavCommandType_SE3Vel,
+        };
+        CommandType cmd_type;
+        dt::TimeStamp recv_time;
+        dt::TimeStamp end_time; //<! The timestamp (in robot time) that the command is valid until.
+        SE2Trajectory traj;     //<! trajectory(route) to follow
+        SE2Pose pose;           //<! goal pose
+        SE2Velocity vel;
+    } NavCommand;
+    NavCommand nav;
 } RobotCommand;
 
 class RobotData

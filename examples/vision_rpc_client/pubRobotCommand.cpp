@@ -33,12 +33,27 @@ bool PubRobotCommand::Publish(const RobotCommand &cmd)
         _request.mutable_header()->set_seq(_msgSeq++);
         _request.mutable_header()->mutable_time_stamp()->set_seconds(tp.tv_sec);
         _request.mutable_header()->mutable_time_stamp()->set_nanos(tp.tv_nsec);
-        // set message body
-        _request.mutable_command()->mutable_nav()->mutable_se2_target_pose()->mutable_pose()->mutable_position()->set_x(cmd.x);
-        _request.mutable_command()->mutable_nav()->mutable_se2_target_pose()->mutable_pose()->mutable_position()->set_y(cmd.y);
-        _request.mutable_command()->mutable_nav()->mutable_se2_target_pose()->mutable_pose()->set_heading(cmd.th);
+        // set message body (velocity)
+        // _request.mutable_command()->mutable_nav()->mutable_se2_target_vel()->mutable_vel()->mutable_linear()->set_x(cmd.nav.vel.vx);
+        // _request.mutable_command()->mutable_nav()->mutable_se2_target_vel()->mutable_vel()->mutable_linear()->set_y(cmd.nav.vel.vy);
+        // _request.mutable_command()->mutable_nav()->mutable_se2_target_vel()->mutable_vel()->set_angular(cmd.nav.vel.w);
+        // _request.mutable_command()->mutable_nav()->mutable_se2_target_vel()->mutable_end_time()->set_seconds(tp.tv_sec + 2);
+        // _request.mutable_command()->mutable_nav()->mutable_se2_target_vel()->mutable_end_time()->set_nanos(tp.tv_nsec);
+        // set message body (pose)
+        _request.mutable_command()->mutable_nav()->mutable_se2_target_pose()->mutable_pose()->mutable_position()->set_x(cmd.nav.pose.x);
+        _request.mutable_command()->mutable_nav()->mutable_se2_target_pose()->mutable_pose()->mutable_position()->set_y(cmd.nav.pose.y);
+        _request.mutable_command()->mutable_nav()->mutable_se2_target_pose()->mutable_pose()->set_heading(cmd.nav.pose.th);
         _request.mutable_command()->mutable_nav()->mutable_se2_target_pose()->mutable_end_time()->set_seconds(tp.tv_sec + 2);
         _request.mutable_command()->mutable_nav()->mutable_se2_target_pose()->mutable_end_time()->set_nanos(tp.tv_nsec);
+        // set message body (trajectory)
+        while (_request.command().nav().se2_target_traj().trajectory().points().size() < cmd.nav.traj.nop)
+            _request.mutable_command()->mutable_nav()->mutable_se2_target_traj()->mutable_trajectory()->add_points();
+        for (int i = 0; i < cmd.nav.traj.nop; i++)
+        {
+            _request.mutable_command()->mutable_nav()->mutable_se2_target_traj()->mutable_trajectory()->mutable_points(i)->mutable_pose()->mutable_position()->set_x(cmd.nav.traj.points[i].pose.x);
+            _request.mutable_command()->mutable_nav()->mutable_se2_target_traj()->mutable_trajectory()->mutable_points(i)->mutable_pose()->mutable_position()->set_y(cmd.nav.traj.points[i].pose.y);
+            _request.mutable_command()->mutable_nav()->mutable_se2_target_traj()->mutable_trajectory()->mutable_points(i)->mutable_pose()->set_heading(cmd.nav.traj.points[i].pose.th);
+        }
 
         _call_state = CallState::WAIT_WRITE_DONE;
         _writer->Write(_request, (void *)this);
