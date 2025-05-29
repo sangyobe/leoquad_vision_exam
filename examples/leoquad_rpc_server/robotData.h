@@ -83,14 +83,15 @@ typedef struct _RobotCommand
     {
         enum CommandType
         {
-            NavCommandType_SE2Traj = 0,
+            NavCommandType_Unknown = 0,
+            NavCommandType_SE2Traj,
             NavCommandType_SE2Pose,
             NavCommandType_SE2Vel,
             // NavCommandType_SE3Traj,
             // NavCommandType_SE3Pose,
             // NavCommandType_SE3Vel,
         };
-        CommandType cmd_type;
+        CommandType cmd_type{NavCommandType_Unknown};
         dt::TimeStamp recv_time;
         dt::TimeStamp end_time; //<! The timestamp (in robot time) that the command is valid until.
         SE2Trajectory traj;     //<! trajectory(route) to follow

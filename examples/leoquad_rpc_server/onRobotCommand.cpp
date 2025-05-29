@@ -59,7 +59,7 @@ bool OnRobotCommand::OnCompletionEvent(bool ok)
 
             if (_request.command().nav().has_se2_target_vel())
             {
-                _robotData->robotCommand.nav.cmd_type = RobotCommand::NavCommand::NavCommandType_SE2Traj;
+                _robotData->robotCommand.nav.cmd_type = RobotCommand::NavCommand::NavCommandType_SE2Vel;
                 _robotData->robotCommand.nav.end_time.tv_sec = _request.command().nav().se2_target_vel().end_time().seconds();
                 _robotData->robotCommand.nav.end_time.tv_nsec = _request.command().nav().se2_target_vel().end_time().nanos();
                 _robotData->robotCommand.nav.vel.vx = _request.command().nav().se2_target_vel().vel().linear().x();
@@ -83,7 +83,7 @@ bool OnRobotCommand::OnCompletionEvent(bool ok)
             }
             else if (_request.command().nav().has_se2_target_traj())
             {
-                _robotData->robotCommand.nav.cmd_type = RobotCommand::NavCommand::NavCommandType_SE2Vel;
+                _robotData->robotCommand.nav.cmd_type = RobotCommand::NavCommand::NavCommandType_SE2Traj;
                 _robotData->robotCommand.nav.end_time.tv_sec = _request.command().nav().se2_target_traj().end_time().seconds();
                 _robotData->robotCommand.nav.end_time.tv_nsec = _request.command().nav().se2_target_traj().end_time().nanos();
 
